@@ -23,6 +23,8 @@ export const metadata: Metadata = {
   },
 };
 
+import SmoothScroll from '@/components/SmoothScroll';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="noise">
@@ -30,7 +32,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className="bg-ink text-white antialiased">{children}</body>
+      <body className="bg-ink text-white antialiased">
+        <SmoothScroll>{children}</SmoothScroll>
+      </body>
     </html>
   );
 }

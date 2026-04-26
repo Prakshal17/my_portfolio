@@ -1,57 +1,25 @@
 'use client';
 
 import { useRef } from 'react';
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  MotionValue,
-} from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 
-/* ─── Types ───────────────────────────────────────────────── */
-interface TextSectionProps {
-  children: React.ReactNode;
-  align: 'center' | 'left' | 'right';
-  scrollYProgress: MotionValue<number>;
-  /** 0–1: centre of visibility (opacity peaks here) */
-  peak: number;
-  /** ±0–0.25: half-width of the visibility window */
-  halfWidth?: number;
-  /** vertical parallax multiplier */
-  parallaxSpeed?: number;
+// Register ScrollTrigger
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
 }
 
-/* ─── Single parallax text section ───────────────────────── */
+/* ─── Single text section ───────────────────────── */
 function TextSection({
   children,
   align,
-  scrollYProgress,
-  peak,
-  halfWidth = 0.13,
-  parallaxSpeed = 80,
-}: TextSectionProps) {
-  const rawOpacity = useTransform(
-    scrollYProgress,
-    [
-      Math.max(0, peak - halfWidth * 1.5),
-      Math.max(0, peak - halfWidth * 0.4),
-      peak,
-      Math.min(1, peak + halfWidth * 0.4),
-      Math.min(1, peak + halfWidth * 1.5),
-    ],
-    [0, 1, 1, 1, 0]
-  );
-  const opacity = useSpring(rawOpacity, { stiffness: 50, damping: 20, restDelta: 0.001 });
-
-  const rawY = useTransform(
-    scrollYProgress,
-    [Math.max(0, peak - halfWidth * 2), Math.min(1, peak + halfWidth * 2)],
-    [parallaxSpeed, -parallaxSpeed]
-  );
-
-  const y = useSpring(rawY, { stiffness: 80, damping: 20 });
-
+  id,
+}: {
+  children: React.ReactNode;
+  align: 'center' | 'left' | 'right';
+  id: string;
+}) {
   const justifyMap = {
     center: 'justify-center',
     left: 'justify-start',
@@ -65,53 +33,76 @@ function TextSection({
   };
 
   return (
-    <motion.div
-      style={{ opacity, y }}
-      className={`absolute inset-0 flex flex-col ${justifyMap[align]} items-center px-8 md:px-20 pointer-events-none select-none z-10`}
+    <div
+      id={id}
+      className={`absolute inset-0 flex flex-col ${justifyMap[align]} items-center px-8 md:px-20 pointer-events-none select-none z-10 opacity-0`}
     >
-      <div className={`flex flex-col gap-3 ${textAlignMap[align]}`}>
+      <div className={`flex flex-col gap-3 ${textAlignMap[align]} section-content`}>
         {children}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 /* ─── Overlay Root ────────────────────────────────────────── */
 export default function Overlay() {
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: overlayRef,
-    offset: ['start start', 'end end'],
-  });
+  useGSAP(() => {
+    if (!containerRef.current) return;
+
+    const sections = [
+      { id: '#section-hero', peak: 0.05 },
+      { id: '#section-what', peak: 0.35 },
+      { id: '#section-philosophy', peak: 0.65 },
+      { id: '#section-cta', peak: 0.9 },
+    ];
+
+    sections.forEach((section) => {
+      const el = containerRef.current?.querySelector(section.id);
+      const content = el?.querySelector('.section-content');
+      if (!el || !content) return;
+
+      // Opacity and Y parallax
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: `${section.peak * 100 - 15}% top`,
+          end: `${section.peak * 100 + 15}% top`,
+          scrub: true,
+        }
+      })
+      .to(el, { opacity: 1, duration: 0.5 })
+      .to(el, { opacity: 0, duration: 0.5 }, '+=0.5');
+
+      gsap.fromTo(content, 
+        { y: 50 },
+        { 
+          y: -50,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: `${section.peak * 100 - 20}% top`,
+            end: `${section.peak * 100 + 20}% top`,
+            scrub: true,
+          }
+        }
+      );
+    });
+  }, { scope: containerRef });
 
   return (
-    /*
-     * This div is absolutely positioned over the ScrollyCanvas 500vh container.
-     * It is NOT its own scroll container — it shares the same scroll space.
-     */
     <div
-      ref={overlayRef}
+      ref={containerRef}
       className="absolute inset-0 pointer-events-none"
       style={{ height: '500vh', top: 0 }}
     >
-      {/* Sticky layer — offset to match canvas (below navbar) */}
       <div className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden">
 
-        {/* ── Section 1: 5% scroll — Hero ─────────────────── */}
-        <TextSection
-          align="center"
-          scrollYProgress={scrollYProgress}
-          peak={0.05}
-          halfWidth={0.08}
-          parallaxSpeed={60}
-        >
-          <motion.p
-            className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-2"
-            style={{ fontFamily: 'Inter, sans-serif' }}
-          >
+        {/* Section 1: Hero */}
+        <TextSection align="center" id="section-hero">
+          <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-2">
             ServiceNow Developer
-          </motion.p>
+          </p>
           <h1
             className="text-6xl md:text-8xl lg:text-9xl font-black leading-none tracking-tighter"
             style={{
@@ -126,21 +117,14 @@ export default function Overlay() {
           <p className="text-lg md:text-2xl font-light text-white/60 mt-4 tracking-wide">
             ServiceNow Consultant · ITSM &amp; CSM · Loves to travel 🏔️
           </p>
-          {/* Scroll cue */}
           <div className="mt-12 flex flex-col items-center gap-2 opacity-70">
             <span className="text-xs tracking-widest uppercase text-white/40">Scroll</span>
             <div className="w-px h-12 bg-gradient-to-b from-accent to-transparent" />
           </div>
         </TextSection>
 
-        {/* ── Section 2: 35% scroll — Left ────────────────── */}
-        <TextSection
-          align="left"
-          scrollYProgress={scrollYProgress}
-          peak={0.35}
-          halfWidth={0.14}
-          parallaxSpeed={80}
-        >
+        {/* Section 2: What I do */}
+        <TextSection align="left" id="section-what">
           <span className="text-xs tracking-[0.3em] uppercase text-accent/80 font-medium">
             What I do
           </span>
@@ -161,14 +145,8 @@ export default function Overlay() {
           </p>
         </TextSection>
 
-        {/* ── Section 3: 65% scroll — Right ───────────────── */}
-        <TextSection
-          align="right"
-          scrollYProgress={scrollYProgress}
-          peak={0.65}
-          halfWidth={0.14}
-          parallaxSpeed={80}
-        >
+        {/* Section 3: Philosophy */}
+        <TextSection align="right" id="section-philosophy">
           <span className="text-xs tracking-[0.3em] uppercase text-accent/80 font-medium">
             My philosophy
           </span>
@@ -189,14 +167,8 @@ export default function Overlay() {
           </p>
         </TextSection>
 
-        {/* ── Section 4: 90% scroll — CTA ─────────────────── */}
-        <TextSection
-          align="center"
-          scrollYProgress={scrollYProgress}
-          peak={0.9}
-          halfWidth={0.08}
-          parallaxSpeed={50}
-        >
+        {/* Section 4: CTA */}
+        <TextSection align="center" id="section-cta">
           <span className="text-xs tracking-[0.35em] uppercase text-accent/80 font-medium">
             See the work
           </span>
@@ -231,3 +203,4 @@ export default function Overlay() {
     </div>
   );
 }
+

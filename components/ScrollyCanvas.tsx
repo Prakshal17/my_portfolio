@@ -1,7 +1,14 @@
 'use client';
 
 import { useEffect, useRef, useCallback } from 'react';
-import { useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+// Register ScrollTrigger
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /* ─── Config ──────────────────────────────────────────────── */
 const FRAME_COUNT = 120;
@@ -9,7 +16,6 @@ const BASE_PATH = '/sequence';
 
 /**
  * Returns the zero-padded filename for a given 0-based frame index.
- * Files are named: frame_000_delay-0.066s.png … frame_119_delay-0.066s.png
  */
 function getFrameSrc(index: number): string {
   const padded = String(index).padStart(3, '0');
@@ -23,6 +29,7 @@ function drawCoverFit(
   cw: number,
   ch: number
 ) {
+  if (!img.naturalWidth) return;
   const imgRatio = img.naturalWidth / img.naturalHeight;
   const canvasRatio = cw / ch;
 
@@ -36,6 +43,7 @@ function drawCoverFit(
     sy = Math.round((img.naturalHeight - sh) / 2);
   }
 
+  ctx.clearRect(0, 0, cw, ch);
   ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
 }
 
@@ -45,20 +53,7 @@ export default function ScrollyCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const loadedRef = useRef<boolean[]>(new Array(FRAME_COUNT).fill(false));
-  const currentFrameRef = useRef(0);
-  const rafRef = useRef<number | null>(null);
-
-  /* ── Scroll progress tied to this section ─────────────── */
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  const frameIndex = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, FRAME_COUNT - 1]
-  );
+  const currentFrameObj = useRef({ frame: 0 });
 
   /* ── Resize: match canvas to viewport ────────────────── */
   const resizeCanvas = useCallback(() => {
@@ -70,64 +65,74 @@ export default function ScrollyCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const img = imagesRef.current[currentFrameRef.current];
-    if (img && loadedRef.current[currentFrameRef.current]) {
+    const img = imagesRef.current[currentFrameObj.current.frame];
+    if (img && loadedRef.current[currentFrameObj.current.frame]) {
       drawCoverFit(ctx, img, canvas.width, canvas.height);
     }
   }, []);
 
-  /* ── Preload all images ───────────────────────────────── */
-  useEffect(() => {
+  /* ── Preload & Setup GSAP ────────────────────────────── */
+  useGSAP(() => {
+    if (!containerRef.current || !canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Preload images
     imagesRef.current = new Array(FRAME_COUNT);
+    let loadedCount = 0;
+
+    const render = () => {
+      const idx = Math.round(currentFrameObj.current.frame);
+      const img = imagesRef.current[idx];
+      if (img && loadedRef.current[idx]) {
+        drawCoverFit(ctx, img, canvas.width, canvas.height);
+      }
+    };
 
     for (let i = 0; i < FRAME_COUNT; i++) {
       const img = new Image();
       img.src = getFrameSrc(i);
       img.onload = () => {
         loadedRef.current[i] = true;
-        // Paint frame 0 as soon as it loads
-        if (i === 0) {
-          const canvas = canvasRef.current;
-          const ctx = canvas?.getContext('2d');
-          if (!canvas || !ctx) return;
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-          drawCoverFit(ctx, img, canvas.width, canvas.height);
-        }
+        loadedCount++;
+        if (i === 0) render();
       };
       imagesRef.current[i] = img;
     }
 
-    window.addEventListener('resize', resizeCanvas);
-    return () => window.removeEventListener('resize', resizeCanvas);
-  }, [resizeCanvas]);
-
-  /* ── Render frame on scroll ──────────────────────────── */
-  useMotionValueEvent(frameIndex, 'change', (latest) => {
-    const idx = Math.round(Math.min(Math.max(latest, 0), FRAME_COUNT - 1));
-    currentFrameRef.current = idx;
-
-    if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(() => {
-      const canvas = canvasRef.current;
-      const ctx = canvas?.getContext('2d');
-      const img = imagesRef.current[idx];
-      if (!canvas || !ctx || !img || !loadedRef.current[idx]) return;
-      drawCoverFit(ctx, img, canvas.width, canvas.height);
+    // ScrollTrigger setup
+    gsap.to(currentFrameObj.current, {
+      frame: FRAME_COUNT - 1,
+      snap: 'frame',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.1, // Slight scrub for smoothness on mobile
+        onUpdate: render,
+      },
     });
-  });
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+    };
+  }, { scope: containerRef });
 
   return (
-    /* 500 vh scroll container */
     <div ref={containerRef} className="relative" style={{ height: '500vh' }}>
-      {/* Sticky canvas — offset by navbar height so photo is never clipped */}
       <div className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden">
         <canvas
           ref={canvasRef}
           className="absolute inset-0 w-full h-full"
-          style={{ display: 'block' }}
+          style={{ display: 'block', willChange: 'transform' }}
         />
-        {/* Vignette overlay for cinematic depth */}
+        {/* Vignette overlay */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -139,10 +144,11 @@ export default function ScrollyCanvas() {
         <div
           className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
           style={{
-            background: 'linear-gradient(to bottom, transparent, #121212)',
+            background: 'linear-gradient(to bottom, transparent, #0a0a0a)',
           }}
         />
       </div>
     </div>
   );
 }
+
