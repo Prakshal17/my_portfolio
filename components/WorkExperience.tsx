@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from 'framer-motion';
 
 /* ─── Workspace Scene (rich CSS 3D) ─────────────────────── */
@@ -332,7 +331,7 @@ function ExperienceCard({ exp, i, active, onSelect, onCompanyClick }: {
       initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: i * 0.08 }}
-      className="glass-card rounded-2xl overflow-hidden group relative cursor-pointer hover:bg-white/5 transition-colors"
+      className="glass-card rounded-3xl overflow-hidden group relative cursor-pointer hover:bg-white/5 transition-colors"
       style={{ borderColor: active ? `${exp.accent}45` : undefined, boxShadow: active ? `0 0 50px ${exp.accent}10` : undefined }}
       onClick={() => { onSelect(); onCompanyClick?.(exp); }}
       whileHover={{ scale: 1.008 } as any}
@@ -428,6 +427,20 @@ export default function WorkExperience() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [isHovered, setIsHovered] = useState(false);
+
+  // ── Pause Lenis smooth scroll when any modal is open ───────
+  useEffect(() => {
+    const lenis = (window as any)._lenis;
+    const isOpen = !!selectedCompany || !!selectedProject;
+    if (isOpen) {
+      lenis?.stop();
+    } else {
+      lenis?.start();
+    }
+    return () => {
+      lenis?.start();
+    };
+  }, [selectedCompany, selectedProject]);
 
   function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
     const { left, top } = currentTarget.getBoundingClientRect();
@@ -539,26 +552,40 @@ export default function WorkExperience() {
       </div>
 
       {/* Company Detail Modal */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {selectedCompany && (
           <div className="fixed inset-0 z-40 flex items-center justify-center p-4 sm:p-6">
-            <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0 bg-black/75 backdrop-blur-xl"
               onClick={() => setSelectedCompany(null)}
             />
+            {/* Modal — smooth spring open, shrink-fade close */}
             <motion.div
-              initial={{ scale: 0.9, y: 40, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.95, y: 20, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-              className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto bg-ink border border-white/10 rounded-2xl shadow-2xl z-10 custom-scrollbar"
-              style={{ background: '#0d0f1a' }}
+              initial={{ scale: 0.90, opacity: 0, filter: 'blur(12px)', y: 32 }}
+              animate={{ scale: 1,    opacity: 1, filter: 'blur(0px)',  y: 0 }}
+              exit={{
+                scale: 0.88,
+                opacity: 0,
+                filter: 'blur(14px)',
+                y: 20,
+                transition: { duration: 0.3, ease: [0.4, 0, 1, 1] },
+              }}
+              transition={{ type: 'spring', stiffness: 340, damping: 26 }}
+              className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar"
+              style={{ background: '#0d0f1a', border: '1px solid rgba(255,255,255,0.08)' }}
+              onWheel={(e) => e.stopPropagation()}
             >
-              <div className="sticky top-0 bg-ink/90 backdrop-blur-xl border-b border-white/5 p-6 flex justify-between items-start z-20">
+              {/* Header */}
+              <div className="sticky top-0 backdrop-blur-xl border-b border-white/5 p-6 flex justify-between items-center z-20 rounded-t-3xl"
+                style={{ background: 'rgba(13,15,26,0.92)' }}>
                 <div className="flex items-center gap-4">
                   {selectedCompany.logo && (
-                    <div className="w-12 h-12 rounded bg-white flex items-center justify-center overflow-hidden" style={{ border: `1px solid ${selectedCompany.accent}40` }}>
+                    <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center overflow-hidden" style={{ border: `1px solid ${selectedCompany.accent}40` }}>
                       <img src={selectedCompany.logo} alt="logo" className="w-full h-full object-contain p-1" />
                     </div>
                   )}
@@ -571,9 +598,19 @@ export default function WorkExperience() {
                     </div>
                   </div>
                 </div>
-                <button onClick={() => setSelectedCompany(null)} className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 transition-colors">
-                  ✕
-                </button>
+                {/* Animated close button */}
+                <motion.button
+                  onClick={() => setSelectedCompany(null)}
+                  whileHover={{ rotate: 90, scale: 1.1, backgroundColor: 'rgba(255,95,87,0.25)' }}
+                  whileTap={{ scale: 0.88 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-white/50 hover:text-white border border-white/10"
+                  style={{ background: 'rgba(255,255,255,0.05)' }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </motion.button>
               </div>
 
               <div className="p-6 space-y-8 relative group"
@@ -581,16 +618,13 @@ export default function WorkExperience() {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                {/* Unique color spotlight overlay */}
+                {/* Spotlight overlay */}
                 <motion.div
                   className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
-                  style={{
-                    background: spotlightBg,
-                  }}
+                  style={{ background: spotlightBg }}
                 />
-                
                 <div className="relative z-20">
-                  <p className="text-xs tracking-widest uppercase font-bold mb-3" style={{ color: selectedCompany.accent }}>Responsibilities & Impact</p>
+                  <p className="text-xs tracking-widest uppercase font-bold mb-3" style={{ color: selectedCompany.accent }}>Responsibilities &amp; Impact</p>
                   <ul className="space-y-3">
                     {selectedCompany.bullets.map((b: string, idx: number) => (
                       <li key={idx} className="flex gap-3 text-sm text-white/70 leading-relaxed transition-colors group-hover:text-white/90">
@@ -605,12 +639,11 @@ export default function WorkExperience() {
                     <p className="text-xs tracking-widest uppercase font-bold mb-4" style={{ color: selectedCompany.accent }}>Key Projects</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {selectedCompany.projects.map((proj: any) => (
-                        <motion.div key={proj.name} layoutId={`proj-card-${proj.name}`} className="rounded-xl p-5 cursor-pointer hover:bg-white/5 transition-colors border relative z-30"
+                        <motion.div key={proj.name} className="rounded-2xl p-5 cursor-pointer hover:bg-white/5 transition-colors border relative z-30"
                           style={{ background: `${selectedCompany.accent}06`, borderColor: `${selectedCompany.accent}20` }}
-                          onClick={() => setSelectedProject(proj)}>
-                          <div className="flex items-start justify-between gap-2 mb-2">
-                            <h4 className="text-sm font-bold text-white/90">{proj.name}</h4>
-                          </div>
+                          onClick={() => setSelectedProject(proj)}
+                          whileHover={{ scale: 1.02 }}>
+                          <h4 className="text-sm font-bold text-white/90 mb-2">{proj.name}</h4>
                           <p className="text-xs text-white/50 mb-3 line-clamp-2 leading-relaxed">{proj.desc}</p>
                           <div className="inline-flex items-center text-xs font-bold gap-1 text-white/70 hover:text-white transition-colors">
                             Open project details <span style={{ color: selectedCompany.accent }}>↗</span>
@@ -627,26 +660,36 @@ export default function WorkExperience() {
       </AnimatePresence>
 
       {/* Project Detail Modal */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {selectedProject && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
             {/* Backdrop */}
-            <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0 bg-black/80 backdrop-blur-xl"
               onClick={() => setSelectedProject(null)}
             />
-            {/* Modal Content */}
+            {/* Modal */}
             <motion.div
-              layoutId={`proj-card-${selectedProject.name}`}
-              initial={{ scale: 0.9, y: 40, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.95, y: 20, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-              className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-ink border border-white/10 rounded-2xl shadow-2xl z-10 custom-scrollbar"
-              style={{ background: '#0d0f1a' }}
+              initial={{ scale: 0.90, opacity: 0, filter: 'blur(12px)', y: 32 }}
+              animate={{ scale: 1,    opacity: 1, filter: 'blur(0px)',  y: 0 }}
+              exit={{
+                scale: 0.88,
+                opacity: 0,
+                filter: 'blur(14px)',
+                y: 20,
+                transition: { duration: 0.3, ease: [0.4, 0, 1, 1] },
+              }}
+              transition={{ type: 'spring', stiffness: 340, damping: 26 }}
+              className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar"
+              style={{ background: '#0d0f1a', border: '1px solid rgba(255,255,255,0.08)' }}
+              onWheel={(e) => e.stopPropagation()}
             >
-              <div className="sticky top-0 bg-ink/90 backdrop-blur-xl border-b border-white/5 p-6 flex justify-between items-start z-20">
+              <div className="sticky top-0 backdrop-blur-xl border-b border-white/5 p-6 flex justify-between items-center z-20 rounded-t-3xl"
+                style={{ background: 'rgba(13,15,26,0.92)' }}>
                 <div>
                   <h3 className="text-2xl font-black text-white mb-1">{selectedProject.name}</h3>
                   <div className="flex flex-wrap gap-3 text-xs font-mono text-white/50">
@@ -654,9 +697,19 @@ export default function WorkExperience() {
                     <span>⏱ {selectedProject.period}</span>
                   </div>
                 </div>
-                <button onClick={() => setSelectedProject(null)} className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 transition-colors">
-                  ✕
-                </button>
+                {/* Animated close button */}
+                <motion.button
+                  onClick={() => setSelectedProject(null)}
+                  whileHover={{ rotate: 90, scale: 1.1, backgroundColor: 'rgba(255,95,87,0.25)' }}
+                  whileTap={{ scale: 0.88 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-white/50 hover:text-white border border-white/10"
+                  style={{ background: 'rgba(255,255,255,0.05)' }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </motion.button>
               </div>
 
               <div className="p-6 space-y-8">

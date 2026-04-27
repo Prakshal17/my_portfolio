@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 const socialLinks = [
   { id: 'footer-li', label: 'LinkedIn', href: 'https://www.linkedin.com/in/prakshal-jain-79379a17b/' },
   { id: 'footer-gh', label: 'GitHub', href: 'https://github.com/Prakshal17' },
-  { id: 'footer-ig', label: 'Instagram', href: 'https://www.instagram.com/_prakshal.jain_/' },
   { id: 'footer-mail', label: 'Email', href: 'mailto:praks1117@gmail.com' },
 ];
 
@@ -60,12 +59,6 @@ export default function Footer() {
                 whileHover={{ scale: 1.05 }}
                 className="px-10 py-4 rounded-full font-bold text-sm tracking-wide border border-white/10 text-white/70 hover:border-white/25 hover:text-white transition-all duration-300">
                 GitHub ↗
-              </motion.a>
-              <motion.a href="https://www.instagram.com/_prakshal.jain_/" target="_blank" rel="noopener noreferrer"
-                id="contact-cta-ig"
-                whileHover={{ scale: 1.05 }}
-                className="px-10 py-4 rounded-full font-bold text-sm tracking-wide border border-white/10 text-white/70 hover:border-white/25 hover:text-white transition-all duration-300">
-                Instagram ↗
               </motion.a>
             </div>
           </motion.div>

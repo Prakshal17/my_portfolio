@@ -5,28 +5,27 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 
-// Register ScrollTrigger
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-/* ─── Single text section ───────────────────────── */
+type SectionAlign = 'center' | 'left' | 'right';
+
 function TextSection({
   children,
   align,
   id,
 }: {
   children: React.ReactNode;
-  align: 'center' | 'left' | 'right';
+  align: SectionAlign;
   id: string;
 }) {
-  const justifyMap = {
+  const justifyMap: Record<SectionAlign, string> = {
     center: 'justify-center',
     left: 'justify-start',
     right: 'justify-end',
   };
-
-  const textAlignMap = {
+  const textAlignMap: Record<SectionAlign, string> = {
     center: 'text-center items-center',
     left: 'text-left items-start',
     right: 'text-right items-end',
@@ -36,15 +35,18 @@ function TextSection({
     <div
       id={id}
       className={`absolute inset-0 flex flex-col ${justifyMap[align]} items-center px-8 md:px-20 pointer-events-none select-none z-10 opacity-0`}
+      style={{ perspective: '1200px' }}
     >
-      <div className={`flex flex-col gap-3 ${textAlignMap[align]} section-content`}>
+      <div
+        className={`flex flex-col gap-3 ${textAlignMap[align]} section-content`}
+        style={{ transformStyle: 'preserve-3d', willChange: 'transform, opacity' }}
+      >
         {children}
       </div>
     </div>
   );
 }
 
-/* ─── Overlay Root ────────────────────────────────────────── */
 export default function Overlay() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -52,41 +54,64 @@ export default function Overlay() {
     if (!containerRef.current) return;
 
     const sections = [
-      { id: '#section-hero', peak: 0.05 },
-      { id: '#section-what', peak: 0.35 },
+      { id: '#section-hero',       peak: 0.05 },
+      { id: '#section-what',       peak: 0.35 },
       { id: '#section-philosophy', peak: 0.65 },
-      { id: '#section-cta', peak: 0.9 },
+      { id: '#section-cta',        peak: 0.90 },
     ];
 
-    sections.forEach((section) => {
-      const el = containerRef.current?.querySelector(section.id);
-      const content = el?.querySelector('.section-content');
+    sections.forEach((section, sIdx) => {
+      const el      = containerRef.current!.querySelector(section.id) as HTMLElement | null;
+      const content = el?.querySelector('.section-content') as HTMLElement | null;
       if (!el || !content) return;
 
-      // Opacity and Y parallax
+      const pct = section.peak * 100;
+
+      /* ─── ENTER: always from slightly left + below, blur clear ─── */
       gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: `${section.peak * 100 - 15}% top`,
-          end: `${section.peak * 100 + 15}% top`,
-          scrub: true,
-        }
+          start: `${pct - 13}% top`,
+          end:   `${pct - 1}%  top`,
+          scrub: 1.0,
+        },
       })
-      .to(el, { opacity: 1, duration: 0.5 })
-      .to(el, { opacity: 0, duration: 0.5 }, '+=0.5');
-
-      gsap.fromTo(content, 
-        { y: 50 },
-        { 
-          y: -50,
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: `${section.peak * 100 - 20}% top`,
-            end: `${section.peak * 100 + 20}% top`,
-            scrub: true,
-          }
-        }
+      .fromTo(el,
+        { opacity: 0 },
+        { opacity: 1, ease: 'power2.out' }
+      )
+      .fromTo(content,
+        { x: -40, y: 30, rotateY: -6, filter: 'blur(10px)', opacity: 0 },
+        { x: 0,   y: 0,  rotateY: 0,  filter: 'blur(0px)',  opacity: 1, ease: 'power3.out' },
+        '<'
       );
+
+      /* ─── EXIT: ALL sections slide to the RIGHT with 3-D tilt ─── */
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: `${pct + 1}%  top`,
+          end:   `${pct + 13}% top`,
+          scrub: 1.0,
+        },
+      })
+      .to(el,
+        { opacity: 0, ease: 'power2.in' }
+      )
+      .to(content,
+        {
+          /* Shift strongly to the right + slight upward + recede in Z */
+          x: 160,
+          y: -20,
+          rotateY: 18,   // 3D tilt as it slides off to the right
+          filter: 'blur(8px)',
+          opacity: 0,
+          ease: 'power3.in',
+        },
+        '<'
+      );
+
+      void sIdx; // suppress unused warning
     });
   }, { scope: containerRef });
 
@@ -96,9 +121,12 @@ export default function Overlay() {
       className="absolute inset-0 pointer-events-none"
       style={{ height: '500vh', top: 0 }}
     >
-      <div className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden">
+      <div
+        className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden"
+        style={{ perspective: '1200px' }}
+      >
 
-        {/* Section 1: Hero */}
+        {/* ── Section 1: Hero ── */}
         <TextSection align="center" id="section-hero">
           <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-2">
             ServiceNow Developer
@@ -123,7 +151,7 @@ export default function Overlay() {
           </div>
         </TextSection>
 
-        {/* Section 2: What I do */}
+        {/* ── Section 2: What I do ── */}
         <TextSection align="left" id="section-what">
           <span className="text-xs tracking-[0.3em] uppercase text-accent/80 font-medium">
             What I do
@@ -145,7 +173,7 @@ export default function Overlay() {
           </p>
         </TextSection>
 
-        {/* Section 3: Philosophy */}
+        {/* ── Section 3: Philosophy ── */}
         <TextSection align="right" id="section-philosophy">
           <span className="text-xs tracking-[0.3em] uppercase text-accent/80 font-medium">
             My philosophy
@@ -167,7 +195,7 @@ export default function Overlay() {
           </p>
         </TextSection>
 
-        {/* Section 4: CTA */}
+        {/* ── Section 4: CTA ── */}
         <TextSection align="center" id="section-cta">
           <span className="text-xs tracking-[0.35em] uppercase text-accent/80 font-medium">
             See the work
@@ -187,7 +215,7 @@ export default function Overlay() {
           <div className="mt-6 flex gap-4 pointer-events-auto">
             <a
               href="#experience"
-              className="px-6 py-3 rounded-full text-sm font-semibold tracking-wide transition-all duration-300"
+              className="px-6 py-3 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:scale-105"
               style={{
                 background: '#60A5FA',
                 color: '#0d0f1a',
@@ -203,4 +231,3 @@ export default function Overlay() {
     </div>
   );
 }
-

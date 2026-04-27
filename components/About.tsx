@@ -52,10 +52,29 @@ export default function About() {
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-20">
           <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">About Me</p>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none"
-            style={{ background: 'linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-            Prakshal Jain
-          </h2>
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none"
+              style={{ background: 'linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+              Prakshal Jain
+            </h2>
+            
+            <div className="flex flex-col gap-2 lg:text-right">
+              <div className="flex flex-wrap items-center lg:justify-end gap-4 text-sm text-white/70 font-medium">
+                <a href="tel:+918171000426" className="flex items-center gap-1.5 hover:text-white transition-colors">
+                  <span className="text-base">📞</span> +91-8171000426
+                </a>
+                <a href="mailto:praks1117@gmail.com" className="flex items-center gap-1.5 hover:text-white transition-colors">
+                  <span className="text-base">✉️</span> praks1117@gmail.com
+                </a>
+                <a href="https://www.linkedin.com/in/prakshal-jain-79379a17b/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-white transition-colors">
+                  <span className="text-base">🔗</span> LinkedIn
+                </a>
+              </div>
+              <p className="text-xs tracking-[0.2em] uppercase text-accent font-bold mt-1">
+                CIS-CSM · CAD · CSA
+              </p>
+            </div>
+          </div>
           <div className="mt-10 h-px bg-gradient-to-r from-accent/40 via-white/10 to-transparent" />
         </motion.div>
 
