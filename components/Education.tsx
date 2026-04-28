@@ -24,7 +24,7 @@ const educationItems = [
     field: 'Information Technology',
     institution: 'Walchand Institute of Technology',
     location: 'Solapur, Maharashtra',
-    board: 'Shivaji University',
+    board: 'Solapur University',
     year: '2017 – 2021',
     grade: '8.82 CGPA (74.71%)',
     accent: '#60A5FA',

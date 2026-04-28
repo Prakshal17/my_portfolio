@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useMotionValue, useMotionTemplate } from 'framer-motion';
-import { useState, MouseEvent } from 'react';
+import { motion, useMotionValue, useMotionTemplate, animate } from 'framer-motion';
+import { useState, MouseEvent, useEffect, useRef } from 'react';
 
 const snModules = ['ITSM', 'CSM', 'Service Catalog', 'Employee Center', 'Service Portal', 'Now Mobile', 'SLAs', 'Surveys'];
 const snScripting = ['JavaScript', 'Client Scripts', 'Business Rules', 'Script Includes', 'GlideRecord', 'GlideAjax', 'UI Policies', 'UI Actions', 'ACLs', 'Scoped Apps'];
@@ -37,8 +37,39 @@ export default function About() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [isHovered, setIsHovered] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let animationX: any;
+    let animationY: any;
+
+    const handleResize = () => {
+      if (animationX) animationX.stop();
+      if (animationY) animationY.stop();
+      
+      if (window.innerWidth < 768) {
+        setIsHovered(true);
+        const w = containerRef.current?.offsetWidth || 300;
+        const h = containerRef.current?.offsetHeight || 400;
+        
+        animationX = animate(mouseX, [0, w, 0], { duration: 7, repeat: Infinity, ease: "easeInOut" });
+        animationY = animate(mouseY, [0, h, 0], { duration: 11, repeat: Infinity, ease: "easeInOut" });
+      } else {
+        setIsHovered(false);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (animationX) animationX.stop();
+      if (animationY) animationY.stop();
+    };
+  }, [mouseX, mouseY]);
 
   function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
+    if (window.innerWidth < 768) return;
     const { left, top } = currentTarget.getBoundingClientRect();
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
@@ -97,10 +128,11 @@ export default function About() {
             </div>
 
             <div 
+              ref={containerRef}
               className="relative group p-4 -m-4 md:p-6 md:-m-6 rounded-2xl"
               onMouseMove={handleMouseMove}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+              onMouseEnter={() => { if (window.innerWidth >= 768) setIsHovered(true); }}
+              onMouseLeave={() => { if (window.innerWidth >= 768) setIsHovered(false); }}
             >
               {/* Spotlight Overlay that reads the line */}
               <motion.div
@@ -122,7 +154,8 @@ export default function About() {
                 style={{
                   WebkitMaskImage: useMotionTemplate`radial-gradient(150px circle at ${mouseX}px ${mouseY}px, black 0%, transparent 100%)`,
                   maskImage: useMotionTemplate`radial-gradient(150px circle at ${mouseX}px ${mouseY}px, black 0%, transparent 100%)`,
-                  opacity: isHovered ? 1 : 0
+                  opacity: isHovered ? 1 : 0,
+                  transition: "opacity 0.5s ease"
                 }}
               >
                 <p className="text-lg md:text-xl text-blue-300 drop-shadow-[0_0_8px_rgba(96,165,250,0.8)] leading-relaxed mb-4">
