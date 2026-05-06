@@ -26,6 +26,7 @@ export const metadata: Metadata = {
   },
 };
 
+import { Analytics } from '@vercel/analytics/react';
 import SmoothScroll from '@/components/SmoothScroll';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-ink text-white antialiased">
         <SmoothScroll>{children}</SmoothScroll>
+        <Analytics />
       </body>
     </html>
   );
