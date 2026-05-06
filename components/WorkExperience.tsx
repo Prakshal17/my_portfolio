@@ -508,8 +508,9 @@ export default function WorkExperience() {
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-2 gap-3 mt-5">
-                {[['8+','Clients Served'],['90%','Ticket Automation'],['70%','Time Reduced'],['3+','Years ServiceNow']].map(([v,l]) => (
+              <h3 className="text-xs tracking-[0.3em] uppercase text-white/30 font-medium mt-8 mb-3">ServiceNow Impact</h3>
+              <div className="grid grid-cols-2 gap-3">
+                {[['8+','Clients Served'],['90%','Ticket Automation'],['70%','Time Reduced'],['100+','Update Sets Moved']].map(([v,l]) => (
                   <div key={l} className="glass-card rounded-xl p-4">
                     <div className="text-xl font-black accent-text mb-0.5">{v}</div>
                     <div className="text-xs text-white/35 uppercase tracking-wider">{l}</div>
