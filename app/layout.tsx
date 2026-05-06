@@ -21,6 +21,9 @@ export const metadata: Metadata = {
     title: 'Prakshal Jain | ServiceNow Developer',
     description: 'ServiceNow Developer | CSA · CAD · CIS-CSM | 8+ Clients | Now Platform',
   },
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 import SmoothScroll from '@/components/SmoothScroll';
@@ -29,7 +32,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="noise">
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
