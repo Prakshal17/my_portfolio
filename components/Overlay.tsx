@@ -102,12 +102,12 @@ function LeftPanel({ section }: { section: number }) {
         <span className="w-5 h-px" style={{ background: '#60A5FA' }} />
         ServiceNow Developer
       </motion.span>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
+      <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
         <div className="text-3xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-white">Hi, I&apos;m</div>
-        <div className="text-3xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight" style={{ background: 'linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.75) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Prakshal.</div>
-      </motion.div>
-      <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="text-xs md:text-sm text-white/50 leading-relaxed max-w-[200px]">
-        ServiceNow Consultant · ITSM &amp; CSM · Loves to travel 🏔️
+        <div className="text-3xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight" style={{ background: 'linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.75) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Prakshal</div>
+      </motion.h1>
+      <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="text-xs md:text-sm text-white/50 leading-relaxed max-w-xs pr-4">
+        4+ years IT experience. 3+ years on ServiceNow platform. ITSM, CSM, Client/Server side scripting, Now Mobile and Workspace, Portals, DataMigration and integration and virtual agent.
       </motion.p>
       {/* Lottie-style floating icons */}
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="flex items-center gap-3 mt-1">
