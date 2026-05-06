@@ -179,7 +179,7 @@ const experiences = [
       { metric: '60–70%', label: 'Agent effort reduction via Now Mobile' },
       { metric: '90%', label: 'Ticket automation via Inbound Email Actions' },
       { metric: '70%', label: 'Processing time reduction via REST integrations' },
-      { metric: '20+', label: 'Update Sets migrated with zero rollbacks' },
+      { metric: '100+', label: 'Update Sets migrated with zero rollbacks' },
     ],
     bullets: [
       'Delivered end-to-end ITIL-aligned ITSM and CSM solutions across 5+ client projects (manufacturing, retail, technology).',
@@ -187,7 +187,7 @@ const experiences = [
       'Architected 8–10 Service Catalogs per client with Client/Server-side Glide scripting, UI Policies, UI Actions, and tailored email notification templates.',
       'Implemented Inbound Email Actions across 5+ clients, automating 90% of ticket creation and assignment with client-specific routing logic.',
       'Streamlined ticket lifecycle via Scheduled Job automation and survey-driven closures — reducing resolved-state backlogs significantly.',
-      'Migrated 20+ Update Sets across dev/test/production with zero rollbacks; resolved post-migration bugs to maintain release stability.',
+      'Migrated 100+ Update Sets across dev/test/production with zero rollbacks; resolved post-migration bugs to maintain release stability.',
       'Strengthened data governance via ACL architecture and role-based access controls.',
       'Enabled mobile operations via Now Mobile and Agent App configurations — cutting agent effort by 60–70%.',
       'Engineered REST integrations (Twilio, bi-directional eBonding) and optimized bulk data ingestion via Transform Maps — slashing processing time by 70%.',

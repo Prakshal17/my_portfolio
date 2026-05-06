@@ -107,7 +107,7 @@ function LeftPanel({ section }: { section: number }) {
         <div className="text-3xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight" style={{ background: 'linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.75) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Prakshal</div>
       </motion.h1>
       <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="text-xs md:text-sm text-white/50 leading-relaxed max-w-xs pr-4">
-        4+ years IT experience. 3+ years on ServiceNow platform. ITSM, CSM, Client/Server side scripting, Now Mobile and Workspace, Portals, DataMigration and integration and virtual agent.
+        4+ years IT experience. 3+ years on ServiceNow platform. ITSM, CSM, Client/Server side scripting, Now Mobile Customization and Workspace, Portals, Data Migration and Integration, Virtual Agent, and Performance Analytics.
       </motion.p>
       {/* Lottie-style floating icons */}
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="flex items-center gap-3 mt-1">
@@ -225,7 +225,7 @@ function RightPanel({ section }: { section: number }) {
         { v: '60–70%', l: 'Agent effort cut', accent: '#60A5FA' },
         { v: '70%', l: 'Processing time', accent: '#34D399' },
         { v: '5+', l: 'Integrations built', accent: '#818CF8' },
-        { v: '20+', l: 'Update Sets', accent: '#FB923C' },
+        { v: '100+', l: 'Update Sets', accent: '#FB923C' },
       ].map((s, i) => <Stat key={s.l} v={s.v} l={s.l} accent={s.accent} delay={0.2 + i * 0.1} />)}
     </motion.div>,
 
