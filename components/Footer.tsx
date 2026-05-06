@@ -29,16 +29,25 @@ export default function Footer() {
             {/* Contact cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
               {[
-                { icon: '📧', label: 'Email', value: 'praks1117@gmail.com', href: 'mailto:praks1117@gmail.com', id: 'contact-email' },
+                { icon: 'email-svg', label: 'Email', value: 'praks1117@gmail.com', href: 'mailto:praks1117@gmail.com', id: 'contact-email' },
                 { icon: '📞', label: 'Phone', value: '+91-8171000426', href: 'tel:+918171000426', id: 'contact-phone' },
                 { icon: '💼', label: 'LinkedIn', value: 'prakshal-jain', href: 'https://www.linkedin.com/in/prakshal-jain-79379a17b/', id: 'contact-linkedin' },
               ].map(c => (
                 <motion.a key={c.id} id={c.id} href={c.href}
                   target={c.href.startsWith('http') ? '_blank' : undefined}
                   rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  whileHover={{ scale: 1.04, y: -3 }}
-                  className="glass-card rounded-2xl p-6 flex flex-col items-center gap-2 group transition-all duration-300">
-                  <span className="text-2xl">{c.icon}</span>
+                  whileHover={{ scale: 1.04, y: -4, boxShadow: '0 0 40px rgba(96,165,250,0.18)' }}
+                  className="glass-card rounded-2xl p-6 flex flex-col items-center gap-2 group transition-all duration-300 cursor-pointer">
+                  {c.icon === 'email-svg' ? (
+                    <span className="w-8 h-8 flex items-center justify-center">
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
+                        <rect x="2" y="4" width="20" height="16" rx="3" stroke="#60A5FA" strokeWidth="1.6"/>
+                        <path d="M2 7l10 7 10-7" stroke="#60A5FA" strokeWidth="1.6" strokeLinecap="round"/>
+                      </svg>
+                    </span>
+                  ) : (
+                    <span className="text-2xl">{c.icon}</span>
+                  )}
                   <span className="text-xs text-white/30 uppercase tracking-widest">{c.label}</span>
                   <span className="text-sm text-white/70 group-hover:text-white transition-colors font-medium break-all text-center">{c.value}</span>
                 </motion.a>

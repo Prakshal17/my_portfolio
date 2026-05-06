@@ -37,7 +37,8 @@ function drawCoverFit(
 
   if (imgRatio > canvasRatio) {
     sw = Math.round(img.naturalHeight * canvasRatio);
-    sx = Math.round((img.naturalWidth - sw) / 2);
+    // Center crop - face is centered since panels are on both sides
+    sx = Math.round((img.naturalWidth - sw) * 0.5);
   } else {
     sh = Math.round(img.naturalWidth / canvasRatio);
     sy = Math.round((img.naturalHeight - sh) / 2);
@@ -82,6 +83,7 @@ export default function ScrollyCanvas() {
     // Preload images
     imagesRef.current = new Array(FRAME_COUNT);
     let loadedCount = 0;
+    void loadedCount;
 
     const render = () => {
       const idx = Math.round(currentFrameObj.current.frame);
@@ -111,7 +113,7 @@ export default function ScrollyCanvas() {
         trigger: containerRef.current,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 0.1, // Slight scrub for smoothness on mobile
+        scrub: 0.1,
         onUpdate: render,
       },
     });
@@ -127,22 +129,39 @@ export default function ScrollyCanvas() {
   return (
     <div ref={containerRef} className="relative" style={{ height: '500vh' }}>
       <div className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden">
+        {/* Full-canvas — canvas is full width, left panel overlays on top via z-index */}
         <canvas
           ref={canvasRef}
           className="absolute inset-0 w-full h-full"
           style={{ display: 'block', willChange: 'transform' }}
         />
-        {/* Vignette overlay */}
+
+        {/* Subtle left-side gradient to blend panel with canvas */}
+        <div
+          className="absolute inset-y-0 left-0 w-5/12 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to right, rgba(13,15,26,0.0) 0%, rgba(13,15,26,0.0) 100%)',
+          }}
+        />
+
+        {/* Vignette - fade both edges so panels blend cleanly */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(ellipse at center, transparent 40%, rgba(18,18,18,0.65) 100%)',
+              'radial-gradient(ellipse at 50% 50%, transparent 35%, rgba(13,15,26,0.6) 100%)',
           }}
         />
+        {/* Left fade */}
+        <div className="absolute inset-y-0 left-0 w-72 pointer-events-none"
+          style={{ background: 'linear-gradient(to right, rgba(13,15,26,0.15), transparent)' }} />
+        {/* Right fade */}
+        <div className="absolute inset-y-0 right-0 w-72 pointer-events-none"
+          style={{ background: 'linear-gradient(to left, rgba(13,15,26,0.15), transparent)' }} />
+
         {/* Bottom fade */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+          className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
           style={{
             background: 'linear-gradient(to bottom, transparent, #0a0a0a)',
           }}
@@ -151,4 +170,3 @@ export default function ScrollyCanvas() {
     </div>
   );
 }
-

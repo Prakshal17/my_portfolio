@@ -91,14 +91,32 @@ export default function About() {
             
             <div className="flex flex-col gap-2 lg:text-right">
               <div className="flex flex-wrap items-center lg:justify-end gap-4 text-sm text-white/70 font-medium">
-                <a href="tel:+918171000426" className="flex items-center gap-1.5 hover:text-white transition-colors">
-                  <span className="text-base">📞</span> +91-8171000426
+                <a href="tel:+918171000426" className="flex items-center gap-1.5 hover:text-white transition-colors group">
+                  <span className="w-5 h-5 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6.6 10.8a15.3 15.3 0 006.6 6.6l2.2-2.2a1 1 0 011.1-.2c1.2.5 2.5.7 3.8.7a1 1 0 011 1V21a1 1 0 01-1 1C10.6 22 2 13.4 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.4.2 2.6.7 3.8a1 1 0 01-.2 1.1L6.6 10.8z" stroke="#34D399" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                  +91-8171000426
                 </a>
-                <a href="mailto:praks1117@gmail.com" className="flex items-center gap-1.5 hover:text-white transition-colors">
-                  <span className="text-base">✉️</span> praks1117@gmail.com
+                <a href="mailto:praks1117@gmail.com" className="flex items-center gap-1.5 hover:text-white transition-colors group">
+                  <span className="w-5 h-5 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="2" y="4" width="20" height="16" rx="3" stroke="#60A5FA" strokeWidth="1.7"/>
+                      <path d="M2 7l10 7 10-7" stroke="#60A5FA" strokeWidth="1.7" strokeLinecap="round"/>
+                    </svg>
+                  </span>
+                  praks1117@gmail.com
                 </a>
-                <a href="https://www.linkedin.com/in/prakshal-jain-79379a17b/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-white transition-colors">
-                  <span className="text-base">🔗</span> LinkedIn
+                <a href="https://www.linkedin.com/in/prakshal-jain-79379a17b/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-white transition-colors group">
+                  <span className="w-5 h-5 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="2" y="2" width="20" height="20" rx="4" stroke="#818CF8" strokeWidth="1.7"/>
+                      <path d="M7 10v7M7 7v.5" stroke="#818CF8" strokeWidth="1.7" strokeLinecap="round"/>
+                      <path d="M11 17v-4a2 2 0 014 0v4M11 13v4" stroke="#818CF8" strokeWidth="1.7" strokeLinecap="round"/>
+                    </svg>
+                  </span>
+                  LinkedIn
                 </a>
               </div>
               <p className="text-xs tracking-[0.2em] uppercase text-accent font-bold mt-1">
