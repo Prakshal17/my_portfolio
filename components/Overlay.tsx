@@ -305,7 +305,13 @@ export default function Overlay() {
           style={{ background: 'linear-gradient(to bottom, var(--hero-fade-transparent), var(--hero-fade-bottom))' }} />
 
         {/* ── MOBILE: stacked top + bottom ─────────────────── */}
-        <div className="md:hidden absolute inset-0 flex flex-col justify-between pointer-events-auto z-20 px-5 pt-6 pb-20">
+        <motion.div 
+          onPanEnd={(_, info) => {
+            if (info.offset.x > 50) setActive(prev => (prev - 1 + 4) % 4);
+            else if (info.offset.x < -50) setActive(prev => (prev + 1) % 4);
+          }}
+          className="md:hidden absolute inset-0 flex flex-col justify-between pointer-events-auto z-20 px-5 pt-20 pb-20"
+        >
           {/* Top area: name/tag */}
           <div style={{ background: 'linear-gradient(to bottom, var(--hero-fade-mobile) 60%, var(--hero-fade-transparent))' }} className="pb-6">
             <LeftPanel section={active} />
@@ -314,7 +320,7 @@ export default function Overlay() {
           <div style={{ background: 'linear-gradient(to top, var(--hero-fade-mobile) 60%, var(--hero-fade-transparent))' }} className="pt-6 flex justify-end">
             <RightPanel section={active} />
           </div>
-        </div>
+        </motion.div>
 
         {/* ── DESKTOP: left + right panels ─────────────────── */}
         <div className="hidden md:flex absolute inset-0 items-center justify-between pointer-events-auto z-20">

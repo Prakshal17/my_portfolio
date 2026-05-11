@@ -423,6 +423,16 @@ export default function WorkExperience() {
   const [selectedCompany, setSelectedCompany] = useState<any>(null);
   const [selectedProject, setSelectedProject] = useState<any>(null);
 
+  // Lock scroll when modal is open
+  useEffect(() => {
+    if (selectedCompany || selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [selectedCompany, selectedProject]);
+
   // Spotlight Effect State
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -576,7 +586,7 @@ export default function WorkExperience() {
                 transition: { duration: 0.3, ease: [0.4, 0, 1, 1] },
               }}
               transition={{ type: 'spring', stiffness: 340, damping: 26 }}
-              className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar"
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar overscroll-contain"
               style={{ background: 'var(--ink)', border: '1px solid var(--border)' }}
               onWheel={(e) => e.stopPropagation()}
             >
@@ -684,7 +694,7 @@ export default function WorkExperience() {
                 transition: { duration: 0.3, ease: [0.4, 0, 1, 1] },
               }}
               transition={{ type: 'spring', stiffness: 340, damping: 26 }}
-              className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar"
+              className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar overscroll-contain"
               style={{ background: 'var(--ink)', border: '1px solid var(--border)' }}
               onWheel={(e) => e.stopPropagation()}
             >

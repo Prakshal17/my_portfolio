@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 /* ─── Data ────────────────────────────────────────────────── */
 const academicProjects = [
@@ -127,6 +127,16 @@ function ProjectCard({
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<any>(null);
 
+  // Lock scroll when modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [selectedProject]);
+
   return (
     <section id="academic-projects" className="relative bg-ink py-24 px-6 md:px-12 lg:px-20 border-t border-white/5">
       <div className="relative max-w-7xl mx-auto">
@@ -175,7 +185,7 @@ export default function Projects() {
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.95, y: 20, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-              className="relative w-full max-w-3xl bg-ink border border-white/10 rounded-2xl shadow-2xl z-10 overflow-hidden"
+              className="relative w-full max-w-3xl bg-ink border border-white/10 rounded-2xl shadow-2xl z-10 overflow-y-auto max-h-[90vh] custom-scrollbar overscroll-contain"
               style={{ background: 'var(--ink)' }}
             >
               <div className="border-b border-white/5 p-6 flex justify-between items-start bg-white/5">
