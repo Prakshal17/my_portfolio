@@ -586,8 +586,8 @@ export default function WorkExperience() {
                 transition: { duration: 0.3, ease: [0.4, 0, 1, 1] },
               }}
               transition={{ type: 'spring', stiffness: 340, damping: 26 }}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar overscroll-contain"
-              style={{ background: 'var(--ink)', border: '1px solid var(--border)' }}
+              className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar overscroll-contain touch-auto"
+              style={{ background: 'var(--ink)', border: '1px solid var(--border)', WebkitOverflowScrolling: 'touch' }}
               onWheel={(e) => e.stopPropagation()}
             >
               {/* Header */}
@@ -694,8 +694,8 @@ export default function WorkExperience() {
                 transition: { duration: 0.3, ease: [0.4, 0, 1, 1] },
               }}
               transition={{ type: 'spring', stiffness: 340, damping: 26 }}
-              className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar overscroll-contain"
-              style={{ background: 'var(--ink)', border: '1px solid var(--border)' }}
+              className="relative w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar overscroll-contain touch-auto"
+              style={{ background: 'var(--ink)', border: '1px solid var(--border)', WebkitOverflowScrolling: 'touch' }}
               onWheel={(e) => e.stopPropagation()}
             >
               <div className="sticky top-0 backdrop-blur-xl border-b border-white/5 p-6 flex justify-between items-center z-20 rounded-t-3xl"

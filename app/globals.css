@@ -79,11 +79,11 @@ a, button, [role="button"] { cursor: pointer; }
 /* ═══════════════════════════════════════════════
    SCROLLBAR
    ═══════════════════════════════════════════════ */
-::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--ink); }
 ::-webkit-scrollbar-thumb { background: rgba(96,165,250,0.5); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(96,165,250,0.9); }
-.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(96,165,250,0.35); border-radius: 99px; }
 
