@@ -184,7 +184,7 @@ export default function Projects() {
       {/* Detail Modal */}
       <AnimatePresence>
         {selectedProject && (
-          <div className="fixed inset-0 z-50 overflow-y-auto p-4 sm:p-8 md:p-12 lg:p-20">
+          <div className="fixed inset-0 z-50 overflow-y-auto md:overflow-hidden flex md:items-center justify-center p-4 sm:p-8 md:p-12 lg:p-20">
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -197,7 +197,7 @@ export default function Projects() {
               animate={{ scale: 1,    opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-              className="relative w-full max-w-3xl bg-ink border border-white/10 rounded-[2.5rem] shadow-2xl z-10 overflow-hidden mx-auto my-12"
+              className="relative w-full max-w-3xl bg-ink border border-white/10 rounded-[2.5rem] shadow-2xl z-10 overflow-y-auto md:max-h-[85vh] custom-scrollbar mx-auto my-12 md:my-0"
               style={{ background: 'var(--ink)' }}
             >
               <div className="border-b border-white/5 p-6 flex justify-between items-start bg-white/5">
