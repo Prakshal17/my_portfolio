@@ -625,7 +625,7 @@ export default function WorkExperience() {
                 </motion.button>
               </div>
 
-              <div className="p-6 space-y-8 relative group"
+              <div className="p-6 pb-20 space-y-12 relative group"
                 onMouseMove={handleMouseMove}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect, createContext, useContext } from 'react';
 
 /* ─── Theme Context ──────────────────────────────────────────── */
