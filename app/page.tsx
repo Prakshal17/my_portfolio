@@ -7,6 +7,7 @@ import Education from '@/components/Education';
 import AcademicProjects from '@/components/Projects';
 import Certifications from '@/components/Certifications';
 import WorkExperience from '@/components/WorkExperience';
+import TechMarquee from '@/components/TechMarquee';
 
 const ScrollyCanvas = dynamic(() => import('@/components/ScrollyCanvas'), { ssr: false });
 const Overlay = dynamic(() => import('@/components/Overlay'), { ssr: false });
@@ -22,6 +23,9 @@ export default function Home() {
         <ScrollyCanvas />
         <Overlay />
       </div>
+
+      {/* ── Floating Tech Stack Marquee ──────────────────────── */}
+      <TechMarquee />
 
       {/* ── About / Bio ─────────────────────────────────────── */}
       <About />

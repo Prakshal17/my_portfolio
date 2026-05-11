@@ -115,8 +115,7 @@ export default function Certifications() {
           viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-16">
           <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">Credentials</p>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none"
-              style={{ background: 'linear-gradient(135deg, #fff 0%, rgba(240,244,255,0.6) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none heading-gradient">
               Certifications
             </h2>
             <p className="text-white/35 text-sm max-w-xs md:text-right">
@@ -134,11 +133,11 @@ export default function Certifications() {
               whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
               className="flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-300"
               style={activeTab === cat.id
-                ? { background: cat.accent, color: '#0d0f1a', boxShadow: `0 0 24px ${cat.accent}50` }
-                : { background: 'rgba(255,255,255,0.04)', color: 'rgba(240,244,255,0.4)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                ? { background: cat.accent, color: '#000', boxShadow: `0 0 24px ${cat.accent}50` }
+                : { background: 'var(--surface)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}>
               <span>{cat.icon}</span>
               <span>{cat.title}</span>
-              <span className="text-xs opacity-60">({cat.certs.length})</span>
+              <span className="text-xs opacity-80">({cat.certs.length})</span>
             </motion.button>
           ))}
         </div>
@@ -162,10 +161,10 @@ export default function Certifications() {
                   style={{ background: `${typeColors[cert.type] ?? active.accent}12`, color: typeColors[cert.type] ?? active.accent, border: `1px solid ${typeColors[cert.type] ?? active.accent}28` }}>
                   {cert.type}
                 </span>
-                <h3 className="text-sm font-semibold text-white/90 leading-snug mb-2">{cert.name}</h3>
-                <p className="text-xs text-white/35">{cert.issuer}</p>
+                <h3 className="text-sm font-semibold leading-snug mb-2" style={{ color: 'var(--text-primary)' }}>{cert.name}</h3>
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{cert.issuer}</p>
                 {cert.year && cert.year !== '—' && (
-                  <p className="text-xs text-white/20 mt-1 font-mono">{cert.year}</p>
+                  <p className="text-xs mt-1 font-mono" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>{cert.year}</p>
                 )}
               </motion.div>
             ))}

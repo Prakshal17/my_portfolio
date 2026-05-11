@@ -143,9 +143,7 @@ export default function Projects() {
             University Work
           </p>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none"
-              style={{ background: 'linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
-            >
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none heading-gradient">
               Academic Projects
             </h2>
             <p className="text-white/40 text-sm md:text-base max-w-sm md:text-right leading-relaxed font-mono">
@@ -178,7 +176,7 @@ export default function Projects() {
               exit={{ scale: 0.95, y: 20, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 400, damping: 30 }}
               className="relative w-full max-w-3xl bg-ink border border-white/10 rounded-2xl shadow-2xl z-10 overflow-hidden"
-              style={{ background: '#0d0f1a' }}
+              style={{ background: 'var(--ink)' }}
             >
               <div className="border-b border-white/5 p-6 flex justify-between items-start bg-white/5">
                 <div>

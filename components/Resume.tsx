@@ -15,8 +15,7 @@ export default function Resume() {
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-12 text-center">
           <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-3">Curriculum Vitae</p>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-none"
-            style={{ background: 'linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+          <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none heading-gradient">
             My Resume
           </h2>
         </motion.div>
@@ -40,7 +39,8 @@ export default function Resume() {
               <a 
                 href="/Prakshal_Jain_ServiceNow_Resume.pdf" 
                 download="Prakshal_Jain_ServiceNow_Resume.pdf"
-                className="text-xs font-mono tracking-widest text-white/40 hover:text-white transition-colors flex items-center gap-2"
+                className="text-xs font-mono tracking-widest transition-colors flex items-center gap-2 hover:text-[var(--text-primary)]"
+                style={{ color: 'var(--text-muted)' }}
                 title="Download PDF Document"
               >
                 Prakshal_Jain_ServiceNow_Resume.pdf
@@ -49,18 +49,18 @@ export default function Resume() {
             </div>
 
             {/* Document Preview (Iframe) */}
-            <div className="w-full h-[500px] md:h-[650px] rounded-xl overflow-hidden bg-white/5 border border-white/5 relative">
+            <div className="w-full h-[500px] md:h-[650px] rounded-xl overflow-hidden relative" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
               {/* Fallback styling shown before/if PDF fails to load */}
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 z-0">
-                <svg className="w-10 h-10 text-white/10 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-10 h-10 mb-4" style={{ color: 'var(--text-faint)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <p className="text-white/40 text-sm mb-2 font-medium">PDF Preview Loading...</p>
+                <p className="text-sm mb-2 font-medium" style={{ color: 'var(--text-muted)' }}>PDF Preview Loading...</p>
               </div>
 
               {/* The actual iframe */}
               <iframe
-                src="/Prakshal_Jain_ServiceNow_Resume.pdf"
+                src="/Prakshal_Jain_ServiceNow_Resume.pdf#toolbar=0&navpanes=0&view=FitH"
                 className="relative z-10 w-full h-full border-0"
                 title="Resume Preview"
                 loading="lazy"

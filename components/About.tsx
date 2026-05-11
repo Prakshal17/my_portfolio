@@ -24,9 +24,10 @@ function SkillTag({ skill, i, accent }: { skill: string; i: number; accent: stri
     <motion.span
       initial={{ opacity: 0, scale: 0.85 }} whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }} transition={{ delay: i * 0.03, duration: 0.35 }}
-      whileHover={{ scale: 1.06 }}
-      className="px-3 py-1.5 rounded-xl text-sm font-medium glass-card cursor-default transition-all duration-200"
-      style={{ color: 'rgba(255,255,255,0.6)' }}
+      className="skill-capsule"
+      style={{
+        ['--tag-accent' as string]: accent,
+      } as React.CSSProperties}
     >
       {skill}
     </motion.span>
@@ -84,8 +85,7 @@ export default function About() {
           viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-20">
           <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">About Me</p>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none"
-              style={{ background: 'linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none heading-gradient">
               Prakshal Jain
             </h2>
             
@@ -177,7 +177,7 @@ export default function About() {
                 }}
               >
                 <p className="text-lg md:text-xl text-blue-300 drop-shadow-[0_0_8px_rgba(96,165,250,0.8)] leading-relaxed mb-4">
-                  I&apos;m <span className="font-bold text-white drop-shadow-[0_0_10px_white]">Prakshal Jain</span>, a{' '}
+                  I&apos;m <span className="font-black text-white drop-shadow-[0_0_10px_white] font-heading">Prakshal Jain</span>, a{' '}
                   <span className="font-bold text-white drop-shadow-[0_0_10px_white]">ServiceNow Developer</span> with 4+ years of IT experience
                   and 3+ years of hands-on expertise delivering ITSM and CSM solutions across manufacturing, retail,
                   finance, and enterprise domains.
@@ -197,7 +197,7 @@ export default function About() {
               {/* Base text layer (visible normally) */}
               <div className="relative z-0 transition-opacity duration-300 group-hover:opacity-40">
                 <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-4">
-                  I&apos;m <span className="text-white font-bold">Prakshal Jain</span>, a{' '}
+                  I&apos;m <span className="text-white font-black font-heading">Prakshal Jain</span>, a{' '}
                   <span className="accent-text font-semibold">ServiceNow Developer</span> with 4+ years of IT experience
                   and 3+ years of hands-on expertise delivering ITSM and CSM solutions across manufacturing, retail,
                   finance, and enterprise domains.
@@ -336,31 +336,32 @@ export default function About() {
           className="mt-20">
           <div className="h-px bg-gradient-to-r from-accent/30 via-white/8 to-transparent mb-14" />
           <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-3">Beyond The Screen</p>
-          <h3 className="text-3xl md:text-4xl font-black text-white/90 mb-8 tracking-tight">
+          <h3 className="text-3xl md:text-4xl font-black mb-8 tracking-tight heading-gradient">
             When I&apos;m not on the Now Platform…
           </h3>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {[
-              { emoji: '🏔️', title: 'Mountains', desc: 'Love trekking to high-altitude destinations. Mountains are therapy.', accent: '#60A5FA' },
-              { emoji: '✈️', title: 'Travelling', desc: 'Avid traveller — exploring new places is a way of life.', accent: '#818CF8' },
-              { emoji: '🏏', title: 'Cricket', desc: 'Die-hard cricket fan. Always watching, always playing.', accent: '#34D399' },
-              { emoji: '⚽', title: 'Football', desc: 'Sports enthusiast — football, cricket, and more.', accent: '#FB923C' },
-              { emoji: '🎮', title: 'FIFA', desc: 'Love playing FIFA — competitive, always.', accent: '#F472B6' },
-              { emoji: '🥾', title: 'Trekking', desc: 'Long trails, backpacks, and open skies.', accent: '#FBBF24' },
+              { emoji: '🏔️', title: 'Mountains', desc: 'High-altitude treks, misty peaks — mountains are where I recharge.', accent: '#60A5FA' },
+              { emoji: '✈️', title: 'Travelling', desc: 'Avid traveller — exploring new places, cultures and cuisines.', accent: '#818CF8' },
+              { emoji: '🥾', title: 'Trekking', desc: 'Long trails, backpacks, and open skies — the perfect escape.', accent: '#34D399' },
+              { emoji: '🏏', title: 'Cricket', desc: 'Die-hard cricket fan. Always watching, always playing.', accent: '#FB923C' },
+              { emoji: '⚽', title: 'Football', desc: 'Sports enthusiast — football, cricket, and more.', accent: '#F472B6' },
+              { emoji: '🎮', title: 'FIFA', desc: 'Love playing FIFA — competitive, always.', accent: '#FBBF24' },
             ].map((hobby, i) => (
               <motion.div key={hobby.title}
                 initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.4 }}
                 whileHover={{ y: -6, scale: 1.04 }}
-                className="glass-card rounded-2xl p-5 flex flex-col items-center text-center group cursor-default relative overflow-hidden">
+                className="glass-card rounded-2xl p-5 flex flex-col items-center text-center group cursor-default relative overflow-hidden"
+                style={{ transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease' }}>
                 <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl"
                   style={{ background: `linear-gradient(to right, ${hobby.accent}, transparent)` }} />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none rounded-2xl"
                   style={{ background: `${hobby.accent}10` }} />
                 <span className="text-3xl mb-3">{hobby.emoji}</span>
                 <p className="text-xs font-bold tracking-wider uppercase mb-1.5" style={{ color: hobby.accent }}>{hobby.title}</p>
-                <p className="text-xs text-white/30 leading-relaxed">{hobby.desc}</p>
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>{hobby.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -395,10 +396,84 @@ export default function About() {
             style={{ borderLeftColor: '#60A5FA' }}>
             <span className="text-3xl mt-0.5">📖</span>
             <div>
-              <p className="text-base text-white/65 italic leading-relaxed font-serif">
+              <p className="text-base italic leading-relaxed font-serif" style={{ color: 'var(--text-muted)' }}>
                 &ldquo;... unless I am myself I am nobody.&rdquo;
               </p>
-              <p className="text-xs text-white/40 mt-2 tracking-wider">— Virginia Woolf</p>
+              <p className="text-xs mt-2 tracking-wider" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>— Virginia Woolf</p>
+            </div>
+          </motion.div>
+
+          {/* ── What I Can Bring to Your Team ───────── */}
+          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }}
+            className="mt-20">
+            <div className="h-px bg-gradient-to-r from-accent/30 via-white/8 to-transparent mb-14" />
+            <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-3">Value I Deliver</p>
+            <h3 className="text-3xl md:text-4xl font-black mb-8 tracking-tight heading-gradient">
+              What I Bring to Your Team
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                { icon: '⚡', title: 'Rapid Delivery', desc: 'I move fast without cutting corners — from requirements to deployed solution in tight timelines.', accent: '#60A5FA' },
+                { icon: '🤝', title: 'Client-First Mindset', desc: 'Multiple client appreciation awards for proactive communication and going beyond the brief.', accent: '#34D399' },
+                { icon: '🏗️', title: 'Scalable Architecture', desc: 'I build for the future — scoped apps, reusable script includes, and clean flow logic that teams can maintain.', accent: '#818CF8' },
+                { icon: '🔍', title: 'Deep Problem Solver', desc: 'Complex bugs, tricky integrations, edge cases — I dig in and find the root cause, not just the quick fix.', accent: '#FB923C' },
+                { icon: '📊', title: 'Measurable Impact', desc: 'Reduced agent effort by 60–70% and processing time by 70% across multiple enterprise clients.', accent: '#F472B6' },
+                { icon: '🧠', title: 'Continuous Learner', desc: 'Actively upskilling in Agentic AI, Virtual Agent NLU, and Now Platform latest releases — always ahead of the curve.', accent: '#FBBF24' },
+              ].map((item, i) => (
+                <motion.div key={item.title}
+                  initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}
+                  whileHover={{ x: 4 }}
+                  className="glass-card rounded-2xl p-5 flex gap-4 group relative overflow-hidden"
+                  style={{ transition: 'all 0.3s cubic-bezier(0.16,1,0.3,1)' }}>
+                  <div className="absolute top-0 left-0 bottom-0 w-0.5 rounded-l-2xl"
+                    style={{ background: item.accent }} />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{ background: `${item.accent}06` }} />
+                  <span className="text-2xl flex-shrink-0 mt-0.5">{item.icon}</span>
+                  <div>
+                    <p className="text-sm font-bold mb-1" style={{ color: item.accent }}>{item.title}</p>
+                    <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)', opacity: 0.75 }}>{item.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* ── Principles I Follow ──────────────────── */}
+          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.15 }}
+            className="mt-20">
+            <div className="h-px bg-gradient-to-r from-accent/30 via-white/8 to-transparent mb-14" />
+            <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-3">My Work Ethos</p>
+            <h3 className="text-3xl md:text-4xl font-black mb-8 tracking-tight heading-gradient">
+              Principles I Follow
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {[
+                { num: '01', title: 'Clarity over Cleverness', desc: 'Code and configurations should be readable six months later — by you or anyone on the team.', accent: '#60A5FA' },
+                { num: '02', title: 'Own the Outcome', desc: 'I don\'t just fix issues — I dig deep to resolve complex bugs and take responsibility for the actual business outcome.', accent: '#818CF8' },
+                { num: '03', title: 'Automate the Tedium', desc: 'If a human is doing something repeatedly that a machine can do, that\'s a problem I want to solve.', accent: '#34D399' },
+                { num: '04', title: 'Communicate Early', desc: 'Blockers, risks, or changes — surfaced early, not the day before go-live.', accent: '#FB923C' },
+                { num: '05', title: 'Build for Scale', desc: 'Every implementation is designed so the next developer can extend it without refactoring from scratch.', accent: '#F472B6' },
+                { num: '06', title: 'Stay Curious', desc: 'Technology moves fast. I actively follow market standards, industry trends, and the latest platform releases — so I\'m never behind.', accent: '#FBBF24' },
+              ].map((p, i) => (
+                <motion.div key={p.num}
+                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.5 }}
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  className="glass-card rounded-2xl p-6 relative overflow-hidden group"
+                  style={{ transition: 'all 0.3s cubic-bezier(0.16,1,0.3,1)' }}>
+                  <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl"
+                    style={{ background: `linear-gradient(to right, ${p.accent}, transparent)` }} />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{ background: `${p.accent}06` }} />
+                  <span className="text-5xl font-black mb-3 block" style={{ color: p.accent, opacity: 0.4 }}>{p.num}</span>
+                  <p className="text-sm font-bold mb-2" style={{ color: p.accent }}>{p.title}</p>
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)', opacity: 0.75 }}>{p.desc}</p>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </motion.div>

@@ -17,7 +17,7 @@ function WorkspaceScene({ company }: { company: string }) {
 
   return (
     <div className="relative w-full h-72 overflow-hidden rounded-2xl"
-      style={{ background: `linear-gradient(160deg, ${env.wall} 0%, #080810 100%)` }}>
+      style={{ background: 'var(--ink)', border: '1px solid var(--border)' }}>
 
       {/* Grid floor */}
       <div className="absolute inset-0" style={{
@@ -154,9 +154,9 @@ function WorkspaceScene({ company }: { company: string }) {
 
       {/* Label bar */}
       <div className="absolute bottom-0 left-0 right-0 px-4 py-2.5 flex items-center justify-between"
-        style={{ background: `linear-gradient(to top, ${env.wall}ee, transparent)` }}>
+        style={{ background: `linear-gradient(to top, var(--ink) 60%, transparent)` }}>
         <span className="text-xs font-bold tracking-wide" style={{ color: env.accent }}>{env.label}</span>
-        <span className="text-xs text-white/30 tracking-widest uppercase">{env.isOffice ? '🏢 Office' : '🏠 Remote'}</span>
+        <span className="text-xs tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>{env.isOffice ? '🏢 Office' : '🏠 Remote'}</span>
       </div>
     </div>
   );
@@ -467,8 +467,7 @@ export default function WorkExperience() {
           viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-20">
           <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">Career</p>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none"
-              style={{ background: 'linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none heading-gradient">
               Work Experience
             </h2>
             <p className="text-white/40 text-sm md:text-right leading-relaxed whitespace-nowrap">
@@ -501,7 +500,7 @@ export default function WorkExperience() {
                     className="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300"
                     style={activeKey === e.key
                       ? { background: e.accent, color: '#0a0a0a', fontWeight: 700 }
-                      : { background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                      : { background: 'var(--surface)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}>
                     {e.company.split(' ')[0]}
                   </button>
                 ))}
@@ -578,12 +577,12 @@ export default function WorkExperience() {
               }}
               transition={{ type: 'spring', stiffness: 340, damping: 26 }}
               className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar"
-              style={{ background: '#0d0f1a', border: '1px solid rgba(255,255,255,0.08)' }}
+              style={{ background: 'var(--ink)', border: '1px solid var(--border)' }}
               onWheel={(e) => e.stopPropagation()}
             >
               {/* Header */}
               <div className="sticky top-0 backdrop-blur-xl border-b border-white/5 p-6 flex justify-between items-center z-20 rounded-t-3xl"
-                style={{ background: 'rgba(13,15,26,0.92)' }}>
+                style={{ background: 'var(--hero-fade-mobile)' }}>
                 <div className="flex items-center gap-4">
                   {selectedCompany.logo && (
                     <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center overflow-hidden" style={{ border: `1px solid ${selectedCompany.accent}40` }}>
@@ -605,8 +604,8 @@ export default function WorkExperience() {
                   whileHover={{ rotate: 90, scale: 1.1, backgroundColor: 'rgba(255,95,87,0.25)' }}
                   whileTap={{ scale: 0.88 }}
                   transition={{ duration: 0.2 }}
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-white/50 hover:text-white border border-white/10"
-                  style={{ background: 'rgba(255,255,255,0.05)' }}
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-colors border border-white/10 hover:border-white/20 hover:text-[var(--text-primary)]"
+                  style={{ background: 'var(--surface)', color: 'var(--text-muted)' }}
                 >
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                     <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -686,11 +685,11 @@ export default function WorkExperience() {
               }}
               transition={{ type: 'spring', stiffness: 340, damping: 26 }}
               className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar"
-              style={{ background: '#0d0f1a', border: '1px solid rgba(255,255,255,0.08)' }}
+              style={{ background: 'var(--ink)', border: '1px solid var(--border)' }}
               onWheel={(e) => e.stopPropagation()}
             >
               <div className="sticky top-0 backdrop-blur-xl border-b border-white/5 p-6 flex justify-between items-center z-20 rounded-t-3xl"
-                style={{ background: 'rgba(13,15,26,0.92)' }}>
+                style={{ background: 'var(--hero-fade-mobile)' }}>
                 <div>
                   <h3 className="text-2xl font-black text-white mb-1">{selectedProject.name}</h3>
                   <div className="flex flex-wrap gap-3 text-xs font-mono text-white/50">
@@ -704,8 +703,8 @@ export default function WorkExperience() {
                   whileHover={{ rotate: 90, scale: 1.1, backgroundColor: 'rgba(255,95,87,0.25)' }}
                   whileTap={{ scale: 0.88 }}
                   transition={{ duration: 0.2 }}
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-white/50 hover:text-white border border-white/10"
-                  style={{ background: 'rgba(255,255,255,0.05)' }}
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-colors border border-white/10 hover:border-white/20 hover:text-[var(--text-primary)]"
+                  style={{ background: 'var(--surface)', color: 'var(--text-muted)' }}
                 >
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                     <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>

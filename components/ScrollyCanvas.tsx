@@ -72,8 +72,8 @@ export default function ScrollyCanvas() {
     }
   }, []);
 
-  /* ── Preload & Setup GSAP ────────────────────────────── */
-  useGSAP(() => {
+  /* ── Preload & Setup Auto-play ────────────────────────────── */
+  useEffect(() => {
     if (!containerRef.current || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
@@ -83,7 +83,6 @@ export default function ScrollyCanvas() {
     // Preload images
     imagesRef.current = new Array(FRAME_COUNT);
     let loadedCount = 0;
-    void loadedCount;
 
     const render = () => {
       const idx = Math.round(currentFrameObj.current.frame);
@@ -104,31 +103,29 @@ export default function ScrollyCanvas() {
       imagesRef.current[i] = img;
     }
 
-    // ScrollTrigger setup
-    gsap.to(currentFrameObj.current, {
-      frame: FRAME_COUNT - 1,
-      snap: 'frame',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 0.1,
-        onUpdate: render,
-      },
-    });
+    let timer: NodeJS.Timeout;
+    let playing = true;
+    const play = () => {
+      if(!playing) return;
+      currentFrameObj.current.frame = (currentFrameObj.current.frame + 0.35) % FRAME_COUNT;
+      render();
+      timer = setTimeout(play, 33); // roughly 30 fps
+    };
+    play();
 
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
     return () => {
+      playing = false;
+      clearTimeout(timer);
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, { scope: containerRef });
+  }, [resizeCanvas]);
 
   return (
-    <div ref={containerRef} className="relative" style={{ height: '500vh' }}>
-      <div className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden">
+    <div ref={containerRef} className="relative h-[calc(100vh-4rem)]">
+      <div className="relative h-full w-full overflow-hidden">
         {/* Full-canvas — canvas is full width, left panel overlays on top via z-index */}
         <canvas
           ref={canvasRef}

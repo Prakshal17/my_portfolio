@@ -17,14 +17,13 @@ export default function Footer() {
           <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.8 }}>
             <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-6">Get In Touch</p>
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-8"
-              style={{ background: 'linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-              Let&apos;s Connect
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none heading-gradient font-heading">
+              Lets Connect
             </h2>
-            <p className="text-lg text-white/50 max-w-xl mx-auto mb-4 leading-relaxed">
-              Looking forward to a <span className="text-white/70 font-medium">Senior ServiceNow Developer / Associate Consultant</span> role in ITSM &amp; CSM. Open to full-time, consulting, or freelance engagements.
+            <p className="text-lg max-w-xl mx-auto mb-4 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+              Looking forward to a <span className="font-medium" style={{ color: 'var(--text-primary)' }}>Senior ServiceNow Developer / Associate Consultant</span> role in ITSM &amp; CSM. Open to full-time, consulting, or freelance engagements.
             </p>
-            <p className="text-sm text-white/30 mb-12">📍 Muzaffarnagar, UP 251002, India &nbsp;·&nbsp; Open to Relocation</p>
+            <p className="text-sm mb-12" style={{ color: 'var(--text-muted)' }}>📍 Delhi NCR, India &nbsp;·&nbsp; Open to Relocation</p>
 
             {/* Contact cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
@@ -48,8 +47,8 @@ export default function Footer() {
                   ) : (
                     <span className="text-2xl">{c.icon}</span>
                   )}
-                  <span className="text-xs text-white/30 uppercase tracking-widest">{c.label}</span>
-                  <span className="text-sm text-white/70 group-hover:text-white transition-colors font-medium break-all text-center">{c.value}</span>
+                  <span className="text-xs uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>{c.label}</span>
+                  <span className="text-sm transition-colors font-medium break-all text-center" style={{ color: 'var(--text-primary)' }}>{c.value}</span>
                 </motion.a>
               ))}
             </div>
@@ -79,11 +78,11 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
-              <p className="text-xl font-black tracking-tighter accent-text mb-0.5">PJ</p>
-              <p className="text-sm font-semibold text-white/60">Prakshal Jain</p>
+              <p className="text-xl font-black tracking-tighter accent-text mb-0.5 font-heading">PJ</p>
+              <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>Prakshal Jain</p>
               <div className="mt-3 mb-4 space-y-2">
               </div>
-              <p className="text-xs text-white/15 mt-1">📍 Muzaffarnagar, UP 251002, India</p>
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>📍 Delhi NCR, India</p>
             </div>
             <div className="flex flex-wrap gap-5">
               {socialLinks.map(link => (
@@ -97,7 +96,7 @@ export default function Footer() {
             </div>
           </div>
           <div className="mt-8 pt-6 border-t border-white/5 flex flex-col md:flex-row items-start md:items-center justify-end gap-3">
-            <p className="text-xs text-white/15">© {new Date().getFullYear()} Prakshal Jain. All rights reserved.</p>
+            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>© {new Date().getFullYear()} Prakshal Jain. All rights reserved.</p>
           </div>
         </div>
       </footer>

@@ -1,15 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Manrope:wght@200..800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Base Reset ─────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* ═══════════════════════════════════════════════
+   THEME VARIABLES
+   ═══════════════════════════════════════════════ */
+:root {
+  --ink:            #0d0f1a;
+  --surface:        rgba(255,255,255,0.03);
+  --surface-hover:  rgba(255,255,255,0.06);
+  --border:         rgba(255,255,255,0.07);
+  --border-hover:   rgba(96,165,250,0.28);
+  --text-primary:   #f0f4ff;
+  --text-muted:     rgba(240,244,255,0.5);
+  --text-faint:     rgba(240,244,255,0.28);
+  --divider:        rgba(255,255,255,0.06);
+  --card-bg:        rgba(255,255,255,0.03);
+  --card-bg-hover:  rgba(255,255,255,0.06);
+  --hero-fade:      rgba(13, 15, 26, 0.95);
+  --hero-fade-mobile: rgba(13, 15, 26, 0.92);
+  --hero-fade-transparent: rgba(13, 15, 26, 0);
+  --hero-fade-bottom: #0a0a0a;
 }
+
+[data-theme="light"] {
+  --ink:            #f0f4ff;
+  --surface:        rgba(255,255,255,0.8);
+  --surface-hover:  rgba(255,255,255,1);
+  --border:         rgba(59,130,246,0.14);
+  --border-hover:   rgba(59,130,246,0.38);
+  --text-primary:   #111827;
+  --text-muted:     #4b5563;
+  --text-faint:     #9ca3af;
+  --divider:        rgba(59,130,246,0.1);
+  --card-bg:        rgba(255,255,255,0.85);
+  --card-bg-hover:  rgba(255,255,255,1);
+  --hero-fade:      rgba(240, 244, 255, 0.96);
+  --hero-fade-mobile: rgba(240, 244, 255, 0.94);
+  --hero-fade-transparent: rgba(240, 244, 255, 0);
+  --hero-fade-bottom: #f0f4ff;
+}
+
+/* ═══════════════════════════════════════════════
+   BASE RESET
+   ═══════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
   scroll-behavior: smooth;
@@ -18,34 +55,43 @@ html {
 }
 
 body {
-  background-color: #0d0f1a;
-  color: #f0f4ff;
-  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--ink);
+  color: var(--text-primary);
+  font-family: 'Manrope', system-ui, sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* ─── Custom Scrollbar ───────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: #0d0f1a;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(96, 165, 250, 0.5);
-  border-radius: 99px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(96, 165, 250, 0.9);
+.font-heading {
+  font-family: 'Bricolage Grotesque', sans-serif;
 }
 
-/* ─── Selection ──────────────────────────────────────────── */
-::selection {
-  background-color: rgba(96, 165, 250, 0.25);
-  color: #60A5FA;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Bricolage Grotesque', sans-serif;
 }
 
-/* ─── Utility ────────────────────────────────────────────── */
+main, section { overflow-x: hidden; max-width: 100vw; }
+
+/* Cursor */
+html, body { cursor: default; }
+a, button, [role="button"] { cursor: pointer; }
+
+/* ═══════════════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: rgba(96,165,250,0.5); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(96,165,250,0.9); }
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(96,165,250,0.35); border-radius: 99px; }
+
+::selection { background-color: rgba(96,165,250,0.25); color: #60A5FA; }
+
+/* ═══════════════════════════════════════════════
+   UTILITY CLASSES
+   ═══════════════════════════════════════════════ */
 .accent-text {
   background: linear-gradient(135deg, #60A5FA, #818CF8);
   -webkit-background-clip: text;
@@ -53,43 +99,51 @@ body {
   background-clip: text;
 }
 
+.heading-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.75) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(96, 165, 250, 0.25);
-  box-shadow: 0 0 40px rgba(96, 165, 250, 0.08), 0 1px 0 rgba(96, 165, 250, 0.10) inset;
+  background: var(--card-bg-hover);
+  border-color: var(--border-hover);
+  box-shadow: 0 0 40px rgba(96,165,250,0.08), 0 1px 0 rgba(96,165,250,0.10) inset;
 }
 
-/* ─── Custom scrollbar inside modals ────────────────────── */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+/* Skill capsule */
+.skill-capsule {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  cursor: default;
+  transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
 }
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(96, 165, 250, 0.35);
-  border-radius: 99px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(96, 165, 250, 0.7);
+.skill-capsule:hover {
+  transform: translateY(-2px) scale(1.04);
+  border-color: rgba(96,165,250,0.45);
+  box-shadow: 0 0 14px rgba(96,165,250,0.2), 0 4px 12px rgba(0,0,0,0.08);
+  color: var(--text-primary);
+  background: rgba(96,165,250,0.08);
 }
 
-/* ─── 3-D perspective helpers ────────────────────────────── */
-.perspective-1200 {
-  perspective: 1200px;
-}
-.preserve-3d {
-  transform-style: preserve-3d;
-}
+.perspective-1200 { perspective: 1200px; }
+.preserve-3d { transform-style: preserve-3d; }
 
-/* ─── Noise Texture Overlay ──────────────────────────────── */
 .noise::after {
   content: '';
   position: fixed;
@@ -101,26 +155,29 @@ body {
   background-size: 200px;
 }
 
-/* ─── Keyframes ───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   KEYFRAMES
+   ═══════════════════════════════════════════════ */
 @keyframes floatY {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-12px); }
 }
-
 @keyframes shimmer {
   0%   { background-position: -200% center; }
   100% { background-position: 200% center; }
 }
-
 @keyframes gradientShift {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-
 @keyframes pulseRing {
   0%   { transform: scale(1); opacity: 0.6; }
   100% { transform: scale(1.8); opacity: 0; }
+}
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .float-anim { animation: floatY 6s ease-in-out infinite; }
@@ -134,17 +191,149 @@ body {
   animation: shimmer 4s linear infinite;
 }
 
-.gradient-animate {
-  background-size: 200% 200%;
-  animation: gradientShift 6s ease infinite;
-}
+.gradient-animate { background-size: 200% 200%; animation: gradientShift 6s ease infinite; }
 
-/* ─── Card hover lift ─────────────────────────────────────── */
+.marquee-track {
+  display: inline-flex;
+  animation: marquee 24s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
 .card-lift {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
 }
 .card-lift:hover {
   transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 20px 60px rgba(96, 165, 250, 0.15);
+  box-shadow: 0 20px 60px rgba(96,165,250,0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LIGHT MODE — COMPREHENSIVE OVERRIDES
+   Goal: white bg (#f0f4ff), dark navy text, white cards with
+   subtle blue borders — clean and readable like a pro portfolio
+   ═══════════════════════════════════════════════════════════════ */
+
+/* --- Base bg & text --- */
+[data-theme="light"] body { background-color: #f0f4ff; color: #111827; }
+[data-theme="light"] main { background-color: #f0f4ff; }
+
+/* --- Section / page backgrounds --- */
+[data-theme="light"] section { background-color: #f0f4ff !important; }
+[data-theme="light"] .bg-ink { background-color: #f0f4ff !important; }
+
+/* --- All Tailwind white text utilities → dark text --- */
+[data-theme="light"] .text-white     { color: #111827 !important; }
+[data-theme="light"] .text-white\/95 { color: rgba(17,24,39,0.95) !important; }
+[data-theme="light"] .text-white\/90 { color: rgba(17,24,39,0.90) !important; }
+[data-theme="light"] .text-white\/80 { color: rgba(17,24,39,0.80) !important; }
+[data-theme="light"] .text-white\/70 { color: rgba(17,24,39,0.70) !important; }
+[data-theme="light"] .text-white\/65 { color: rgba(17,24,39,0.65) !important; }
+[data-theme="light"] .text-white\/60 { color: rgba(17,24,39,0.60) !important; }
+[data-theme="light"] .text-white\/50 { color: rgba(17,24,39,0.50) !important; }
+[data-theme="light"] .text-white\/45 { color: rgba(17,24,39,0.50) !important; }
+[data-theme="light"] .text-white\/40 { color: rgba(17,24,39,0.45) !important; }
+[data-theme="light"] .text-white\/35 { color: rgba(17,24,39,0.40) !important; }
+[data-theme="light"] .text-white\/30 { color: rgba(17,24,39,0.38) !important; }
+[data-theme="light"] .text-white\/25 { color: rgba(17,24,39,0.32) !important; }
+[data-theme="light"] .text-white\/20 { color: rgba(17,24,39,0.26) !important; }
+[data-theme="light"] .text-white\/15 { color: rgba(17,24,39,0.20) !important; }
+
+/* --- font-mono in light (used for code-like labels) --- */
+[data-theme="light"] .font-mono { color: #4b5563 !important; }
+
+/* --- Borders --- */
+[data-theme="light"] .border-white\/5  { border-color: rgba(59,130,246,0.1) !important; }
+[data-theme="light"] .border-white\/10 { border-color: rgba(59,130,246,0.14) !important; }
+[data-theme="light"] .border-t         { border-color: rgba(59,130,246,0.12) !important; }
+
+/* --- Glass cards → white cards with soft shadow --- */
+[data-theme="light"] .glass-card {
+  background: rgba(255,255,255,0.9) !important;
+  border-color: rgba(59,130,246,0.13) !important;
+  box-shadow: 0 1px 6px rgba(59,130,246,0.07), 0 4px 20px rgba(59,130,246,0.04);
+}
+[data-theme="light"] .glass-card:hover {
+  background: #ffffff !important;
+  border-color: rgba(59,130,246,0.3) !important;
+  box-shadow: 0 4px 24px rgba(59,130,246,0.14) !important;
+}
+
+/* --- Large gradient headings (WebkitTextFillColor: transparent inline) → dark gradient --- */
+[data-theme="light"] h1[style*="WebkitTextFillColor"],
+[data-theme="light"] h2[style*="WebkitTextFillColor"],
+[data-theme="light"] h3[style*="WebkitTextFillColor"],
+[data-theme="light"] div[style*="WebkitTextFillColor"],
+[data-theme="light"] .heading-gradient {
+  background: linear-gradient(135deg, #111827 0%, rgba(17,24,39,0.72) 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* --- Typed text in hero → keep accent blue (readable on light) --- */
+[data-theme="light"] span[style*="WebkitTextFillColor: transparent"] {
+  background: linear-gradient(135deg, #2563eb, #4f46e5) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+}
+
+/* --- Canvas fade layers — swap dark fade to light --- */
+[data-theme="light"] div[style*="transparent, #0a0a0a"] {
+  background: linear-gradient(to bottom, transparent, #f0f4ff) !important;
+}
+[data-theme="light"] div[style*="transparent, rgba(13,15,26"] {
+  background: linear-gradient(to bottom, transparent, #f0f4ff) !important;
+}
+
+/* --- Overlay left/right panels --- */
+[data-theme="light"] div[style*="rgba(13,15,26,0.95) 70%, transparent"] {
+  background: linear-gradient(to right, rgba(240,244,255,0.97) 70%, transparent) !important;
+}
+
+/* --- Shimmer in light mode → dark shimmer --- */
+[data-theme="light"] .shimmer-text {
+  background: linear-gradient(90deg, #2563eb, #111827, #4f46e5, #2563eb) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  animation: shimmer 4s linear infinite !important;
+}
+
+/* --- Skill capsule in light mode --- */
+[data-theme="light"] .skill-capsule {
+  background: rgba(255,255,255,0.9) !important;
+  border-color: rgba(59,130,246,0.15) !important;
+  color: #4b5563 !important;
+}
+[data-theme="light"] .skill-capsule:hover {
+  background: rgba(239,246,255,1) !important;
+  border-color: rgba(59,130,246,0.4) !important;
+  color: #111827 !important;
+  box-shadow: 0 0 14px rgba(59,130,246,0.15) !important;
+}
+
+/* --- Scrollbar in light --- */
+[data-theme="light"] ::-webkit-scrollbar-track { background: #f0f4ff; }
+
+/* ═══════════════════════════════════════════════
+   MOBILE RESPONSIVE
+   ═══════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  .max-w-7xl {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  /* Prevent cards from overflowing on mobile */
+  .grid {
+    overflow-x: hidden;
+  }
+  /* Marquee visible but not breaking layout */
+  .marquee-track {
+    gap: 0;
+  }
 }

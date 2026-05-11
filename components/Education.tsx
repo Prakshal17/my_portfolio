@@ -26,7 +26,11 @@ const educationItems = [
     location: 'Solapur, Maharashtra',
     board: 'Solapur University',
     year: '2017 – 2021',
-    grade: '8.82 CGPA (74.71%)',
+    cgpa: '8.82',
+    cgpaMax: '10',
+    percentage: '74.71%',
+    distinction: 'First Class with Distinction',
+    letterGrade: 'A+',
     accent: '#60A5FA',
     icon: '🎓',
     showCap: true,
@@ -41,7 +45,11 @@ const educationItems = [
     location: 'Muzaffarnagar, Uttar Pradesh',
     board: 'Central Board of Secondary Education (CBSE)',
     year: '2016 – 2017',
-    grade: '63%',
+    cgpa: null,
+    cgpaMax: null,
+    percentage: '63%',
+    distinction: null,
+    letterGrade: null,
     accent: '#818CF8',
     icon: '📘',
     showCap: false,
@@ -56,7 +64,11 @@ const educationItems = [
     location: 'Muzaffarnagar, Uttar Pradesh',
     board: 'Central Board of Secondary Education (CBSE)',
     year: '2014 – 2015',
-    grade: '8.2 CGPA',
+    cgpa: '8.2',
+    cgpaMax: '10',
+    percentage: null,
+    distinction: null,
+    letterGrade: null,
     accent: '#A78BFA',
     icon: '📗',
     showCap: false,
@@ -65,7 +77,9 @@ const educationItems = [
   },
 ];
 
-function EducationCard({ edu, i }: { edu: typeof educationItems[0]; i: number }) {
+type EduItem = typeof educationItems[0];
+
+function EducationCard({ edu, i }: { edu: EduItem; i: number }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -114,12 +128,12 @@ function EducationCard({ edu, i }: { edu: typeof educationItems[0]; i: number })
       </div>
 
       {/* Field */}
-      <h3 className="text-xl font-bold text-white/95 mb-1">{edu.field}</h3>
+      <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>{edu.field}</h3>
 
       {/* Institution */}
-      <p className="text-sm font-semibold text-white/70 mb-0.5">{edu.institution}</p>
-      <p className="text-xs text-white/35 mb-0.5">📍 {edu.location}</p>
-      <p className="text-xs text-white/30 mb-4">{edu.board}</p>
+      <p className="text-sm font-semibold mb-0.5" style={{ color: 'var(--text-muted)' }}>{edu.institution}</p>
+      <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)', opacity: 0.8 }}>📍 {edu.location}</p>
+      <p className="text-xs mb-4" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>{edu.board}</p>
 
       {/* Subjects */}
       <div className="mb-4 flex flex-wrap gap-1.5">
@@ -132,23 +146,67 @@ function EducationCard({ edu, i }: { edu: typeof educationItems[0]; i: number })
       </div>
 
       {edu.description && (
-        <motion.p className="text-sm text-white/40 leading-relaxed mb-4">
+        <motion.p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>
           {edu.description}
         </motion.p>
       )}
 
-      {/* Year + Grade */}
-      <div className="flex items-center justify-between mt-2">
-        <span className="text-xs font-mono text-white/25">{edu.year}</span>
-        <span className="text-sm font-bold px-3 py-1 rounded-full"
-          style={{ background: `${edu.accent}15`, color: edu.accent, border: `1px solid ${edu.accent}30` }}>
-          {edu.grade}
-        </span>
-      </div>
+      {/* ── Grade Block — Bold CGPA + Distinction + A+ ──── */}
+      {edu.cgpa ? (
+        <div className="mt-4 rounded-xl p-4 relative overflow-hidden"
+          style={{ background: `${edu.accent}08`, border: `1px solid ${edu.accent}20` }}>
+          {/* CGPA big bold display */}
+          <div className="flex items-baseline gap-1.5 mb-2">
+            <span className="text-3xl font-black" style={{ color: edu.accent }}>
+              {edu.cgpa}
+            </span>
+            <span className="text-sm font-semibold" style={{ color: `${edu.accent}90` }}>
+              / {edu.cgpaMax} CGPA
+            </span>
+            {edu.percentage && (
+              <span className="ml-2 text-xs font-mono" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>
+                ({edu.percentage})
+              </span>
+            )}
+          </div>
+
+          {/* Distinction & Grade badges */}
+          <div className="flex flex-wrap gap-2">
+            {edu.distinction && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold"
+                style={{ background: `${edu.accent}18`, color: edu.accent, border: `1px solid ${edu.accent}35` }}>
+                🏅 {edu.distinction}
+              </span>
+            )}
+            {edu.letterGrade && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black"
+                style={{ background: 'rgba(52,211,153,0.12)', color: '#34D399', border: '1px solid rgba(52,211,153,0.3)' }}>
+                ⭐ Grade {edu.letterGrade}
+              </span>
+            )}
+          </div>
+        </div>
+      ) : (
+        /* Year + simple grade for non-CGPA cards */
+        <div className="flex items-center justify-between mt-2">
+          <span className="text-xs font-mono" style={{ color: 'var(--text-muted)', opacity: 0.5 }}>{edu.year}</span>
+          <span className="text-sm font-bold px-3 py-1 rounded-full"
+            style={{ background: `${edu.accent}15`, color: edu.accent, border: `1px solid ${edu.accent}30` }}>
+            {edu.percentage}
+          </span>
+        </div>
+      )}
+
+      {/* Year for CGPA cards */}
+      {edu.cgpa && (
+        <p className="text-xs font-mono mt-3" style={{ color: 'var(--text-muted)', opacity: 0.4 }}>
+          Graduated {edu.year.split('–')[1].trim()}
+        </p>
+      )}
 
       {/* Hover hint for BE card */}
       {edu.showCap && !hovered && (
-        <p className="absolute bottom-3 right-4 text-xs text-white/15">hover for 🎓</p>
+        <p className="absolute bottom-3 right-4 text-xs" style={{ color: 'var(--text-muted)', opacity: 0.25 }}>hover for 🎓</p>
       )}
 
       <div className="absolute bottom-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -159,17 +217,16 @@ function EducationCard({ edu, i }: { edu: typeof educationItems[0]; i: number })
 
 export default function Education() {
   return (
-    <section id="education" className="relative bg-ink py-32 px-6 md:px-12 lg:px-20 border-t border-white/5">
+    <section id="education" className="relative bg-ink py-32 px-6 md:px-12 lg:px-20 border-t" style={{ borderColor: 'var(--border)' }}>
       <div className="max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-16">
           <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">Background</p>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none"
-              style={{ background: 'linear-gradient(135deg, #fff 0%, rgba(240,244,255,0.6) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none heading-gradient">
               Education
             </h2>
-            <p className="text-white/35 text-sm">Hover over the BE card to see the graduation cap ✨</p>
+            <p className="text-sm" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>Hover over the BE card to see the graduation cap ✨</p>
           </div>
           <div className="mt-8 h-px bg-gradient-to-r from-accent/40 via-white/10 to-transparent" />
         </motion.div>

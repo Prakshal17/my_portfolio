@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
 if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
@@ -97,14 +97,14 @@ function Tag({ label, accent, delay }: { label: string; accent: string; delay: n
 function LeftPanel({ section }: { section: number }) {
   const panels = [
     // 0: Hero
-    <motion.div key="l0" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4">
+    <motion.div key="l0" initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -60 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4">
       <motion.span initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="inline-flex items-center gap-2 text-[10px] tracking-[0.35em] uppercase font-semibold" style={{ color: '#60A5FA' }}>
         <span className="w-5 h-px" style={{ background: '#60A5FA' }} />
         ServiceNow Developer
       </motion.span>
       <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
         <div className="text-3xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-white">Hi, I&apos;m</div>
-        <div className="text-3xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight" style={{ background: 'linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.75) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Prakshal</div>
+        <div className="text-3xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight heading-gradient">Prakshal</div>
       </motion.h1>
       <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="text-xs md:text-sm text-white/50 leading-relaxed max-w-xs pr-4">
         4+ years IT experience. 3+ years on ServiceNow platform. ITSM, CSM, Client/Server side scripting, Now Mobile Customization and Workspace, Portals, Data Migration and Integration, Virtual Agent, and Performance Analytics.
@@ -118,10 +118,10 @@ function LeftPanel({ section }: { section: number }) {
     </motion.div>,
 
     // 1: What I do
-    <motion.div key="l1" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4">
+    <motion.div key="l1" initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -60 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4" style={{ willChange: "transform, opacity" }}>
       <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-[10px] tracking-[0.35em] uppercase font-semibold" style={{ color: '#60A5FA' }}>What I Do</motion.span>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-2xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
-        <span className="text-white">Your consultant<br />for </span>
+        <span style={{ color: 'var(--text-primary)' }}>Your consultant<br />for </span>
         <TypedText words={['ServiceNow.', 'ITSM.', 'CSM.', 'Flow Designer.', 'Automation.']} />
       </motion.div>
       <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="text-xs text-white/45 leading-relaxed max-w-[200px]">
@@ -130,10 +130,10 @@ function LeftPanel({ section }: { section: number }) {
     </motion.div>,
 
     // 2: Philosophy
-    <motion.div key="l2" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4">
+    <motion.div key="l2" initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -60 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4" style={{ willChange: "transform, opacity" }}>
       <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-[10px] tracking-[0.35em] uppercase font-semibold" style={{ color: '#818CF8' }}>My Stack</motion.span>
-      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-2xl md:text-4xl font-black text-white leading-tight">
-        Automate the<br />
+      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-2xl md:text-4xl font-black leading-tight">
+        <span style={{ color: 'var(--text-primary)' }}>Automate the<br /></span>
         <span style={{ background: 'linear-gradient(135deg,#818CF8,#60A5FA)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>enterprise.</span>
       </motion.div>
       <div className="flex flex-wrap gap-1.5 max-w-[200px]">
@@ -144,10 +144,10 @@ function LeftPanel({ section }: { section: number }) {
     </motion.div>,
 
     // 3: CTA
-    <motion.div key="l3" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4">
+    <motion.div key="l3" initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -60 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4" style={{ willChange: "transform, opacity" }}>
       <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-[10px] tracking-[0.35em] uppercase font-semibold" style={{ color: '#34D399' }}>Let&apos;s Connect</motion.span>
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-2xl md:text-4xl font-black leading-tight">
-        <span className="text-white">Let&apos;s build<br /></span>
+        <span style={{ color: 'var(--text-primary)' }}>Let&apos;s build<br /></span>
         <span style={{ background: 'linear-gradient(135deg,#60A5FA,#34D399)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>something.</span>
       </motion.div>
       {/* Contact links - card style with glow hover */}
@@ -200,7 +200,7 @@ function LeftPanel({ section }: { section: number }) {
 function RightPanel({ section }: { section: number }) {
   const panels = [
     // 0: Stats + scroll
-    <motion.div key="r0" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-end gap-4">
+    <motion.div key="r0" initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -60 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-end gap-4" style={{ willChange: "transform, opacity" }}>
       <div className="flex flex-col gap-2">
         {[
           { v: '3+', l: 'Yrs ServiceNow', accent: '#60A5FA' },
@@ -208,18 +208,10 @@ function RightPanel({ section }: { section: number }) {
           { v: '3×', l: 'Certified', accent: '#34D399' },
         ].map((s, i) => <Stat key={s.l} v={s.v} l={s.l} accent={s.accent} delay={0.2 + i * 0.1} />)}
       </div>
-      {/* Scroll hint */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="flex flex-col items-center gap-1 mt-2">
-        <span className="text-[9px] tracking-[0.4em] uppercase text-white/25">Scroll</span>
-        <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-4 h-7 rounded-full border border-white/15 flex items-start justify-center pt-1">
-          <div className="w-0.5 h-1.5 bg-white/30 rounded-full" />
-        </motion.div>
-      </motion.div>
     </motion.div>,
 
     // 1: Impact metrics
-    <motion.div key="r1" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-end gap-3">
+    <motion.div key="r1" initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -60 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-end gap-3" style={{ willChange: "transform, opacity" }}>
       <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-[10px] tracking-widest uppercase text-white/30">Impact</motion.span>
       {[
         { v: '60–70%', l: 'Agent effort cut', accent: '#60A5FA' },
@@ -230,7 +222,7 @@ function RightPanel({ section }: { section: number }) {
     </motion.div>,
 
     // 2: Certs & awards
-    <motion.div key="r2" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-end gap-3">
+    <motion.div key="r2" initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -60 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-end gap-3" style={{ willChange: "transform, opacity" }}>
       <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-[10px] tracking-widest uppercase text-white/30">Credentials</motion.span>
       {[
         { emoji: '🏅', label: 'CSA Certified', accent: '#60A5FA' },
@@ -250,11 +242,11 @@ function RightPanel({ section }: { section: number }) {
     </motion.div>,
 
     // 3: CTA button + open to work
-    <motion.div key="r3" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-end gap-4">
+    <motion.div key="r3" initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -60 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-end gap-4" style={{ willChange: "transform, opacity" }}>
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: 'rgba(74,222,128,0.1)', border: '1px solid rgba(74,222,128,0.25)' }}>
-        <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-        <span className="text-xs text-green-300">Open to Opportunities</span>
+        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)' }}>
+        <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#10B981' }} />
+        <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Open to Opportunities</span>
       </motion.div>
       <motion.a href="#experience" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.5 }}
@@ -280,18 +272,12 @@ export default function Overlay() {
 
   const peaks = [0.05, 0.35, 0.65, 0.90];
 
-  useGSAP(() => {
-    if (!containerRef.current) return;
-    peaks.forEach((peak, i) => {
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: `${(peak - 0.16) * 100}% top`,
-        end: `${(peak + 0.16) * 100}% top`,
-        onEnter: () => setActive(i),
-        onEnterBack: () => setActive(i),
-      });
-    });
-  }, { scope: containerRef });
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActive((prev) => (prev + 1) % 4);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
   // Random particles
   const particles = Array.from({ length: 18 }, (_, i) => ({
@@ -302,26 +288,30 @@ export default function Overlay() {
   }));
 
   return (
-    <div ref={containerRef} className="absolute inset-0 pointer-events-none" style={{ height: '500vh', top: 0 }}>
-      <div className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden">
+    <div ref={containerRef} className="absolute inset-0 pointer-events-none">
+      <div className="relative h-[calc(100vh-4rem)] w-full overflow-hidden">
 
         {/* Particles */}
         <div className="absolute inset-0">
           {particles.map(p => <Particle key={p.id} {...p} />)}
         </div>
 
+        {/* Top fade for Navbar */}
+        <div className="absolute top-0 left-0 right-0 h-32 pointer-events-none z-10"
+          style={{ background: 'linear-gradient(to top, var(--hero-fade-transparent), var(--hero-fade-bottom))' }} />
+
         {/* Bottom fade */}
         <div className="absolute bottom-0 left-0 right-0 h-36 pointer-events-none z-10"
-          style={{ background: 'linear-gradient(to bottom, transparent, #0a0a0a)' }} />
+          style={{ background: 'linear-gradient(to bottom, var(--hero-fade-transparent), var(--hero-fade-bottom))' }} />
 
         {/* ── MOBILE: stacked top + bottom ─────────────────── */}
         <div className="md:hidden absolute inset-0 flex flex-col justify-between pointer-events-auto z-20 px-5 pt-6 pb-20">
           {/* Top area: name/tag */}
-          <div style={{ background: 'linear-gradient(to bottom, rgba(13,15,26,0.92) 60%, transparent)' }} className="pb-6">
+          <div style={{ background: 'linear-gradient(to bottom, var(--hero-fade-mobile) 60%, var(--hero-fade-transparent))' }} className="pb-6">
             <LeftPanel section={active} />
           </div>
           {/* Bottom area: stats/cta */}
-          <div style={{ background: 'linear-gradient(to top, rgba(13,15,26,0.92) 60%, transparent)' }} className="pt-6 flex justify-end">
+          <div style={{ background: 'linear-gradient(to top, var(--hero-fade-mobile) 60%, var(--hero-fade-transparent))' }} className="pt-6 flex justify-end">
             <RightPanel section={active} />
           </div>
         </div>
@@ -330,30 +320,74 @@ export default function Overlay() {
         <div className="hidden md:flex absolute inset-0 items-center justify-between pointer-events-auto z-20">
           {/* LEFT */}
           <div className="w-64 lg:w-80 h-full flex flex-col justify-center pl-8 lg:pl-14"
-            style={{ background: 'linear-gradient(to right, rgba(13,15,26,0.95) 70%, transparent)' }}>
+            style={{ background: 'linear-gradient(to right, var(--hero-fade) 70%, var(--hero-fade-transparent))' }}>
             <LeftPanel section={active} />
           </div>
 
           {/* RIGHT */}
           <div className="w-56 lg:w-72 h-full flex flex-col justify-center pr-8 lg:pr-14 items-end"
-            style={{ background: 'linear-gradient(to left, rgba(13,15,26,0.95) 70%, transparent)' }}>
+            style={{ background: 'linear-gradient(to left, var(--hero-fade) 70%, var(--hero-fade-transparent))' }}>
             <RightPanel section={active} />
           </div>
         </div>
 
         {/* Progress dots */}
-        <div className="absolute right-3 md:right-5 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-30 pointer-events-auto">
+        <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-row items-center gap-2.5 z-30 pointer-events-auto">
           {peaks.map((_, i) => (
             <motion.button key={i}
-              onClick={() => { window.scrollTo({ top: peaks[i] * 5 * window.innerHeight, behavior: 'smooth' }); }}
-              animate={{ scale: active === i ? 1 : 0.55, opacity: active === i ? 1 : 0.3 }}
-              whileHover={{ scale: 0.85, opacity: 0.7 }}
-              className="w-1.5 h-1.5 rounded-full"
-              style={{ background: active === i ? '#60A5FA' : 'rgba(255,255,255,0.5)' }} />
+              onClick={() => setActive(i)}
+              animate={{ 
+                width: active === i ? 24 : 6,
+                opacity: active === i ? 1 : 0.3 
+              }}
+              whileHover={{ opacity: 0.7 }}
+              className="h-1.5 rounded-full transition-colors duration-300"
+              style={{ background: active === i ? '#60A5FA' : 'var(--text-primary)' }} />
           ))}
         </div>
 
+        {/* Persistent Scroll Hint (Bottom Center) - Fades on Scroll */}
+        <ScrollHint />
       </div>
     </div>
+  );
+}
+
+function ScrollHint() {
+  const { scrollYProgress } = useScroll();
+  const opacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.05], [1, 0.8]);
+  const y = useTransform(scrollYProgress, [0, 0.05], [0, 20]);
+
+  return (
+    <motion.div 
+      style={{ opacity, scale, y }}
+      className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 pointer-events-none"
+    >
+      <span 
+        className="text-[10px] tracking-[0.5em] uppercase font-bold" 
+        style={{ color: 'var(--text-muted)' }}
+      >
+        Scroll
+      </span>
+      <div 
+        className="w-6 h-10 rounded-full border-2 flex items-start justify-center pt-2" 
+        style={{ borderColor: 'var(--border)', background: 'var(--surface)' }}
+      >
+        <motion.div 
+          animate={{ 
+            y: [0, 12, 0],
+            opacity: [1, 0.2, 1]
+          }} 
+          transition={{ 
+            duration: 1.5, 
+            repeat: Infinity, 
+            ease: 'easeInOut' 
+          }}
+          className="w-1 h-2 rounded-full" 
+          style={{ background: '#60A5FA' }} 
+        />
+      </div>
+    </motion.div>
   );
 }

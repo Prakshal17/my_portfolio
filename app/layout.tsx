@@ -28,6 +28,7 @@ export const metadata: Metadata = {
 
 import { Analytics } from '@vercel/analytics/react';
 import SmoothScroll from '@/components/SmoothScroll';
+import { ThemeProvider } from '@/components/Navbar';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -37,7 +38,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="bg-ink text-white antialiased">
-        <SmoothScroll>{children}</SmoothScroll>
+        <ThemeProvider>
+          <SmoothScroll>{children}</SmoothScroll>
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>
