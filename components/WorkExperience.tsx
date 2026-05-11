@@ -423,14 +423,25 @@ export default function WorkExperience() {
   const [selectedCompany, setSelectedCompany] = useState<any>(null);
   const [selectedProject, setSelectedProject] = useState<any>(null);
 
-  // Lock scroll when modal is open
+  // Handle browser back button to close modals
   useEffect(() => {
+    const handlePopState = () => {
+      if (selectedProject) setSelectedProject(null);
+      else if (selectedCompany) setSelectedCompany(null);
+    };
+
     if (selectedCompany || selectedProject) {
+      window.history.pushState({ modal: true }, '');
+      window.addEventListener('popstate', handlePopState);
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-    return () => { document.body.style.overflow = 'unset'; };
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      document.body.style.overflow = 'unset';
+    };
   }, [selectedCompany, selectedProject]);
 
   // Spotlight Effect State
@@ -564,31 +575,21 @@ export default function WorkExperience() {
       {/* Company Detail Modal */}
       <AnimatePresence mode="wait">
         {selectedCompany && (
-          <div className="fixed inset-0 z-40 flex items-center justify-center p-4 sm:p-6">
+          <div className="fixed inset-0 z-40 overflow-y-auto flex items-start justify-center p-4 sm:p-8 md:p-12">
             {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-black/75 backdrop-blur-xl"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/85 backdrop-blur-xl"
               onClick={() => setSelectedCompany(null)}
             />
-            {/* Modal — smooth spring open, shrink-fade close */}
+            {/* Modal */}
             <motion.div
-              initial={{ scale: 0.90, opacity: 0, filter: 'blur(12px)', y: 32 }}
-              animate={{ scale: 1,    opacity: 1, filter: 'blur(0px)',  y: 0 }}
-              exit={{
-                scale: 0.88,
-                opacity: 0,
-                filter: 'blur(14px)',
-                y: 20,
-                transition: { duration: 0.3, ease: [0.4, 0, 1, 1] },
-              }}
-              transition={{ type: 'spring', stiffness: 340, damping: 26 }}
-              className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar overscroll-contain touch-auto"
-              style={{ background: 'var(--ink)', border: '1px solid var(--border)', WebkitOverflowScrolling: 'touch' }}
-              onWheel={(e) => e.stopPropagation()}
+              initial={{ scale: 0.92, opacity: 0, y: 40 }}
+              animate={{ scale: 1,    opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+              className="relative w-full max-w-4xl bg-ink border border-white/10 rounded-[2.5rem] shadow-2xl z-10 overflow-hidden my-auto"
+              style={{ background: 'var(--ink)' }}
             >
               {/* Header */}
               <div className="sticky top-0 backdrop-blur-xl border-b border-white/5 p-6 flex justify-between items-center z-20 rounded-t-3xl"
@@ -672,31 +673,21 @@ export default function WorkExperience() {
       {/* Project Detail Modal */}
       <AnimatePresence mode="wait">
         {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+          <div className="fixed inset-0 z-50 overflow-y-auto flex items-start justify-center p-4 sm:p-8 md:p-20">
             {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-black/80 backdrop-blur-xl"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/90 backdrop-blur-2xl"
               onClick={() => setSelectedProject(null)}
             />
             {/* Modal */}
             <motion.div
-              initial={{ scale: 0.90, opacity: 0, filter: 'blur(12px)', y: 32 }}
-              animate={{ scale: 1,    opacity: 1, filter: 'blur(0px)',  y: 0 }}
-              exit={{
-                scale: 0.88,
-                opacity: 0,
-                filter: 'blur(14px)',
-                y: 20,
-                transition: { duration: 0.3, ease: [0.4, 0, 1, 1] },
-              }}
-              transition={{ type: 'spring', stiffness: 340, damping: 26 }}
-              className="relative w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-3xl shadow-2xl z-10 custom-scrollbar overscroll-contain touch-auto"
-              style={{ background: 'var(--ink)', border: '1px solid var(--border)', WebkitOverflowScrolling: 'touch' }}
-              onWheel={(e) => e.stopPropagation()}
+              initial={{ scale: 0.92, opacity: 0, y: 40 }}
+              animate={{ scale: 1,    opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+              className="relative w-full max-w-3xl bg-ink border border-white/10 rounded-[2.5rem] shadow-2xl z-10 overflow-hidden my-auto"
+              style={{ background: 'var(--ink)' }}
             >
               <div className="sticky top-0 backdrop-blur-xl border-b border-white/5 p-6 flex justify-between items-center z-20 rounded-t-3xl"
                 style={{ background: 'var(--hero-fade-mobile)' }}>

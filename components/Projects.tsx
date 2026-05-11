@@ -127,14 +127,24 @@ function ProjectCard({
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<any>(null);
 
-  // Lock scroll when modal is open
+  // Handle browser back button to close modal
   useEffect(() => {
+    const handlePopState = () => {
+      if (selectedProject) setSelectedProject(null);
+    };
+
     if (selectedProject) {
+      window.history.pushState({ modal: true }, '');
+      window.addEventListener('popstate', handlePopState);
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-    return () => { document.body.style.overflow = 'unset'; };
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      document.body.style.overflow = 'unset';
+    };
   }, [selectedProject]);
 
   return (
@@ -174,19 +184,21 @@ export default function Projects() {
       {/* Detail Modal */}
       <AnimatePresence>
         {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+          <div className="fixed inset-0 z-50 overflow-y-auto flex items-start justify-center p-4 sm:p-8 md:p-12">
+            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+              className="fixed inset-0 bg-black/85 backdrop-blur-xl"
               onClick={() => setSelectedProject(null)}
             />
+            {/* Modal */}
             <motion.div
-              initial={{ scale: 0.9, y: 40, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.95, y: 20, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-              className="relative w-full max-w-3xl bg-ink border border-white/10 rounded-2xl shadow-2xl z-10 overflow-y-auto max-h-[92vh] custom-scrollbar overscroll-contain touch-auto"
-              style={{ background: 'var(--ink)', WebkitOverflowScrolling: 'touch' }}
+              initial={{ scale: 0.92, opacity: 0, y: 40 }}
+              animate={{ scale: 1,    opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+              className="relative w-full max-w-3xl bg-ink border border-white/10 rounded-[2.5rem] shadow-2xl z-10 overflow-hidden my-auto"
+              style={{ background: 'var(--ink)' }}
             >
               <div className="border-b border-white/5 p-6 flex justify-between items-start bg-white/5">
                 <div>
