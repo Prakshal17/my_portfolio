@@ -8,6 +8,12 @@ export default function Resume() {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-5" style={{ background: '#60A5FA' }} />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full blur-3xl opacity-5" style={{ background: '#A78BFA' }} />
+        
+        {/* Technical decorative elements */}
+        <div className="absolute top-40 left-[10%] text-7xl opacity-10 blur-[1px] transform rotate-12 transition-opacity">⚙️</div>
+        <div className="absolute bottom-40 left-[15%] text-6xl opacity-10 blur-[2px] transform -rotate-12 transition-opacity">💻</div>
+        <div className="absolute top-1/3 right-[10%] text-8xl opacity-10 blur-[1px] transform rotate-45 transition-opacity">🚀</div>
+        <div className="absolute bottom-32 right-[15%] text-6xl opacity-5 blur-[1px] transition-opacity">📄</div>
       </div>
 
       <div className="relative max-w-5xl mx-auto">
@@ -15,8 +21,8 @@ export default function Resume() {
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-12 text-center">
           <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-3">Curriculum Vitae</p>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none heading-gradient">
-            My Resume
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8 text-center" style={{ color: 'var(--text-primary)' }}>
+            MY RESUME
           </h2>
         </motion.div>
 
@@ -73,3 +79,4 @@ export default function Resume() {
     </section>
   );
 }
+

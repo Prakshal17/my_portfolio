@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from 'framer-motion';
+import BackgroundDecorations from '@/components/BackgroundDecorations';
 
 /* ─── Workspace Scene (rich CSS 3D) ─────────────────────── */
 const envConfig: Record<string, { accent: string; wall: string; floor: string; isOffice: boolean; label: string; screen: string }> = {
@@ -348,10 +349,10 @@ function ExperienceCard({ exp, i, active, onSelect, onCompanyClick }: {
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
           <div className="flex items-center gap-3">
             <span className="text-xs font-mono font-bold" style={{ color: exp.accent }}>{exp.index}</span>
-            <span className="text-xs text-white/30 tracking-widest uppercase">{exp.category}</span>
+            <span className="text-xs text-[var(--text-primary)]/30 tracking-widest uppercase">{exp.category}</span>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs text-white/20 font-mono">{exp.period}</span>
+            <span className="text-xs text-[var(--text-primary)]/20 font-mono">{exp.period}</span>
             <span className="text-xs px-2 py-0.5 rounded-full"
               style={{ background: `${exp.accent}15`, color: `${exp.accent}CC`, border: `1px solid ${exp.accent}30` }}>
               {exp.type}
@@ -374,21 +375,21 @@ function ExperienceCard({ exp, i, active, onSelect, onCompanyClick }: {
               />
             </div>
           )}
-          <h3 className="text-xl md:text-2xl font-bold text-white">{exp.company}</h3>
+          <h3 className="text-xl md:text-2xl font-bold text-[var(--text-primary)]">{exp.company}</h3>
         </div>
         <p className="text-sm font-semibold mb-1" style={{ color: exp.accent }}>{exp.role}</p>
-        <p className="text-xs text-white/30 mb-1">📍 {exp.location}</p>
+        <p className="text-xs text-[var(--text-primary)]/30 mb-1">📍 {exp.location}</p>
         {'client' in exp && exp.client && (
-          <p className="text-xs text-white/50 mb-3 font-medium">🏦 Client: {exp.client}</p>
+          <p className="text-xs text-[var(--text-primary)]/50 mb-3 font-medium">🏦 Client: {exp.client}</p>
         )}
-        <p className="text-sm text-white/50 leading-relaxed mb-4">{exp.summary}</p>
+        <p className="text-sm text-[var(--text-primary)]/50 leading-relaxed mb-4">{exp.summary}</p>
 
         {/* Impact metrics */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
           {exp.impact.map(({ metric, label }) => (
             <div key={label} className="rounded-lg p-2 text-center" style={{ background: `${exp.accent}08`, border: `1px solid ${exp.accent}20` }}>
               <div className="text-sm font-black" style={{ color: exp.accent }}>{metric}</div>
-              <div className="text-xs text-white/30 leading-tight mt-0.5">{label}</div>
+              <div className="text-xs text-[var(--text-primary)]/30 leading-tight mt-0.5">{label}</div>
             </div>
           ))}
         </div>
@@ -480,75 +481,38 @@ export default function WorkExperience() {
   return (
     <section id="experience" className="relative bg-ink py-32 px-6 md:px-12 lg:px-20">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <BackgroundDecorations 
+          iconNames={['Briefcase', 'Building', 'Globe', 'Briefcase', 'Building', 'Globe']} 
+          positions={[
+            'top-[10%] -left-10 lg:-left-20',
+            'top-[25%] -right-10 lg:-right-20',
+            'top-[45%] -left-5 lg:-left-15',
+            'top-[65%] -right-5 lg:-right-15',
+            'top-[85%] -left-10 lg:-left-20',
+            'bottom-[5%] -right-10 lg:-right-20'
+          ]} 
+        />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-5" style={{ background: '#60A5FA' }} />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full blur-3xl opacity-5" style={{ background: '#A78BFA' }} />
       </div>
       <div className="relative max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-20">
-          <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">Career</p>
+          <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">Timeline</p>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none heading-gradient">
-              Work Experience
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8" style={{ color: 'var(--text-primary)' }}>
+              WORK EXPERIENCE
             </h2>
-            <p className="text-white/40 text-sm md:text-right leading-relaxed whitespace-nowrap">
-              3+ yrs ServiceNow · 4+ yrs IT · 8+ Clients · Serving Notice Period
+            <p className="text-[var(--text-primary)]/40 text-sm md:text-right leading-relaxed whitespace-nowrap">
+              3+ yrs ServiceNow · 4+ yrs IT · 8+ Clients
             </p>
           </div>
           <div className="mt-10 h-px bg-gradient-to-r from-accent/40 via-white/10 to-transparent" />
         </motion.div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-5 gap-10">
-          {/* Sticky 3D workspace */}
-          <div className="xl:col-span-2">
-            <div className="xl:sticky xl:top-28">
-              <p className="text-xs tracking-[0.3em] uppercase text-white/30 font-medium mb-3">Live Workspace</p>
-              <AnimatePresence mode="wait">
-                <motion.div key={activeKey}
-                  initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.35 }}>
-                  <WorkspaceScene company={activeKey} />
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Company pills */}
-              <div className="flex flex-wrap gap-2 mt-3">
-                {experiences.map(e => (
-                  <button key={e.key} onClick={() => {
-                    setActiveKey(e.key);
-                    document.getElementById(e.id)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  }}
-                    className="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300"
-                    style={activeKey === e.key
-                      ? { background: e.accent, color: '#0a0a0a', fontWeight: 700 }
-                      : { background: 'var(--surface)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}>
-                    {e.company.split(' ')[0]}
-                  </button>
-                ))}
-              </div>
-
-              {/* Stats */}
-              <h3 className="text-xs tracking-[0.3em] uppercase text-white/30 font-medium mt-8 mb-3">ServiceNow Impact</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {[['8+','Clients Served'],['90%','Ticket Automation'],['70%','Time Reduced'],['100+','Update Sets Moved']].map(([v,l]) => (
-                  <div key={l} className="glass-card rounded-xl p-4">
-                    <div className="text-xl font-black accent-text mb-0.5">{v}</div>
-                    <div className="text-xs text-white/35 uppercase tracking-wider">{l}</div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Client appreciation callout */}
-              <div className="mt-5 glass-card rounded-xl p-4 border-l-2" style={{ borderLeftColor: '#60A5FA' }}>
-                <p className="text-xs text-white/50 leading-relaxed">
-                  🏅 <span className="text-white/70 font-medium">Client Appreciation Awards</span> received for exceptional problem-solving skills and proactive client interaction across multiple engagements.
-                </p>
-              </div>
-            </div>
-          </div>
 
           {/* Experience cards */}
-          <div className="xl:col-span-3 flex flex-col gap-5">
+          <div className="max-w-4xl mx-auto flex flex-col gap-5">
             {experiences.map((exp, i) => (
               <ExperienceCard key={exp.id} exp={exp} i={i}
                 active={activeKey === exp.key}
@@ -564,12 +528,11 @@ export default function WorkExperience() {
                 Full LinkedIn Profile ↗
               </a>
               <a id="cta-phone" href="tel:+918171000426"
-                className="px-8 py-4 rounded-full font-semibold text-sm tracking-wide border border-white/10 text-white/70 hover:border-white/25 hover:text-white transition-all duration-300 text-center">
+                className="px-8 py-4 rounded-full font-semibold text-sm tracking-wide border border-white/10 text-[var(--text-primary)]/70 hover:border-white/25 hover:text-[var(--text-primary)] transition-all duration-300 text-center">
                 📞 +91-8171000426
               </a>
             </div>
           </div>
-        </div>
       </div>
 
       {/* Company Detail Modal */}
@@ -602,8 +565,8 @@ export default function WorkExperience() {
                     </div>
                   )}
                   <div>
-                    <h3 className="text-2xl font-black text-white mb-1">{selectedCompany.company}</h3>
-                    <div className="flex flex-wrap gap-3 text-xs font-mono text-white/50">
+                    <h3 className="text-2xl font-black text-[var(--text-primary)] mb-1">{selectedCompany.company}</h3>
+                    <div className="flex flex-wrap gap-3 text-xs font-mono text-[var(--text-primary)]/50">
                       <span style={{ color: selectedCompany.accent }}>{selectedCompany.role}</span>
                       <span>📍 {selectedCompany.location}</span>
                       <span>⏱ {selectedCompany.period}</span>
@@ -639,7 +602,7 @@ export default function WorkExperience() {
                   <p className="text-xs tracking-widest uppercase font-bold mb-3" style={{ color: selectedCompany.accent }}>Responsibilities &amp; Impact</p>
                   <ul className="space-y-3">
                     {selectedCompany.bullets.map((b: string, idx: number) => (
-                      <li key={idx} className="flex gap-3 text-sm text-white/70 leading-relaxed transition-colors group-hover:text-white/90">
+                      <li key={idx} className="flex gap-3 text-sm text-[var(--text-primary)]/70 leading-relaxed transition-colors group-hover:text-[var(--text-primary)]/90">
                         <span className="mt-0.5 font-bold" style={{ color: selectedCompany.accent }}>▸</span> {b}
                       </li>
                     ))}
@@ -655,9 +618,9 @@ export default function WorkExperience() {
                           style={{ background: `${selectedCompany.accent}06`, borderColor: `${selectedCompany.accent}20` }}
                           onClick={() => setSelectedProject(proj)}
                           whileHover={{ scale: 1.02 }}>
-                          <h4 className="text-sm font-bold text-white/90 mb-2">{proj.name}</h4>
-                          <p className="text-xs text-white/50 mb-3 line-clamp-2 leading-relaxed">{proj.desc}</p>
-                          <div className="inline-flex items-center text-xs font-bold gap-1 text-white/70 hover:text-white transition-colors">
+                          <h4 className="text-sm font-bold text-[var(--text-primary)]/90 mb-2">{proj.name}</h4>
+                          <p className="text-xs text-[var(--text-primary)]/50 mb-3 line-clamp-2 leading-relaxed">{proj.desc}</p>
+                          <div className="inline-flex items-center text-xs font-bold gap-1 text-[var(--text-primary)]/70 hover:text-[var(--text-primary)] transition-colors">
                             Open project details <span style={{ color: selectedCompany.accent }}>↗</span>
                           </div>
                         </motion.div>
@@ -694,8 +657,8 @@ export default function WorkExperience() {
               <div className="sticky top-0 backdrop-blur-xl border-b border-white/5 p-6 flex justify-between items-center z-20 rounded-t-3xl"
                 style={{ background: 'var(--hero-fade-mobile)' }}>
                 <div>
-                  <h3 className="text-2xl font-black text-white mb-1">{selectedProject.name}</h3>
-                  <div className="flex flex-wrap gap-3 text-xs font-mono text-white/50">
+                  <h3 className="text-2xl font-black text-[var(--text-primary)] mb-1">{selectedProject.name}</h3>
+                  <div className="flex flex-wrap gap-3 text-xs font-mono text-[var(--text-primary)]/50">
                     <span>🏢 {selectedProject.client}</span>
                     <span>⏱ {selectedProject.period}</span>
                   </div>
@@ -718,12 +681,12 @@ export default function WorkExperience() {
               <div className="p-6 space-y-8">
                 <div>
                   <p className="text-xs tracking-widest uppercase text-accent font-bold mb-2">Role</p>
-                  <p className="text-sm text-white/80">{selectedProject.role}</p>
+                  <p className="text-sm text-[var(--text-primary)]/80">{selectedProject.role}</p>
                 </div>
                 
                 <div>
                   <p className="text-xs tracking-widest uppercase text-accent font-bold mb-2">Description</p>
-                  <p className="text-sm text-white/70 leading-relaxed">{selectedProject.desc}</p>
+                  <p className="text-sm text-[var(--text-primary)]/70 leading-relaxed">{selectedProject.desc}</p>
                 </div>
 
                 {selectedProject.bullets && selectedProject.bullets.length > 0 && (
@@ -731,7 +694,7 @@ export default function WorkExperience() {
                     <p className="text-xs tracking-widest uppercase text-accent font-bold mb-3">Key Responsibilities</p>
                     <ul className="space-y-2">
                       {selectedProject.bullets.map((b: string, idx: number) => (
-                        <li key={idx} className="flex gap-2 text-sm text-white/60 leading-relaxed">
+                        <li key={idx} className="flex gap-2 text-sm text-[var(--text-primary)]/60 leading-relaxed">
                           <span className="text-accent mt-0.5">▸</span> {b}
                         </li>
                       ))}
@@ -742,19 +705,19 @@ export default function WorkExperience() {
                 {selectedProject.achievement && (
                   <div className="bg-accent/10 border border-accent/20 rounded-xl p-4">
                     <p className="text-xs tracking-widest uppercase text-accent font-bold mb-1">Achievement</p>
-                    <p className="text-sm text-white/90 leading-relaxed">{selectedProject.achievement}</p>
+                    <p className="text-sm text-[var(--text-primary)]/90 leading-relaxed">{selectedProject.achievement}</p>
                   </div>
                 )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2 border-t border-white/5">
                   <div>
                     <p className="text-xs tracking-widest uppercase text-accent font-bold mb-2">Technologies</p>
-                    <p className="text-xs text-white/60 font-mono leading-relaxed">{selectedProject.tech}</p>
+                    <p className="text-xs text-[var(--text-primary)]/60 font-mono leading-relaxed">{selectedProject.tech}</p>
                   </div>
                   <div>
                     <p className="text-xs tracking-widest uppercase text-accent font-bold mb-2">Tools & Skills</p>
-                    <p className="text-xs text-white/60 font-mono leading-relaxed mb-1">{selectedProject.tools}</p>
-                    <p className="text-xs text-white/40 font-mono">{selectedProject.skills}</p>
+                    <p className="text-xs text-[var(--text-primary)]/60 font-mono leading-relaxed mb-1">{selectedProject.tools}</p>
+                    <p className="text-xs text-[var(--text-primary)]/40 font-mono">{selectedProject.skills}</p>
                   </div>
                 </div>
               </div>
@@ -765,3 +728,4 @@ export default function WorkExperience() {
     </section>
   );
 }
+

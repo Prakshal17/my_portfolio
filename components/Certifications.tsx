@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import BackgroundDecorations from '@/components/BackgroundDecorations';
 
 /* ─── Certifications Data ────────────────────────────────── */
 const categories = [
@@ -110,14 +111,22 @@ export default function Certifications() {
 
   return (
     <section id="certifications" className="relative bg-ink py-32 px-6 md:px-12 lg:px-20 border-t border-white/5">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto relative">
+        <BackgroundDecorations 
+          iconNames={['Award', 'Settings', 'Compass']} 
+          positions={[
+            'top-1/4 -left-10 lg:-left-20',
+            'bottom-1/4 -right-10 lg:-right-20',
+            'top-1/2 -right-5 lg:-right-15'
+          ]} 
+        />
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-16">
           <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">Credentials</p>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none heading-gradient">
-              Certifications
-            </h2>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8" style={{ color: 'var(--text-primary)' }}>
+            CERTIFICATIONS
+          </h2>
             <p className="text-white/35 text-sm max-w-xs md:text-right">
               33+ credentials · ServiceNow · Infosys · NPTEL · Coursera · HackerRank · Udemy
             </p>
@@ -191,3 +200,4 @@ export default function Certifications() {
     </section>
   );
 }
+

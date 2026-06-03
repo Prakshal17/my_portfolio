@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const socialLinks = [
@@ -9,97 +10,181 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+
+  const handleSend = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`Let's Connect - ${formData.name}`);
+    const body = encodeURIComponent(`Hi Prakshal,\n\n${formData.message}\n\nBest regards,\n${formData.name}\n${formData.email}`);
+    window.location.href = `mailto:praks1117@gmail.com?subject=${subject}&body=${body}`;
+  };
+
   return (
-    <>
-      {/* ── Contact Section ──────────────────────────────────── */}
-      <section id="contact" className="relative bg-ink py-32 px-6 md:px-12 lg:px-20 border-t border-white/5">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} transition={{ duration: 0.8 }}>
-            <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-6">Get In Touch</p>
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none heading-gradient font-heading">
-              Lets Connect
-            </h2>
-            <p className="text-lg max-w-xl mx-auto mb-4 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-              Looking forward to a <span className="font-medium" style={{ color: 'var(--text-primary)' }}>Senior ServiceNow Developer / Associate Consultant</span> role in ITSM &amp; CSM. Open to full-time, consulting, or freelance engagements.
-            </p>
-            <p className="text-sm mb-12" style={{ color: 'var(--text-muted)' }}>📍 Delhi NCR, India &nbsp;·&nbsp; Open to Relocation</p>
+    <footer id="contact" className="relative pt-24 pb-12 overflow-hidden border-t border-white/5 transition-colors" style={{ backgroundColor: 'var(--bg-primary)' }}>
+      {/* Background glow matching the image */}
+      <div className="absolute top-1/4 left-1/4 w-[50vw] h-[50vw] bg-[#60A5FA] rounded-full blur-[200px] opacity-[0.03] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[30vw] h-[30vw] bg-[#60A5FA] rounded-full blur-[150px] opacity-[0.02] pointer-events-none" />
 
-            {/* Contact cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10">
+        
+        <div className="flex flex-col lg:flex-row justify-between gap-16 lg:gap-24 mb-24">
+          
+          {/* ── Left Column: Text & Contact Cards ── */}
+          <div className="w-full lg:w-1/2 flex flex-col">
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 w-max mb-8"
+            >
+              <div className="w-1.5 h-1.5 rounded-full bg-[#60A5FA]" />
+              <span className="text-[10px] font-mono uppercase tracking-widest text-white/60">Get in touch</span>
+            </motion.div>
+
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6 leading-[1.1] transition-colors" style={{ color: 'var(--text-primary)' }}
+            >
+              Let&apos;s build something <br className="hidden sm:block" />
+              <span className="italic font-medium" style={{ color: '#60A5FA' }}>reliable</span> together.
+            </motion.h2>
+
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-sm md:text-base leading-relaxed mb-10 max-w-md transition-colors" style={{ color: 'var(--text-muted)' }}
+            >
+              Open to ServiceNow, ITSM, CSM, Platform Engineering, or collaboration opportunities. Drop a line — I read everything.
+            </motion.p>
+
+            {/* Contact Cards List */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-col gap-3 max-w-md"
+            >
               {[
-                { icon: 'email-svg', label: 'Email', value: 'praks1117@gmail.com', href: 'mailto:praks1117@gmail.com', id: 'contact-email' },
-                { icon: '📞', label: 'Phone', value: '+91-8171000426', href: 'tel:+918171000426', id: 'contact-phone' },
-                { icon: '💼', label: 'LinkedIn', value: 'prakshal-jain', href: 'https://www.linkedin.com/in/prakshal-jain-79379a17b/', id: 'contact-linkedin' },
-              ].map(c => (
-                <motion.a key={c.id} id={c.id} href={c.href}
-                  target={c.href.startsWith('http') ? '_blank' : undefined}
-                  rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  whileHover={{ scale: 1.04, y: -4, boxShadow: '0 0 40px rgba(96,165,250,0.18)' }}
-                  className="glass-card rounded-2xl p-6 flex flex-col items-center gap-2 group transition-all duration-300 cursor-pointer">
-                  {c.icon === 'email-svg' ? (
-                    <span className="w-8 h-8 flex items-center justify-center">
-                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
-                        <rect x="2" y="4" width="20" height="16" rx="3" stroke="#60A5FA" strokeWidth="1.6"/>
-                        <path d="M2 7l10 7 10-7" stroke="#60A5FA" strokeWidth="1.6" strokeLinecap="round"/>
-                      </svg>
-                    </span>
-                  ) : (
-                    <span className="text-2xl">{c.icon}</span>
-                  )}
-                  <span className="text-xs uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>{c.label}</span>
-                  <span className="text-sm transition-colors font-medium break-all text-center" style={{ color: 'var(--text-primary)' }}>{c.value}</span>
-                </motion.a>
+                { icon: '✉️', label: 'EMAIL', value: 'praks1117@gmail.com', href: 'mailto:praks1117@gmail.com' },
+                { icon: '🐙', label: 'GITHUB', value: 'github.com/Prakshal17', href: 'https://github.com/Prakshal17' },
+                { icon: '💼', label: 'LINKEDIN', value: 'linkedin.com/in/prakshal-jain', href: 'https://www.linkedin.com/in/prakshal-jain-79379a17b/' },
+                { icon: '📞', label: 'PHONE', value: '+91 8171000426', href: 'tel:+918171000426' },
+                { icon: '📍', label: 'LOCATION', value: 'Delhi NCR, India', href: null },
+              ].map((c) => (
+                <a 
+                  key={c.label} 
+                  href={c.href || '#'}
+                  target={c.href?.startsWith('http') ? '_blank' : undefined}
+                  rel={c.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className={`flex items-center gap-4 p-4 rounded-xl border border-[var(--text-muted)]/20 transition-colors ${c.href ? 'hover:border-[#60A5FA] cursor-pointer' : 'cursor-default'}`}
+                  style={{ backgroundColor: 'var(--bg-secondary)' }}
+                >
+                  <span className="text-xl opacity-80" style={{ color: 'var(--text-primary)' }}>{c.icon}</span>
+                  <div>
+                    <p className="text-[10px] font-mono tracking-widest mb-1 uppercase" style={{ color: 'var(--text-muted)' }}>{c.label}</p>
+                    <p className="text-sm font-medium transition-colors" style={{ color: 'var(--text-primary)' }}>{c.value}</p>
+                  </div>
+                </a>
               ))}
-            </div>
-
-            {/* CTA buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a href="https://www.linkedin.com/in/prakshal-jain-79379a17b/" target="_blank" rel="noopener noreferrer"
-                id="contact-cta-li"
-                whileHover={{ scale: 1.05 }}
-                className="px-10 py-4 rounded-full font-bold text-sm tracking-wide transition-all duration-300"
-                style={{ background: '#60A5FA', color: '#0d0f1a', boxShadow: '0 0 50px rgba(96,165,250,0.35)' }}>
-                View LinkedIn Profile ↗
-              </motion.a>
-              <motion.a href="https://github.com/Prakshal17" target="_blank" rel="noopener noreferrer"
-                id="contact-cta-gh"
-                whileHover={{ scale: 1.05 }}
-                className="px-10 py-4 rounded-full font-bold text-sm tracking-wide border border-white/10 text-white/70 hover:border-white/25 hover:text-white transition-all duration-300">
-                GitHub ↗
-              </motion.a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── Footer Bar ───────────────────────────────────────── */}
-      <footer className="relative bg-ink border-t border-white/5 px-6 md:px-12 lg:px-20 py-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <div>
-              <p className="text-xl font-black tracking-tighter accent-text mb-0.5 font-heading">PJ</p>
-              <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>Prakshal Jain</p>
-              <div className="mt-3 mb-4 space-y-2">
-              </div>
-              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>📍 Delhi NCR, India</p>
-            </div>
-            <div className="flex flex-wrap gap-5">
-              {socialLinks.map(link => (
-                <motion.a key={link.id} id={link.id} href={link.href}
-                  target="_blank" rel="noopener noreferrer"
-                  className="text-xs text-white/35 hover:text-white/80 tracking-wider uppercase transition-colors duration-200"
-                  whileHover={{ y: -2 }}>
-                  {link.label}
-                </motion.a>
-              ))}
-            </div>
+            </motion.div>
           </div>
-          <div className="mt-8 pt-6 border-t border-white/5 flex flex-col md:flex-row items-start md:items-center justify-end gap-3">
-            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>© {new Date().getFullYear()} Prakshal Jain. All rights reserved.</p>
+
+          {/* ── Right Column: Form ── */}
+          <div className="w-full lg:w-1/2 flex justify-start lg:justify-end">
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.3 }}
+              className="w-full max-w-[480px] p-6 sm:p-8 rounded-3xl border border-[var(--text-muted)]/20 relative overflow-hidden transition-colors"
+              style={{ boxShadow: '0 20px 40px rgba(0,0,0,0.1)', backgroundColor: 'var(--bg-secondary)' }}
+            >
+              {/* Form Glow */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#60A5FA] rounded-full blur-[120px] opacity-[0.03] pointer-events-none" />
+
+              <form onSubmit={handleSend} className="flex flex-col gap-5 relative z-10">
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="name" className="text-[10px] font-mono tracking-widest uppercase pl-1 transition-colors" style={{ color: 'var(--text-muted)' }}>Name</label>
+                  <input 
+                    id="name"
+                    type="text" 
+                    required
+                    placeholder="Your name" 
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-4 py-3.5 rounded-xl border border-[var(--text-muted)]/20 text-sm focus:outline-none focus:border-[#60A5FA] transition-colors"
+                    style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="email" className="text-[10px] font-mono tracking-widest uppercase pl-1 transition-colors" style={{ color: 'var(--text-muted)' }}>Email</label>
+                  <input 
+                    id="email"
+                    type="email" 
+                    required
+                    placeholder="you@company.com" 
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full px-4 py-3.5 rounded-xl border border-[var(--text-muted)]/20 text-sm focus:outline-none focus:border-[#60A5FA] transition-colors"
+                    style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2 mb-2">
+                  <label htmlFor="message" className="text-[10px] font-mono tracking-widest uppercase pl-1 transition-colors" style={{ color: 'var(--text-muted)' }}>Message</label>
+                  <textarea 
+                    id="message"
+                    required
+                    rows={4}
+                    placeholder="Tell me a bit about what you're working on..." 
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full px-4 py-3.5 rounded-xl border border-[var(--text-muted)]/20 text-sm focus:outline-none focus:border-[#60A5FA] transition-colors resize-none"
+                    style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+                  />
+                </div>
+
+                <button 
+                  type="submit"
+                  className="w-full py-4 rounded-xl font-bold text-sm text-[#0C0C0C] flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(96,165,250,0.15)] hover:shadow-[0_0_30px_rgba(96,165,250,0.3)]"
+                  style={{ backgroundColor: '#60A5FA' }}
+                >
+                  Send message 
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </form>
+            </motion.div>
           </div>
         </div>
-      </footer>
-    </>
+        
+        {/* ── Footer Bar ── */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-[var(--text-muted)]/20 transition-colors">
+          <div>
+            <p className="text-xl font-black tracking-tighter mb-0.5 font-heading" style={{ color: '#60A5FA' }}>PJ</p>
+            <p className="text-sm font-semibold transition-colors" style={{ color: 'var(--text-primary)' }}>Prakshal Jain</p>
+            <p className="text-[10px] uppercase tracking-widest font-mono mt-1 transition-colors" style={{ color: 'var(--text-muted)' }}>Delhi NCR, India</p>
+          </div>
+          
+          <div className="flex gap-6">
+            {socialLinks.map(link => (
+              <a 
+                key={link.id} 
+                href={link.href}
+                target={link.href.startsWith('http') ? "_blank" : undefined} 
+                rel={link.href.startsWith('http') ? "noopener noreferrer" : undefined}
+                className="text-xs font-mono uppercase tracking-widest hover:text-[#60A5FA] transition-colors"
+                style={{ color: 'var(--text-muted)' }}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+          
+          <div className="text-right">
+            <p className="text-[10px] font-mono tracking-widest uppercase transition-colors" style={{ color: 'var(--text-muted)' }}>
+              © {new Date().getFullYear()} Prakshal Jain. <br className="hidden sm:block" />
+              All rights reserved.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </footer>
   );
 }

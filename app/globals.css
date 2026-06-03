@@ -1,46 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter Tight', 'Inter', sans-serif !important;
+  letter-spacing: -0.04em !important;
+}
+
 /* ═══════════════════════════════════════════════
    THEME VARIABLES
    ═══════════════════════════════════════════════ */
 :root {
-  --ink:            #0d0f1a;
-  --surface:        rgba(255,255,255,0.03);
-  --surface-hover:  rgba(255,255,255,0.06);
-  --border:         rgba(255,255,255,0.07);
-  --border-hover:   rgba(96,165,250,0.28);
-  --text-primary:   #f0f4ff;
-  --text-muted:     rgba(240,244,255,0.5);
-  --text-faint:     rgba(240,244,255,0.28);
-  --divider:        rgba(255,255,255,0.06);
-  --card-bg:        rgba(255,255,255,0.03);
-  --card-bg-hover:  rgba(255,255,255,0.06);
-  --hero-fade:      rgba(13, 15, 26, 0.95);
-  --hero-fade-mobile: rgba(13, 15, 26, 0.92);
-  --hero-fade-transparent: rgba(13, 15, 26, 0);
-  --hero-fade-bottom: #0a0a0a;
+  --ink:            #1B2A30;
+  --surface:        rgba(255, 255, 255, 0.04);
+  --surface-hover:  rgba(255, 255, 255, 0.08);
+  --border:         rgba(255, 255, 255, 0.08);
+  --border-hover:   rgba(96, 165, 250, 0.3);
+  --text-primary:   #F1F5F9;
+  --text-muted:     rgba(241, 245, 249, 0.6);
+  --text-faint:     rgba(241, 245, 249, 0.3);
+  --divider:        rgba(255, 255, 255, 0.06);
+  --card-bg:        rgba(255, 255, 255, 0.03);
+  --card-bg-hover:  rgba(255, 255, 255, 0.07);
+  --hero-fade:      rgba(27, 42, 48, 0.95);
+  --hero-fade-mobile: rgba(27, 42, 48, 0.92);
+  --hero-fade-transparent: rgba(27, 42, 48, 0);
+  --hero-fade-bottom: #1B2A30;
 }
 
 [data-theme="light"] {
-  --ink:            #f0f4ff;
-  --surface:        rgba(255,255,255,0.8);
-  --surface-hover:  rgba(255,255,255,1);
-  --border:         rgba(59,130,246,0.14);
-  --border-hover:   rgba(59,130,246,0.38);
-  --text-primary:   #111827;
-  --text-muted:     #4b5563;
-  --text-faint:     #9ca3af;
-  --divider:        rgba(59,130,246,0.1);
-  --card-bg:        rgba(255,255,255,0.85);
-  --card-bg-hover:  rgba(255,255,255,1);
-  --hero-fade:      rgba(240, 244, 255, 0.96);
-  --hero-fade-mobile: rgba(240, 244, 255, 0.94);
-  --hero-fade-transparent: rgba(240, 244, 255, 0);
-  --hero-fade-bottom: #f0f4ff;
+  --ink:            #D1E2E0;
+  --surface:        rgba(255, 255, 255, 0.55);
+  --surface-hover:  rgba(255, 255, 255, 0.85);
+  --border:         rgba(27, 42, 48, 0.12);
+  --border-hover:   rgba(27, 42, 48, 0.28);
+  --text-primary:   #15242A;
+  --text-muted:     rgba(21, 36, 42, 0.7);
+  --text-faint:     rgba(21, 36, 42, 0.4);
+  --divider:        rgba(21, 36, 42, 0.08);
+  --card-bg:        rgba(255, 255, 255, 0.65);
+  --card-bg-hover:  rgba(255, 255, 255, 0.95);
+  --hero-fade:      rgba(209, 226, 224, 0.96);
+  --hero-fade-mobile: rgba(209, 226, 224, 0.94);
+  --hero-fade-transparent: rgba(209, 226, 224, 0);
+  --hero-fade-bottom: #D1E2E0;
 }
 
 /* ═══════════════════════════════════════════════
@@ -63,7 +70,7 @@ body {
 }
 
 .font-heading {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'Anton', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -208,64 +215,64 @@ a, button, [role="button"] { cursor: pointer; }
   box-shadow: 0 20px 60px rgba(96,165,250,0.15);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   LIGHT MODE — COMPREHENSIVE OVERRIDES
-   Goal: white bg (#f0f4ff), dark navy text, white cards with
-   subtle blue borders — clean and readable like a pro portfolio
-   ═══════════════════════════════════════════════════════════════ */
+/* ─────────────────────────────────────────────────────────────────────────────
+   LIGHT MODE – COMPREHENSIVE OVERRIDES
+   Goal: Soft greenish-teal background (#D1E2E0), dark slate-teal text (#15242A),
+   perfectly cohesive with the dark mode aesthetic.
+   ───────────────────────────────────────────────────────────────────────────── */
 
 /* --- Base bg & text --- */
-[data-theme="light"] body { background-color: #f0f4ff; color: #111827; }
-[data-theme="light"] main { background-color: #f0f4ff; }
+[data-theme="light"] body { background-color: #D1E2E0; color: #15242A; }
+[data-theme="light"] main { background-color: #D1E2E0; }
 
 /* --- Section / page backgrounds --- */
-[data-theme="light"] section { background-color: #f0f4ff !important; }
-[data-theme="light"] .bg-ink { background-color: #f0f4ff !important; }
+[data-theme="light"] section { background-color: #D1E2E0 !important; }
+[data-theme="light"] .bg-ink { background-color: #D1E2E0 !important; }
 
-/* --- All Tailwind white text utilities → dark text --- */
-[data-theme="light"] .text-white     { color: #111827 !important; }
-[data-theme="light"] .text-white\/95 { color: rgba(17,24,39,0.95) !important; }
-[data-theme="light"] .text-white\/90 { color: rgba(17,24,39,0.90) !important; }
-[data-theme="light"] .text-white\/80 { color: rgba(17,24,39,0.80) !important; }
-[data-theme="light"] .text-white\/70 { color: rgba(17,24,39,0.70) !important; }
-[data-theme="light"] .text-white\/65 { color: rgba(17,24,39,0.65) !important; }
-[data-theme="light"] .text-white\/60 { color: rgba(17,24,39,0.60) !important; }
-[data-theme="light"] .text-white\/50 { color: rgba(17,24,39,0.50) !important; }
-[data-theme="light"] .text-white\/45 { color: rgba(17,24,39,0.50) !important; }
-[data-theme="light"] .text-white\/40 { color: rgba(17,24,39,0.45) !important; }
-[data-theme="light"] .text-white\/35 { color: rgba(17,24,39,0.40) !important; }
-[data-theme="light"] .text-white\/30 { color: rgba(17,24,39,0.38) !important; }
-[data-theme="light"] .text-white\/25 { color: rgba(17,24,39,0.32) !important; }
-[data-theme="light"] .text-white\/20 { color: rgba(17,24,39,0.26) !important; }
-[data-theme="light"] .text-white\/15 { color: rgba(17,24,39,0.20) !important; }
+/* --- All Tailwind white text utilities -> dark text --- */
+[data-theme="light"] .text-white     { color: #1B2A30 !important; }
+[data-theme="light"] .text-white\/95 { color: rgba(27, 42, 48, 0.95) !important; }
+[data-theme="light"] .text-white\/90 { color: rgba(27, 42, 48, 0.90) !important; }
+[data-theme="light"] .text-white\/80 { color: rgba(27, 42, 48, 0.80) !important; }
+[data-theme="light"] .text-white\/70 { color: rgba(27, 42, 48, 0.70) !important; }
+[data-theme="light"] .text-white\/65 { color: rgba(27, 42, 48, 0.65) !important; }
+[data-theme="light"] .text-white\/60 { color: rgba(27, 42, 48, 0.60) !important; }
+[data-theme="light"] .text-white\/50 { color: rgba(27, 42, 48, 0.50) !important; }
+[data-theme="light"] .text-white\/45 { color: rgba(27, 42, 48, 0.50) !important; }
+[data-theme="light"] .text-white\/40 { color: rgba(27, 42, 48, 0.45) !important; }
+[data-theme="light"] .text-white\/35 { color: rgba(27, 42, 48, 0.40) !important; }
+[data-theme="light"] .text-white\/30 { color: rgba(27, 42, 48, 0.38) !important; }
+[data-theme="light"] .text-white\/25 { color: rgba(27, 42, 48, 0.32) !important; }
+[data-theme="light"] .text-white\/20 { color: rgba(27, 42, 48, 0.26) !important; }
+[data-theme="light"] .text-white\/15 { color: rgba(27, 42, 48, 0.20) !important; }
 
 /* --- font-mono in light (used for code-like labels) --- */
-[data-theme="light"] .font-mono { color: #4b5563 !important; }
+[data-theme="light"] .font-mono { color: #37535E !important; }
 
 /* --- Borders --- */
-[data-theme="light"] .border-white\/5  { border-color: rgba(59,130,246,0.1) !important; }
-[data-theme="light"] .border-white\/10 { border-color: rgba(59,130,246,0.14) !important; }
-[data-theme="light"] .border-t         { border-color: rgba(59,130,246,0.12) !important; }
+[data-theme="light"] .border-white\/5  { border-color: rgba(0, 0, 0, 0.04) !important; }
+[data-theme="light"] .border-white\/10 { border-color: rgba(0, 0, 0, 0.08) !important; }
+[data-theme="light"] .border-t         { border-color: rgba(0, 0, 0, 0.06) !important; }
 
-/* --- Glass cards → white cards with soft shadow --- */
+/* --- Glass cards -> white cards with soft shadow --- */
 [data-theme="light"] .glass-card {
-  background: rgba(255,255,255,0.9) !important;
-  border-color: rgba(59,130,246,0.13) !important;
-  box-shadow: 0 1px 6px rgba(59,130,246,0.07), 0 4px 20px rgba(59,130,246,0.04);
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03), 0 1px 4px rgba(0, 0, 0, 0.02);
 }
 [data-theme="light"] .glass-card:hover {
-  background: #ffffff !important;
-  border-color: rgba(59,130,246,0.3) !important;
-  box-shadow: 0 4px 24px rgba(59,130,246,0.14) !important;
+  background: rgba(255, 255, 255, 1) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* --- Large gradient headings (WebkitTextFillColor: transparent inline) → dark gradient --- */
+/* --- Large gradient headings (WebkitTextFillColor: transparent inline) -> dark gradient --- */
 [data-theme="light"] h1[style*="WebkitTextFillColor"],
 [data-theme="light"] h2[style*="WebkitTextFillColor"],
 [data-theme="light"] h3[style*="WebkitTextFillColor"],
 [data-theme="light"] div[style*="WebkitTextFillColor"],
 [data-theme="light"] .heading-gradient {
-  background: linear-gradient(135deg, #111827 0%, rgba(17,24,39,0.72) 100%) !important;
+  background: linear-gradient(135deg, #1A202C 0%, #4A5568 100%) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
@@ -278,22 +285,22 @@ a, button, [role="button"] { cursor: pointer; }
   background-clip: text !important;
 }
 
-/* --- Canvas fade layers — swap dark fade to light --- */
+/* --- Canvas fade layers - swap dark fade to light --- */
 [data-theme="light"] div[style*="transparent, #0a0a0a"] {
-  background: linear-gradient(to bottom, transparent, #f0f4ff) !important;
+  background: linear-gradient(to bottom, transparent, #D1E2E0) !important;
 }
 [data-theme="light"] div[style*="transparent, rgba(13,15,26"] {
-  background: linear-gradient(to bottom, transparent, #f0f4ff) !important;
+  background: linear-gradient(to bottom, transparent, #D1E2E0) !important;
 }
 
 /* --- Overlay left/right panels --- */
 [data-theme="light"] div[style*="rgba(13,15,26,0.95) 70%, transparent"] {
-  background: linear-gradient(to right, rgba(240,244,255,0.97) 70%, transparent) !important;
+  background: linear-gradient(to right, rgba(209, 226, 224, 0.97) 70%, transparent) !important;
 }
 
-/* --- Shimmer in light mode → dark shimmer --- */
+/* --- Shimmer in light mode -> soft dark shimmer --- */
 [data-theme="light"] .shimmer-text {
-  background: linear-gradient(90deg, #2563eb, #111827, #4f46e5, #2563eb) !important;
+  background: linear-gradient(90deg, #15242A, #2C4852, #15242A, #15242A) !important;
   background-size: 200% auto !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
@@ -302,19 +309,19 @@ a, button, [role="button"] { cursor: pointer; }
 
 /* --- Skill capsule in light mode --- */
 [data-theme="light"] .skill-capsule {
-  background: rgba(255,255,255,0.9) !important;
-  border-color: rgba(59,130,246,0.15) !important;
-  color: #4b5563 !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(21, 36, 42, 0.12) !important;
+  color: #15242A !important;
 }
 [data-theme="light"] .skill-capsule:hover {
-  background: rgba(239,246,255,1) !important;
-  border-color: rgba(59,130,246,0.4) !important;
-  color: #111827 !important;
-  box-shadow: 0 0 14px rgba(59,130,246,0.15) !important;
+  background: #FFFFFF !important;
+  border-color: rgba(21, 36, 42, 0.35) !important;
+  color: #15242A !important;
+  box-shadow: 0 4px 14px rgba(21, 36, 42, 0.1) !important;
 }
 
 /* --- Scrollbar in light --- */
-[data-theme="light"] ::-webkit-scrollbar-track { background: #f0f4ff; }
+[data-theme="light"] ::-webkit-scrollbar-track { background: #D1E2E0; }
 
 /* ═══════════════════════════════════════════════
    MOBILE RESPONSIVE

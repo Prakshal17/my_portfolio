@@ -1,7 +1,8 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform, MotionValue } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import BackgroundDecorations from '@/components/BackgroundDecorations';
 
 /* ─── Data ────────────────────────────────────────────────── */
 const academicProjects = [
@@ -62,70 +63,16 @@ const academicProjects = [
   },
 ];
 
-/* ─── Card ────────────────────────────────────────────────── */
-function ProjectCard({
-  proj,
-  i,
-  onClick,
-}: {
-  proj: (typeof academicProjects)[0];
-  i: number;
-  onClick: (proj: any) => void;
-}) {
-  return (
-    <motion.article
-      id={proj.id}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.6, delay: i * 0.1 }}
-      whileHover={{ scale: 1.02 }}
-      onClick={() => onClick(proj)}
-      className="glass-card rounded-2xl p-6 group relative overflow-hidden cursor-pointer transition-all duration-300"
-      style={{ border: `1px solid ${proj.accent}20` }}
-    >
-      <div
-        className="absolute -top-20 -right-20 w-48 h-48 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-3xl pointer-events-none"
-        style={{ background: `${proj.accent}15` }}
-      />
-
-      <div className="flex justify-between items-start mb-4">
-        <span className="text-xs font-mono font-bold" style={{ color: proj.accent }}>{proj.index}</span>
-        <span className="text-xs font-mono text-white/30">{proj.period}</span>
-      </div>
-
-      <h3 className="text-xl font-bold tracking-tight text-white mb-2 line-clamp-2">
-        {proj.name}
-      </h3>
-      <p className="text-xs font-medium text-white/40 mb-4">{proj.type}</p>
-
-      <p className="text-sm text-white/50 leading-relaxed mb-6 line-clamp-3">
-        {proj.description}
-      </p>
-
-      <div className="flex flex-wrap gap-2 mb-4">
-        {proj.tags.slice(0, 3).map((tag) => (
-          <span
-            key={tag}
-            className="px-2.5 py-1 rounded-md text-[10px] font-medium border"
-            style={{ borderColor: `${proj.accent}30`, color: `${proj.accent}CC`, background: `${proj.accent}0A` }}
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-      
-      <div className="mt-4 pt-4 border-t border-white/5 text-xs text-white/30 tracking-widest uppercase flex justify-between items-center">
-        <span>View Details</span>
-        <span style={{ color: proj.accent }}>↗</span>
-      </div>
-    </motion.article>
-  );
-}
-
-/* ─── Section ─────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────────────
+   Section
+   ───────────────────────────────────────────────────────────────────────────── */
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
 
   // Handle browser back button to close modal
   useEffect(() => {
@@ -148,35 +95,89 @@ export default function Projects() {
   }, [selectedProject]);
 
   return (
-    <section id="academic-projects" className="relative bg-ink py-24 px-6 md:px-12 lg:px-20 border-t border-white/5">
-      <div className="relative max-w-7xl mx-auto">
-        
-        {/* Section header */}
+    <section id="academic-projects" className="relative pb-24 pt-16 sm:pt-20 md:pt-28">
+      <BackgroundDecorations 
+        iconNames={['LayoutTemplate', 'Code2', 'Rocket', 'Cpu', 'Terminal', 'Search']} 
+        positions={[
+          'top-[10%] -left-10 lg:-left-20',
+          'top-[25%] -right-10 lg:-right-20',
+          'top-[45%] -left-5 lg:-left-15',
+          'top-[65%] -right-5 lg:-right-15',
+          'top-[85%] -left-10 lg:-left-20',
+          'bottom-[5%] -right-10 lg:-right-20'
+        ]} 
+      />
+      
+      {/* Section header */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mb-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-16"
         >
-          <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">
-            University Work
-          </p>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none heading-gradient">
-              Academic Projects
+          <div className="flex flex-col items-center text-center">
+            <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">Academic</p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8 uppercase" style={{ color: 'var(--text-primary)' }}>
+              PROJECTS
             </h2>
-            <p className="text-white/40 text-sm md:text-base max-w-sm md:text-right leading-relaxed font-mono">
+            <p className="text-sm md:text-base max-w-xl mx-auto leading-relaxed font-mono tracking-widest uppercase transition-colors" style={{ color: 'var(--text-muted)' }}>
               Walchand Institute of Technology, Solapur
             </p>
           </div>
-          <div className="mt-10 h-px bg-gradient-to-r from-accent/40 via-white/10 to-transparent" />
         </motion.div>
+      </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Grid Container */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {academicProjects.map((proj, i) => (
-            <ProjectCard key={proj.id} proj={proj} i={i} onClick={setSelectedProject} />
+            <motion.div
+              key={proj.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--text-muted)' }}
+              className="relative w-full rounded-[40px] p-6 sm:p-10 cursor-pointer shadow-2xl transition-colors group overflow-hidden"
+              onClick={() => setSelectedProject(proj)}
+              whileHover={{ y: -5 }}
+            >
+              {/* Dynamic Background matching accent */}
+              <div className="absolute -top-[50%] -right-[20%] w-[100%] h-[150%] rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-700 blur-[120px] pointer-events-none z-0"
+                style={{ background: `radial-gradient(circle, ${proj.accent} 0%, transparent 70%)` }}
+              />
+
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="flex justify-between items-start mb-6 gap-4">
+                  <div>
+                    <span className="text-4xl sm:text-6xl font-black font-mono leading-none block mb-2" style={{ color: proj.accent }}>{proj.index}</span>
+                    <span className="text-xs sm:text-sm font-mono opacity-60 tracking-widest uppercase">{proj.period}</span>
+                  </div>
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl font-black tracking-normal mb-3" style={{ color: 'var(--text-primary)' }}>
+                  {proj.name}
+                </h3>
+                <p className="text-xs font-medium opacity-60 uppercase tracking-widest mb-6">{proj.type}</p>
+
+                <p className="text-sm opacity-70 leading-relaxed mb-8 flex-grow">
+                  {proj.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {proj.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide"
+                      style={{ color: proj.accent, background: `${proj.accent}15` }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -188,7 +189,7 @@ export default function Projects() {
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/85 backdrop-blur-xl"
+              className="fixed inset-0 bg-[var(--bg-primary)]/90 backdrop-blur-xl"
               onClick={() => setSelectedProject(null)}
             />
             {/* Modal */}
@@ -197,18 +198,17 @@ export default function Projects() {
               animate={{ scale: 1,    opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-              className="relative w-full max-w-3xl bg-ink border border-white/10 rounded-[2.5rem] shadow-2xl z-10 overflow-y-auto md:max-h-[85vh] custom-scrollbar mx-auto my-12 md:my-0"
-              style={{ background: 'var(--ink)' }}
+              className="relative w-full max-w-3xl bg-[var(--bg-secondary)] border border-[var(--text-muted)]/20 rounded-[2.5rem] shadow-2xl z-10 overflow-y-auto md:max-h-[85vh] custom-scrollbar mx-auto my-12 md:my-0"
             >
-              <div className="border-b border-white/5 p-6 flex justify-between items-start bg-white/5">
+              <div className="border-b border-[var(--text-muted)]/10 p-6 flex justify-between items-start bg-[var(--text-primary)]/[0.03]">
                 <div>
                   <span className="text-xs font-mono font-bold mb-2 block" style={{ color: selectedProject.accent }}>{selectedProject.type}</span>
-                  <h3 className="text-2xl font-black text-white mb-2">{selectedProject.name}</h3>
-                  <p className="text-sm font-mono text-white/50 flex items-center gap-2">
+                  <h3 className="text-2xl font-black mb-2" style={{ color: 'var(--text-primary)' }}>{selectedProject.name}</h3>
+                  <p className="text-sm font-mono opacity-50 flex items-center gap-2">
                     <span>⏱ {selectedProject.period}</span>
                   </p>
                 </div>
-                <button onClick={() => setSelectedProject(null)} className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/70 transition-colors">
+                <button onClick={() => setSelectedProject(null)} className="w-8 h-8 rounded-full bg-[var(--text-primary)]/10 hover:bg-[var(--text-primary)]/20 flex items-center justify-center transition-colors">
                   ✕
                 </button>
               </div>
@@ -216,7 +216,7 @@ export default function Projects() {
               <div className="p-6 md:p-8 space-y-6">
                 <div>
                   <p className="text-xs tracking-widest uppercase font-bold mb-3" style={{ color: selectedProject.accent }}>Project Description</p>
-                  <p className="text-sm text-white/70 leading-relaxed">
+                  <p className="text-sm opacity-70 leading-relaxed">
                     {selectedProject.description}
                   </p>
                 </div>
@@ -247,3 +247,4 @@ export default function Projects() {
     </section>
   );
 }
+

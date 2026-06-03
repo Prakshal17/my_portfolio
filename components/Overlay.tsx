@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import Magnet from './animations/Magnet';
 
 if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
@@ -40,25 +41,27 @@ function Particle({ x, y, size, delay, dur, color }: { x: number; y: number; siz
   );
 }
 
-/* ── Lottie-style animated icon (CSS only, no heavy deps) ──── */
+/* ── Lottie-style animated icon with magnetic hover ──────── */
 function AnimIcon({ emoji, label, accent, delay }: { emoji: string; label: string; accent: string; delay: number }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.7, y: 12 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ delay, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="flex flex-col items-center gap-1"
-    >
+    <Magnet padding={60} strength={5} activeTransition="transform 0.2s ease-out" inactiveTransition="transform 0.5s ease-in-out">
       <motion.div
-        animate={{ y: [0, -4, 0] }}
-        transition={{ duration: 2.5 + delay, repeat: Infinity, ease: 'easeInOut', delay }}
-        className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
-        style={{ background: `${accent}18`, border: `1px solid ${accent}30` }}
+        initial={{ opacity: 0, scale: 0.7, y: 12 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ delay, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="flex flex-col items-center gap-1"
       >
-        {emoji}
+        <motion.div
+          animate={{ y: [0, -4, 0] }}
+          transition={{ duration: 2.5 + delay, repeat: Infinity, ease: 'easeInOut', delay }}
+          className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
+          style={{ background: `${accent}18`, border: `1px solid ${accent}30` }}
+        >
+          {emoji}
+        </motion.div>
+        <span className="text-[9px] text-white/40 tracking-widest uppercase">{label}</span>
       </motion.div>
-      <span className="text-[9px] text-white/40 tracking-widest uppercase">{label}</span>
-    </motion.div>
+    </Magnet>
   );
 }
 

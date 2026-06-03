@@ -34,6 +34,7 @@ export function useTheme() {
 
 const navItems = [
   { id: 'nav-about', label: 'About', href: '#about' },
+  { id: 'nav-skills', label: 'Skills', href: '#expertise' },
   { id: 'nav-resume', label: 'Resume', href: '#resume' },
   { id: 'nav-work', label: 'Experience', href: '#experience' },
   { id: 'nav-certs', label: 'Certifications', href: '#certifications' },

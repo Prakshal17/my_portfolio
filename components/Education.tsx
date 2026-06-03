@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import BackgroundDecorations from '@/components/BackgroundDecorations';
 
 /* ─── Graduation Cap SVG ─────────────────────────────────── */
 function GradCap({ color = '#60A5FA', size = 56 }: { color?: string; size?: number }) {
@@ -91,7 +92,7 @@ function EducationCard({ edu, i }: { edu: EduItem; i: number }) {
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: i * 0.12 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="glass-card rounded-2xl p-8 group relative overflow-hidden cursor-default"
+      className="glass-card rounded-2xl p-8 group relative overflow-hidden cursor-default hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] transition-all duration-300 border border-transparent hover:border-white/10"
       style={{ borderColor: hovered ? `${edu.accent}40` : undefined, boxShadow: hovered ? `0 0 40px ${edu.accent}10` : undefined }}
     >
       {/* Top accent bar */}
@@ -217,14 +218,22 @@ function EducationCard({ edu, i }: { edu: EduItem; i: number }) {
 
 export default function Education() {
   return (
-    <section id="education" className="relative bg-ink py-32 px-6 md:px-12 lg:px-20 border-t" style={{ borderColor: 'var(--border)' }}>
-      <div className="max-w-7xl mx-auto">
+    <section id="education" className="py-24 sm:py-32 relative overflow-hidden bg-ink transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative">
+        <BackgroundDecorations 
+          iconNames={['GraduationCap', 'BookOpen', 'Award']} 
+          positions={[
+            'top-1/4 -left-10 lg:-left-20',
+            'bottom-1/4 -right-10 lg:-right-20',
+            'top-1/2 -right-5 lg:-right-15'
+          ]} 
+        />
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-16">
           <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">Background</p>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none heading-gradient">
-              Education
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8" style={{ color: 'var(--text-primary)' }}>
+              EDUCATION
             </h2>
             <p className="text-sm" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>Hover over the BE card to see the graduation cap ✨</p>
           </div>
@@ -240,3 +249,4 @@ export default function Education() {
     </section>
   );
 }
+

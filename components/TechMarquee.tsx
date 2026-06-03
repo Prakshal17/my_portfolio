@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const techStack = [
   { name: 'Prakshal Jain', emoji: '👋' },
@@ -33,11 +34,54 @@ const Dot = () => (
 );
 
 export default function TechMarquee() {
-  // Double the array for seamless loop
-  const doubled = [...techStack, ...techStack];
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [baseVelocity] = useState(0.5);
+  const [offset, setOffset] = useState(0);
+  const lastScrollY = useRef(0);
+  const animFrameRef = useRef<number>(0);
+
+  // Tripled for seamless loop
+  const tripled = [...techStack, ...techStack, ...techStack];
+
+  useEffect(() => {
+    let velocity = 0;
+
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      const delta = currentY - lastScrollY.current;
+      lastScrollY.current = currentY;
+      // Add scroll velocity to base velocity
+      velocity = delta * 0.15;
+    };
+
+    const tick = () => {
+      // Decay velocity towards base speed
+      velocity *= 0.95;
+      const speed = baseVelocity + velocity;
+      setOffset((prev) => {
+        const next = prev - speed;
+        // Reset when we've scrolled past one full set
+        const trackWidth = techStack.length * 220; // approx width per item
+        if (Math.abs(next) > trackWidth) {
+          return next + trackWidth;
+        }
+        return next;
+      });
+      animFrameRef.current = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    animFrameRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(animFrameRef.current);
+    };
+  }, [baseVelocity]);
 
   return (
     <motion.div
+      ref={containerRef}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -59,9 +103,15 @@ export default function TechMarquee() {
         style={{ background: 'linear-gradient(to left, var(--ink), transparent)' }}
       />
 
-      {/* Marquee track */}
-      <div className="marquee-track whitespace-nowrap">
-        {doubled.map((tech, i) => (
+      {/* Scroll-velocity-driven marquee track */}
+      <div
+        className="whitespace-nowrap"
+        style={{
+          transform: `translateX(${offset}px)`,
+          willChange: 'transform',
+        }}
+      >
+        {tripled.map((tech, i) => (
           <span
             key={`${tech.name}-${i}`}
             className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide select-none"

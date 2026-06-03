@@ -1,482 +1,128 @@
 'use client';
 
-import { motion, useMotionValue, useMotionTemplate, animate } from 'framer-motion';
-import { useState, MouseEvent, useEffect, useRef } from 'react';
-
-const snModules = ['ITSM', 'CSM', 'Service Catalog', 'Employee Center', 'Service Portal', 'Now Mobile', 'SLAs', 'Surveys'];
-const snScripting = ['JavaScript', 'Client Scripts', 'Business Rules', 'Script Includes', 'GlideRecord', 'GlideAjax', 'UI Policies', 'UI Actions', 'ACLs', 'Scoped Apps'];
-const snAutomation = ['Flow Designer', 'Subflows', 'Custom Actions', 'Decision Tables', 'Scheduled Jobs', 'Inbound Email Actions'];
-const snReporting = ['Dashboards', 'Performance Analytics', 'Service Ops Workspace', 'CSM/FSM Workspace'];
-const snIntegrations = ['Scripted REST APIs', 'eBonding', 'LDAP', 'Twilio', 'JSON', 'Transform Maps', 'Import Sets'];
-const snAI = ['Virtual Agent', 'Agentic AI', 'Now Assist'];
-
-const backendSkills = ['Java', 'Spring Boot', 'SQL', 'MySQL', 'Apache Kafka', 'Talend ETL', 'Jenkins', 'Jira', 'Bitbucket', 'Git', 'HTML', 'CSS', 'XML', 'Agile'];
+import { motion } from 'framer-motion';
+import FadeIn from '@/components/animations/FadeIn';
+import AnimatedText from '@/components/animations/AnimatedText';
+import Magnet from '@/components/animations/Magnet';
+import ContactButton from '@/components/ContactButton';
+import BackgroundDecorations from '@/components/BackgroundDecorations';
 
 const stats = [
-  { value: '4+', label: 'Years IT Experience' },
-  { value: '3+', label: 'Years on ServiceNow' },
-  { value: '8+', label: 'Clients Served' },
-  { value: '33', label: 'Certifications' },
+  { label: 'Years IT Experience', value: '4+' },
+  { label: 'Years on ServiceNow', value: '3+' },
+  { label: 'Clients Served', value: '8+' },
+  { label: 'Certifications', value: '33' },
 ];
 
-function SkillTag({ skill, i, accent }: { skill: string; i: number; accent: string }) {
-  return (
-    <motion.span
-      initial={{ opacity: 0, scale: 0.85 }} whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }} transition={{ delay: i * 0.03, duration: 0.35 }}
-      className="skill-capsule"
-      style={{
-        ['--tag-accent' as string]: accent,
-      } as React.CSSProperties}
-    >
-      {skill}
-    </motion.span>
-  );
-}
-
 export default function About() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    let animationX: any;
-    let animationY: any;
-
-    const handleResize = () => {
-      if (animationX) animationX.stop();
-      if (animationY) animationY.stop();
-      
-      if (window.innerWidth < 768) {
-        setIsHovered(true);
-        const w = containerRef.current?.offsetWidth || 300;
-        const h = containerRef.current?.offsetHeight || 400;
-        
-        animationX = animate(mouseX, [0, w, 0], { duration: 7, repeat: Infinity, ease: "easeInOut" });
-        animationY = animate(mouseY, [0, h, 0], { duration: 11, repeat: Infinity, ease: "easeInOut" });
-      } else {
-        setIsHovered(false);
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (animationX) animationX.stop();
-      if (animationY) animationY.stop();
-    };
-  }, [mouseX, mouseY]);
-
-  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
-    if (window.innerWidth < 768) return;
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
-
   return (
-    <section id="about" className="relative bg-ink py-32 px-6 md:px-12 lg:px-20 border-t border-white/5">
-      <div className="max-w-7xl mx-auto">
-
+    <section id="about" className="py-24 sm:py-32 relative overflow-hidden bg-ink transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative z-10">
+        
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-20">
           <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">About Me</p>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none heading-gradient">
-              Prakshal Jain
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight" style={{ color: 'var(--text-primary)' }}>
+              PRAKSHAL JAIN
             </h2>
-            
-            <div className="flex flex-col gap-2 lg:text-right">
-              <div className="flex flex-wrap items-center lg:justify-end gap-4 text-sm text-white/70 font-medium">
-                <a href="tel:+918171000426" className="flex items-center gap-1.5 hover:text-white transition-colors group">
-                  <span className="w-5 h-5 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M6.6 10.8a15.3 15.3 0 006.6 6.6l2.2-2.2a1 1 0 011.1-.2c1.2.5 2.5.7 3.8.7a1 1 0 011 1V21a1 1 0 01-1 1C10.6 22 2 13.4 2 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.4.2 2.6.7 3.8a1 1 0 01-.2 1.1L6.6 10.8z" stroke="#34D399" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </span>
-                  +91-8171000426
-                </a>
-                <a href="mailto:praks1117@gmail.com" className="flex items-center gap-1.5 hover:text-white transition-colors group">
-                  <span className="w-5 h-5 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="2" y="4" width="20" height="16" rx="3" stroke="#60A5FA" strokeWidth="1.7"/>
-                      <path d="M2 7l10 7 10-7" stroke="#60A5FA" strokeWidth="1.7" strokeLinecap="round"/>
-                    </svg>
-                  </span>
-                  praks1117@gmail.com
-                </a>
-                <a href="https://www.linkedin.com/in/prakshal-jain-79379a17b/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-white transition-colors group">
-                  <span className="w-5 h-5 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="2" y="2" width="20" height="20" rx="4" stroke="#818CF8" strokeWidth="1.7"/>
-                      <path d="M7 10v7M7 7v.5" stroke="#818CF8" strokeWidth="1.7" strokeLinecap="round"/>
-                      <path d="M11 17v-4a2 2 0 014 0v4M11 13v4" stroke="#818CF8" strokeWidth="1.7" strokeLinecap="round"/>
-                    </svg>
-                  </span>
-                  LinkedIn
-                </a>
-              </div>
-              <p className="text-xs tracking-[0.2em] uppercase text-accent font-bold mt-1">
-                CIS-CSM · CAD · CSA
-              </p>
-            </div>
           </div>
-          <div className="mt-10 h-px bg-gradient-to-r from-accent/40 via-white/10 to-transparent" />
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        {/* Combined Bio and Photo Layout */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 w-full max-w-5xl mx-auto">
+          
+          {/* Photo Column - Using the user's photo with Magnet */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, rotate: -5 }} 
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            viewport={{ once: true }} 
+            transition={{ duration: 0.8, type: "spring" }}
+            className="w-full md:w-5/12 flex justify-center"
+          >
+            <Magnet padding={120} strength={4} activeTransition="transform 0.3s ease-out" inactiveTransition="transform 0.6s ease-in-out">
+              <div className="relative w-full max-w-[300px] aspect-[4/5] rounded-3xl overflow-hidden glass-card p-2 group shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <img
+                  src="/prakshal.jpg"
+                  alt="Prakshal Jain - ServiceNow Consultant"
+                  onError={(e) => { e.currentTarget.src = 'https://ui-avatars.com/api/?name=Prakshal+Jain&background=60A5FA&color=fff&size=512'; }}
+                  className="w-full h-full object-cover rounded-2xl filter grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
+                />
+                <div className="absolute bottom-6 left-6 right-6 glass-card rounded-xl p-4 backdrop-blur-md border border-white/10 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <p className="text-sm font-bold text-white mb-0.5">Your ServiceNow Consultant</p>
+                  <p className="text-xs text-white/60 tracking-wider">Prakshal Jain</p>
+                </div>
+              </div>
+            </Magnet>
+          </motion.div>
 
-          {/* Bio + Stats */}
-          <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }} transition={{ duration: 0.8 }}>
+          {/* Text & Button Column */}
+          <div className="w-full md:w-7/12 flex flex-col items-center md:items-start text-center md:text-left">
+            <AnimatedText
+              text="I am Prakshal Jain, a ServiceNow Developer with 4+ years of IT experience and 3+ years delivering ITSM and CSM solutions across manufacturing, retail, finance, and enterprise domains. I focus on architecting solutions that reduce agent effort by 60-70%. Currently exploring Virtual Agent, NLU, and Agentic AI. Let's build something incredible together!"
+              className="font-medium leading-relaxed max-w-[560px] transition-colors"
+              style={{ fontSize: 'clamp(1rem, 2vw, 1.35rem)', color: 'var(--text-primary)' }}
+            />
+            
+            <div className="mt-10 sm:mt-12 md:mt-16">
+              <ContactButton />
+            </div>
+          </div>
+        </div>
+
+        {/* Existing Status Badges and Stats below the new layout */}
+        <div className="mt-32 w-full flex flex-col items-center relative">
+          
+          <BackgroundDecorations 
+            iconNames={['Rocket', 'Orbit', 'Sparkles', 'Code2', 'Zap']} 
+            positions={[
+              'top-1/2 left-0 -translate-y-1/2 -translate-x-10 lg:-translate-x-20',
+              'top-1/4 left-10',
+              'top-1/2 right-0 -translate-y-1/2 translate-x-10 lg:translate-x-20',
+              'bottom-1/4 right-10',
+              '-top-10 right-1/4'
+            ]} 
+          />
+
+          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.8 }} className="max-w-2xl w-full flex flex-col items-center relative z-10">
 
             {/* Status badges */}
-            <div className="flex flex-wrap gap-2 mb-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card">
-                <div className="w-2 h-2 rounded-full bg-green-400" />
-                <span className="text-xs text-white/60 tracking-wider font-medium">Open to Opportunities</span>
+              <div className="flex flex-wrap gap-2 mb-8 justify-center">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card">
+                  <div className="w-2 h-2 rounded-full bg-green-400" />
+                  <span className="text-xs tracking-wider font-medium transition-colors" style={{ color: 'var(--text-muted)' }}>Open to Opportunities</span>
+                </div>
               </div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card">
-                <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                <span className="text-xs text-white/60 tracking-wider font-medium">Serving Notice Period</span>
-              </div>
-            </div>
-
-            <div 
-              ref={containerRef}
-              className="relative group p-4 -m-4 md:p-6 md:-m-6 rounded-2xl"
-              onMouseMove={handleMouseMove}
-              onMouseEnter={() => { if (window.innerWidth >= 768) setIsHovered(true); }}
-              onMouseLeave={() => { if (window.innerWidth >= 768) setIsHovered(false); }}
-            >
-              {/* Spotlight Overlay that reads the line */}
-              <motion.div
-                className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10"
-                style={{
-                  background: useMotionTemplate`
-                    radial-gradient(
-                      200px circle at ${mouseX}px ${mouseY}px,
-                      rgba(96, 165, 250, 0.15),
-                      transparent 80%
-                    )
-                  `,
-                }}
-              />
-              
-              {/* Highlighted text layer (only visible near cursor via mask) */}
-              <motion.div 
-                className="absolute inset-0 p-4 md:p-6 pointer-events-none z-20"
-                style={{
-                  WebkitMaskImage: useMotionTemplate`radial-gradient(150px circle at ${mouseX}px ${mouseY}px, black 0%, transparent 100%)`,
-                  maskImage: useMotionTemplate`radial-gradient(150px circle at ${mouseX}px ${mouseY}px, black 0%, transparent 100%)`,
-                  opacity: isHovered ? 1 : 0,
-                  transition: "opacity 0.5s ease"
-                }}
-              >
-                <p className="text-lg md:text-xl text-blue-300 drop-shadow-[0_0_8px_rgba(96,165,250,0.8)] leading-relaxed mb-4">
-                  I&apos;m <span className="font-black text-white drop-shadow-[0_0_10px_white] font-heading">Prakshal Jain</span>, a{' '}
-                  <span className="font-bold text-white drop-shadow-[0_0_10px_white]">ServiceNow Developer</span> with 4+ years of IT experience
-                  and 3+ years of hands-on expertise delivering ITSM and CSM solutions across manufacturing, retail,
-                  finance, and enterprise domains.
-                </p>
-                <p className="text-base text-blue-200 drop-shadow-[0_0_6px_rgba(96,165,250,0.6)] leading-relaxed mb-4">
-                  I architect and customize ITSM/CSM implementations — reducing agent effort by 60–70% and processing
-                  time by 70% for enterprise clients. I have served 8+ clients and received multiple client appreciation
-                  awards for strong problem-solving skills and proactive client interaction.
-                </p>
-                <p className="text-base text-blue-200 drop-shadow-[0_0_6px_rgba(96,165,250,0.6)] leading-relaxed">
-                  Currently exploring Virtual Agent, NLU topic design, and Agentic AI on the Now Platform. Additional
-                  strength in Java, Spring Boot, Kafka, and Talend ETL from financial services work at Morgan Stanley
-                  via Infosys.
-                </p>
-              </motion.div>
-
-              {/* Base text layer (visible normally) */}
-              <div className="relative z-0 transition-opacity duration-300 group-hover:opacity-40">
-                <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-4">
-                  I&apos;m <span className="text-white font-black font-heading">Prakshal Jain</span>, a{' '}
-                  <span className="accent-text font-semibold">ServiceNow Developer</span> with 4+ years of IT experience
-                  and 3+ years of hands-on expertise delivering ITSM and CSM solutions across manufacturing, retail,
-                  finance, and enterprise domains.
-                </p>
-                <p className="text-base text-white/45 leading-relaxed mb-4">
-                  I architect and customize ITSM/CSM implementations — reducing agent effort by 60–70% and processing
-                  time by 70% for enterprise clients. I have served 8+ clients and received multiple client appreciation
-                  awards for strong problem-solving skills and proactive client interaction.
-                </p>
-                <p className="text-base text-white/45 leading-relaxed">
-                  Currently exploring Virtual Agent, NLU topic design, and Agentic AI on the Now Platform. Additional
-                  strength in Java, Spring Boot, Kafka, and Talend ETL from financial services work at Morgan Stanley
-                  via Infosys.
-                </p>
-              </div>
-            </div>
-
-            <div className="mb-10" />
 
             {/* Headline */}
-            <div className="glass-card rounded-xl p-4 mb-8 border-l-2" style={{ borderLeftColor: '#C8FF00' }}>
-              <p className="text-xs text-white/30 tracking-widest uppercase mb-1">LinkedIn Headline</p>
-              <p className="text-sm text-white/70 leading-relaxed font-medium">
-                Serving Notice Period | ServiceNow Developer | ITSM &amp; CSM | CSA · CAD · CIS-CSM | 6x Micro-Certs | Exploring VA &amp; Agentic AI
+            <div className="glass-card rounded-xl p-5 mb-10 text-center w-full shadow-2xl relative overflow-hidden" style={{ border: '1px solid rgba(96, 165, 250, 0.2)' }}>
+              <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ background: '#60A5FA' }} />
+              <p className="text-xs tracking-widest uppercase mb-4 transition-colors font-bold" style={{ color: 'var(--text-muted)' }}>LinkedIn Headline</p>
+              <p className="text-sm md:text-base md:text-lg leading-relaxed font-bold px-4 transition-colors" style={{ color: 'var(--text-primary)' }}>
+                ServiceNow Developer | ITSM &amp; CSM | CSA • CAD • CIS-CSM | 6x Micro-Certs | Exploring VA &amp; Agentic AI
               </p>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
               {stats.map((stat, i) => (
                 <motion.div key={stat.label}
                   initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.6 }}
-                  className="glass-card rounded-xl p-5">
-                  <div className="text-3xl font-black tracking-tight accent-text mb-1">{stat.value}</div>
-                  <div className="text-xs text-white/40 uppercase tracking-wider leading-relaxed">{stat.label}</div>
+                  className="glass-card rounded-xl p-5 text-center">
+                  <div className="text-2xl sm:text-3xl font-black tracking-normal accent-text mb-1">{stat.value}</div>
+                  <div className="text-[10px] sm:text-xs uppercase tracking-wider leading-relaxed transition-colors" style={{ color: 'var(--text-muted)' }}>{stat.label}</div>
                 </motion.div>
               ))}
-            </div>
-          </motion.div>
-
-          {/* Photo Column */}
-          <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }} transition={{ duration: 0.8 }}
-            className="flex flex-col items-center justify-center h-full">
-            <div className="relative w-full max-w-sm aspect-[4/5] rounded-3xl overflow-hidden glass-card p-2 group">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <img
-                src="/prakshal.jpg"
-                alt="Prakshal Jain - ServiceNow Consultant"
-                onError={(e) => {
-                  e.currentTarget.src = 'https://ui-avatars.com/api/?name=Prakshal+Jain&background=60A5FA&color=fff&size=512';
-                }}
-                className="w-full h-full object-cover rounded-2xl filter grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
-              />
-              <div className="absolute bottom-6 left-6 right-6 glass-card rounded-xl p-4 backdrop-blur-md border border-white/10 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                <p className="text-sm font-bold text-white mb-0.5">Your ServiceNow Consultant</p>
-                <p className="text-xs text-white/60 tracking-wider">Prakshal Jain</p>
-              </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Tech Stack */}
-        <div className="mt-32">
-          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }}>
-
-            {/* ServiceNow Category */}
-            <div className="mb-10">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-1.5 h-6 rounded-full" style={{ background: '#60A5FA' }} />
-                <p className="text-xs tracking-[0.3em] uppercase font-bold text-white/90">⚙️ ServiceNow Platform</p>
-              </div>
-              
-              <div className="space-y-6 pl-4 border-l border-white/5">
-                <div>
-                  <p className="text-xs font-mono text-white/40 mb-2">Modules & Portals</p>
-                  <div className="flex flex-wrap gap-2">
-                    {snModules.map((s, i) => <SkillTag key={s} skill={s} i={i} accent="#60A5FA" />)}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-xs font-mono text-white/40 mb-2">Scripting & Development</p>
-                  <div className="flex flex-wrap gap-2">
-                    {snScripting.map((s, i) => <SkillTag key={s} skill={s} i={i} accent="#C8FF00" />)}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-xs font-mono text-white/40 mb-2">Automation & Workflow</p>
-                  <div className="flex flex-wrap gap-2">
-                    {snAutomation.map((s, i) => <SkillTag key={s} skill={s} i={i} accent="#34D399" />)}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-xs font-mono text-white/40 mb-2">Reporting & Workspaces</p>
-                  <div className="flex flex-wrap gap-2">
-                    {snReporting.map((s, i) => <SkillTag key={s} skill={s} i={i} accent="#FB923C" />)}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-xs font-mono text-white/40 mb-2">Integrations & Data</p>
-                  <div className="flex flex-wrap gap-2">
-                    {snIntegrations.map((s, i) => <SkillTag key={s} skill={s} i={i} accent="#A78BFA" />)}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-xs font-mono text-white/40 mb-2">AI & Automation</p>
-                  <div className="flex flex-wrap gap-2">
-                    {snAI.map((s, i) => <SkillTag key={s} skill={s} i={i} accent="#F472B6" />)}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="h-px bg-gradient-to-r from-white/10 to-transparent mb-7" />
-
-            {/* Other Technologies */}
-            <div className="mb-8">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-1.5 h-6 rounded-full" style={{ background: '#38BDF8' }} />
-                <p className="text-xs tracking-[0.3em] uppercase font-bold text-white/90">💻 Other Technologies & Tools</p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {backendSkills.map((s, i) => <SkillTag key={s} skill={s} i={i} accent="#38BDF8" />)}
-              </div>
-            </div>
 
 
-          </motion.div>
-        </div>
-
-        {/* ── Beyond Code: Hobbies ───────────────────────────── */}
-        <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-20">
-          <div className="h-px bg-gradient-to-r from-accent/30 via-white/8 to-transparent mb-14" />
-          <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-3">Beyond The Screen</p>
-          <h3 className="text-3xl md:text-4xl font-black mb-8 tracking-tight heading-gradient">
-            When I&apos;m not on the Now Platform…
-          </h3>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {[
-              { emoji: '🏔️', title: 'Mountains', desc: 'High-altitude treks, misty peaks — mountains are where I recharge.', accent: '#60A5FA' },
-              { emoji: '✈️', title: 'Travelling', desc: 'Avid traveller — exploring new places, cultures and cuisines.', accent: '#818CF8' },
-              { emoji: '🥾', title: 'Trekking', desc: 'Long trails, backpacks, and open skies — the perfect escape.', accent: '#34D399' },
-              { emoji: '🏏', title: 'Cricket', desc: 'Die-hard cricket fan. Always watching, always playing.', accent: '#FB923C' },
-              { emoji: '⚽', title: 'Football', desc: 'Sports enthusiast — football, cricket, and more.', accent: '#F472B6' },
-              { emoji: '🎮', title: 'FIFA', desc: 'Love playing FIFA — competitive, always.', accent: '#FBBF24' },
-            ].map((hobby, i) => (
-              <motion.div key={hobby.title}
-                initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.4 }}
-                whileHover={{ y: -6, scale: 1.04 }}
-                className="glass-card rounded-2xl p-5 flex flex-col items-center text-center group cursor-default relative overflow-hidden"
-                style={{ transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease' }}>
-                <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl"
-                  style={{ background: `linear-gradient(to right, ${hobby.accent}, transparent)` }} />
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none rounded-2xl"
-                  style={{ background: `${hobby.accent}10` }} />
-                <span className="text-3xl mb-3">{hobby.emoji}</span>
-                <p className="text-xs font-bold tracking-wider uppercase mb-1.5" style={{ color: hobby.accent }}>{hobby.title}</p>
-                <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>{hobby.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Languages Known */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-12">
-            <p className="text-xs tracking-[0.3em] uppercase font-bold text-white/50 mb-4">🌍 Languages Known</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="glass-card rounded-xl p-5 border border-white/5 hover:border-white/10 transition-colors">
-                <h4 className="text-sm font-black text-white/90 mb-1.5 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full" style={{ background: '#60A5FA' }} />
-                  English
-                </h4>
-                <p className="text-xs text-white/50 font-mono tracking-wide">Professional working proficiency</p>
-              </div>
-              <div className="glass-card rounded-xl p-5 border border-white/5 hover:border-white/10 transition-colors">
-                <h4 className="text-sm font-black text-white/90 mb-1.5 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full" style={{ background: '#F472B6' }} />
-                  Hindi
-                </h4>
-                <p className="text-xs text-white/50 font-mono tracking-wide">Native or bilingual proficiency</p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Personal quote */}
-          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-            viewport={{ once: true }} transition={{ delay: 0.5, duration: 0.6 }}
-            className="mt-10 glass-card rounded-2xl p-6 border-l-4 flex items-start gap-4"
-            style={{ borderLeftColor: '#60A5FA' }}>
-            <span className="text-3xl mt-0.5">📖</span>
-            <div>
-              <p className="text-base italic leading-relaxed font-serif" style={{ color: 'var(--text-muted)' }}>
-                &ldquo;... unless I am myself I am nobody.&rdquo;
-              </p>
-              <p className="text-xs mt-2 tracking-wider" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>— Virginia Woolf</p>
-            </div>
-          </motion.div>
-
-          {/* ── What I Can Bring to Your Team ───────── */}
-          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }}
-            className="mt-20">
-            <div className="h-px bg-gradient-to-r from-accent/30 via-white/8 to-transparent mb-14" />
-            <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-3">Value I Deliver</p>
-            <h3 className="text-3xl md:text-4xl font-black mb-8 tracking-tight heading-gradient">
-              What I Bring to Your Team
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                { icon: '⚡', title: 'Rapid Delivery', desc: 'I move fast without cutting corners — from requirements to deployed solution in tight timelines.', accent: '#60A5FA' },
-                { icon: '🤝', title: 'Client-First Mindset', desc: 'Multiple client appreciation awards for proactive communication and going beyond the brief.', accent: '#34D399' },
-                { icon: '🏗️', title: 'Scalable Architecture', desc: 'I build for the future — scoped apps, reusable script includes, and clean flow logic that teams can maintain.', accent: '#818CF8' },
-                { icon: '🔍', title: 'Deep Problem Solver', desc: 'Complex bugs, tricky integrations, edge cases — I dig in and find the root cause, not just the quick fix.', accent: '#FB923C' },
-                { icon: '📊', title: 'Measurable Impact', desc: 'Reduced agent effort by 60–70% and processing time by 70% across multiple enterprise clients.', accent: '#F472B6' },
-                { icon: '🧠', title: 'Continuous Learner', desc: 'Actively upskilling in Agentic AI, Virtual Agent NLU, and Now Platform latest releases — always ahead of the curve.', accent: '#FBBF24' },
-              ].map((item, i) => (
-                <motion.div key={item.title}
-                  initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}
-                  whileHover={{ x: 4 }}
-                  className="glass-card rounded-2xl p-5 flex gap-4 group relative overflow-hidden"
-                  style={{ transition: 'all 0.3s cubic-bezier(0.16,1,0.3,1)' }}>
-                  <div className="absolute top-0 left-0 bottom-0 w-0.5 rounded-l-2xl"
-                    style={{ background: item.accent }} />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{ background: `${item.accent}06` }} />
-                  <span className="text-2xl flex-shrink-0 mt-0.5">{item.icon}</span>
-                  <div>
-                    <p className="text-sm font-bold mb-1" style={{ color: item.accent }}>{item.title}</p>
-                    <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)', opacity: 0.75 }}>{item.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* ── Principles I Follow ──────────────────── */}
-          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.15 }}
-            className="mt-20">
-            <div className="h-px bg-gradient-to-r from-accent/30 via-white/8 to-transparent mb-14" />
-            <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-3">My Work Ethos</p>
-            <h3 className="text-3xl md:text-4xl font-black mb-8 tracking-tight heading-gradient">
-              Principles I Follow
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {[
-                { num: '01', title: 'Clarity over Cleverness', desc: 'Code and configurations should be readable six months later — by you or anyone on the team.', accent: '#60A5FA' },
-                { num: '02', title: 'Own the Outcome', desc: 'I don\'t just fix issues — I dig deep to resolve complex bugs and take responsibility for the actual business outcome.', accent: '#818CF8' },
-                { num: '03', title: 'Automate the Tedium', desc: 'If a human is doing something repeatedly that a machine can do, that\'s a problem I want to solve.', accent: '#34D399' },
-                { num: '04', title: 'Communicate Early', desc: 'Blockers, risks, or changes — surfaced early, not the day before go-live.', accent: '#FB923C' },
-                { num: '05', title: 'Build for Scale', desc: 'Every implementation is designed so the next developer can extend it without refactoring from scratch.', accent: '#F472B6' },
-                { num: '06', title: 'Stay Curious', desc: 'Technology moves fast. I actively follow market standards, industry trends, and the latest platform releases — so I\'m never behind.', accent: '#FBBF24' },
-              ].map((p, i) => (
-                <motion.div key={p.num}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.5 }}
-                  whileHover={{ y: -4, scale: 1.02 }}
-                  className="glass-card rounded-2xl p-6 relative overflow-hidden group"
-                  style={{ transition: 'all 0.3s cubic-bezier(0.16,1,0.3,1)' }}>
-                  <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl"
-                    style={{ background: `linear-gradient(to right, ${p.accent}, transparent)` }} />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{ background: `${p.accent}06` }} />
-                  <span className="text-5xl font-black mb-3 block" style={{ color: p.accent, opacity: 0.4 }}>{p.num}</span>
-                  <p className="text-sm font-bold mb-2" style={{ color: p.accent }}>{p.title}</p>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)', opacity: 0.75 }}>{p.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   );
