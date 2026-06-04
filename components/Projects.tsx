@@ -7,8 +7,19 @@ import BackgroundDecorations from '@/components/BackgroundDecorations';
 /* ─── Data ────────────────────────────────────────────────── */
 const academicProjects = [
   {
-    id: 'proj-1',
+    id: 'proj-6',
     index: '01',
+    name: 'Portfolio Website',
+    type: 'Personal Project',
+    period: '2024 - Present',
+    description: 'A modern, responsive portfolio website built with Next.js, Tailwind CSS, and Framer Motion. Features a dynamic theme, interactive timelines, and a cinematic video hero section.',
+    college: 'Personal',
+    tags: ['Next.js', 'Tailwind CSS', 'Framer Motion', 'React'],
+    accent: '#818CF8',
+  },
+  {
+    id: 'proj-1',
+    index: '02',
     name: 'Online Sweet Shop (Android App)',
     type: 'Final Year Project',
     period: 'Jan 2021 – Apr 2021',
@@ -19,7 +30,7 @@ const academicProjects = [
   },
   {
     id: 'proj-2',
-    index: '02',
+    index: '03',
     name: 'Cafe Billing System',
     type: 'Academic Project',
     period: 'Dec 2020 – Jan 2021',
@@ -30,7 +41,7 @@ const academicProjects = [
   },
   {
     id: 'proj-3',
-    index: '03',
+    index: '04',
     name: 'CD-DVD Store Management System',
     type: '3rd Year Mini Project',
     period: 'Apr 2020 – May 2020',
@@ -41,7 +52,7 @@ const academicProjects = [
   },
   {
     id: 'proj-4',
-    index: '04',
+    index: '05',
     name: 'QRAAI: QR Code Generator App',
     type: 'SIH2020 Project',
     period: 'Feb 2020 – Mar 2020',
@@ -52,7 +63,7 @@ const academicProjects = [
   },
   {
     id: 'proj-5',
-    index: '05',
+    index: '06',
     name: 'Stock Management System',
     type: '3rd Year Mini Project',
     period: 'Sep 2019 – Oct 2019',
@@ -60,21 +71,8 @@ const academicProjects = [
     college: 'Walchand Institute of Technology, Solapur',
     tags: ['Java', 'MySQL'],
     accent: '#FBBF24',
-  },
-
-  {
-    id: 'proj-6',
-    index: '06',
-    name: 'Portfolio Website',
-    type: 'Personal Project',
-    period: '2024 - Present',
-    description: 'A modern, responsive portfolio website built with Next.js, Tailwind CSS, and Framer Motion. Features a dynamic theme, interactive timelines, and a cinematic video hero section.',
-    college: 'Personal',
-    tags: ['Next.js', 'Tailwind CSS', 'Framer Motion', 'React'],
-    accent: '#818CF8',
   }
 ];
-
 /* ─────────────────────────────────────────────────────────────────────────────
    Section
    ───────────────────────────────────────────────────────────────────────────── */
