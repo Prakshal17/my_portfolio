@@ -1,6 +1,6 @@
 # Prakshal Jain - Professional Portfolio
 
-Welcome to my personal portfolio repository! This is a modern, highly interactive, and cinematic web application built to showcase my 4+ years of IT experience, primarily as a **ServiceNow Developer** specializing in ITSM, CSM, Virtual Agent, and Agentic AI.
+Welcome to my personal portfolio repository! This is a modern, highly interactive, and cinematic web application built to showcase my 4+ years of IT experience, primarily as a **ServiceNow Developer** specializing in ITSM, CSM modules.
 
 ## 🌟 Overview
 
