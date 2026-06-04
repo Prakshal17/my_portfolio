@@ -514,7 +514,7 @@ export default function WorkExperience() {
           {/* Experience cards - Alternating Vertical Timeline */}
           <div className="relative max-w-6xl mx-auto mb-16">
             {/* The central vertical line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-white/20 via-white/10 to-transparent -translate-x-1/2 z-0" />
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px timeline-line -translate-x-1/2 z-0" />
             
             <div className="flex flex-col gap-12 md:gap-24 relative z-10">
               {experiences.map((exp, i) => {

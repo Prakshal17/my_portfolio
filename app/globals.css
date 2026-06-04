@@ -254,6 +254,14 @@ a, button, [role="button"] { cursor: pointer; }
 [data-theme="light"] .border-white\/10 { border-color: rgba(0, 0, 0, 0.08) !important; }
 [data-theme="light"] .border-t         { border-color: rgba(0, 0, 0, 0.06) !important; }
 
+/* --- Timeline Line --- */
+.timeline-line {
+  background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.1), transparent);
+}
+[data-theme="light"] .timeline-line {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.1), transparent);
+}
+
 /* --- Glass cards -> white cards with soft shadow --- */
 [data-theme="light"] .glass-card {
   background: rgba(255, 255, 255, 0.85) !important;
