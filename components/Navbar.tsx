@@ -210,7 +210,7 @@ export default function Navbar() {
               backdropFilter: 'blur(20px)'
             }}
           >
-            <ul className="flex flex-col gap-4">
+            <ul className="flex flex-col gap-1">
               {navItems.map((item, i) => (
                 <motion.li 
                   key={item.id}
@@ -221,9 +221,9 @@ export default function Navbar() {
                   <a 
                     href={item.href} 
                     onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center justify-between group"
+                    className={`flex items-center justify-between group px-4 py-3 rounded-xl transition-colors duration-300 ${theme === 'dark' ? 'hover:bg-white/10 active:bg-white/15' : 'hover:bg-black/5 active:bg-black/10'}`}
                   >
-                    <span className={`text-sm font-bold tracking-widest uppercase font-heading ${theme === 'dark' ? 'text-white/70' : 'text-black/70'}`}>
+                    <span className={`text-base font-medium tracking-wide ${theme === 'dark' ? 'text-white/80 group-hover:text-white' : 'text-black/80 group-hover:text-black'}`}>
                       {item.label}
                     </span>
                     <span className="text-[#60A5FA] opacity-0 group-hover:opacity-100 transition-opacity">→</span>

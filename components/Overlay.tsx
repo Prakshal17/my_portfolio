@@ -179,7 +179,7 @@ function LeftPanel({ section }: { section: number }) {
           <span className="text-white/65 hover:text-white transition-colors">+91-8171000426</span>
         </motion.a>
         {/* LinkedIn */}
-        <motion.a href="https://www.linkedin.com/in/prakshal-jain-79379a17b/" target="_blank" rel="noopener noreferrer"
+        <motion.a href="https://www.linkedin.com/in/prakshal-jain17/" target="_blank" rel="noopener noreferrer"
           initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.6 }}
           whileHover={{ x: 5, scale: 1.04, boxShadow: '0 0 18px rgba(129,140,248,0.2)' }}
           className="inline-flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs pointer-events-auto transition-all duration-200"

@@ -256,7 +256,7 @@ export default function Education() {
       {/* Detail Modal */}
       <AnimatePresence>
         {selectedEdu && (
-          <div className="fixed inset-0 z-[100] overflow-y-auto md:overflow-hidden flex md:items-center justify-center p-4 sm:p-8 md:p-12 lg:p-20">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8 md:p-12 lg:p-20">
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -269,8 +269,9 @@ export default function Education() {
               animate={{ scale: 1,    opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-              className="relative w-full max-w-3xl bg-[var(--card-bg)] border border-[var(--border)] rounded-[2.5rem] shadow-2xl z-10 overflow-y-auto md:max-h-[85vh] custom-scrollbar mx-auto my-12 md:my-0"
+              className="relative w-full max-w-3xl bg-[var(--card-bg)] border border-[var(--border)] rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl z-10 overflow-y-auto max-h-[85vh] custom-scrollbar mx-auto overscroll-contain"
               style={{ backgroundColor: 'var(--ink)' }}
+              data-lenis-prevent="true"
             >
               <div className="border-b border-[var(--divider)] p-6 flex justify-between items-start" style={{ background: 'var(--surface)' }}>
                 <div>

@@ -169,7 +169,7 @@ const experiences = [
     id: 'exp-enterprise', key: 'enterprise', index: '01',
     company: 'Exterprise Services',
     role: 'ServiceNow Developer',
-    category: 'ITSM · CSM · Enterprise',
+    category: 'ITSM · CSM',
     location: 'Remote, India',
     period: 'Jan 2025 – Present',
     type: 'Remote',
@@ -348,7 +348,6 @@ function ExperienceCard({ exp, i, active, onSelect, onCompanyClick }: {
         {/* Header row */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono font-bold" style={{ color: exp.accent }}>{exp.index}</span>
             <span className="text-xs text-[var(--text-primary)]/30 tracking-widest uppercase">{exp.category}</span>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -553,7 +552,7 @@ export default function WorkExperience() {
 
             {/* CTA row */}
             <div className="flex flex-col sm:flex-row justify-center gap-4 pt-12 relative z-10">
-              <a id="cta-linkedin-exp" href="https://www.linkedin.com/in/prakshal-jain-79379a17b/" target="_blank" rel="noopener noreferrer"
+              <a id="cta-linkedin-exp" href="https://www.linkedin.com/in/prakshal-jain17/" target="_blank" rel="noopener noreferrer"
                 className="px-8 py-4 rounded-full font-semibold text-sm tracking-wide hover:scale-105 transition-all duration-300 text-center"
                 style={{ background: '#60A5FA', color: '#0d0f1a', boxShadow: '0 0 40px rgba(96,165,250,0.35)' }}>
                 Full LinkedIn Profile ↗

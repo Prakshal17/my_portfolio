@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const socialLinks = [
-  { id: 'footer-li', label: 'LinkedIn', href: 'https://www.linkedin.com/in/prakshal-jain-79379a17b/' },
+  { id: 'footer-li', label: 'LinkedIn', href: 'https://www.linkedin.com/in/prakshal-jain17/' },
   { id: 'footer-gh', label: 'GitHub', href: 'https://github.com/Prakshal17' },
   { id: 'footer-mail', label: 'Email', href: 'mailto:praks1117@gmail.com' },
 ];
@@ -55,32 +55,58 @@ export default function Footer() {
               Open to ServiceNow, ITSM, CSM, Platform Engineering, or collaboration opportunities. Drop a line — I read everything.
             </motion.p>
 
-            {/* Contact Cards List */}
+            {/* Contact Cards Grid */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col gap-3 max-w-md"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg"
             >
               {[
-                { icon: '✉️', label: 'EMAIL', value: 'praks1117@gmail.com', href: 'mailto:praks1117@gmail.com' },
-                { icon: '🐙', label: 'GITHUB', value: 'github.com/Prakshal17', href: 'https://github.com/Prakshal17' },
-                { icon: '💼', label: 'LINKEDIN', value: 'linkedin.com/in/prakshal-jain', href: 'https://www.linkedin.com/in/prakshal-jain-79379a17b/' },
-                { icon: '📞', label: 'PHONE', value: '+91 8171000426', href: 'tel:+918171000426' },
-                { icon: '📍', label: 'LOCATION', value: 'Delhi NCR, India', href: null },
-              ].map((c) => (
-                <a 
-                  key={c.label} 
-                  href={c.href || '#'}
+                { icon: '✉️', label: 'EMAIL', value: 'praks1117@gmail.com', href: 'mailto:praks1117@gmail.com', accent: '#60A5FA' },
+                { icon: '🐙', label: 'GITHUB', value: 'github.com/Prakshal17', href: 'https://github.com/Prakshal17', accent: '#A78BFA' },
+                { icon: '💼', label: 'LINKEDIN', value: 'linkedin.com/in/prakshal-jain17', href: 'https://www.linkedin.com/in/prakshal-jain17/', accent: '#818CF8' },
+                { icon: '📞', label: 'PHONE', value: '+91 8171000426', href: 'tel:+918171000426', accent: '#34D399' },
+                { icon: '📍', label: 'LOCATION', value: 'Delhi NCR, India', href: null, accent: '#FB923C' },
+              ].map((c, idx) => (
+                <motion.a
+                  key={c.label}
+                  href={c.href || undefined}
                   target={c.href?.startsWith('http') ? '_blank' : undefined}
                   rel={c.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className={`flex items-center gap-4 p-4 rounded-xl border border-[var(--text-muted)]/20 transition-colors ${c.href ? 'hover:border-[#60A5FA] cursor-pointer' : 'cursor-default'}`}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.3 + idx * 0.07 }}
+                  whileHover={c.href ? { y: -3, scale: 1.02 } as any : undefined}
+                  className={`group relative flex items-center gap-3.5 p-4 rounded-2xl border border-[var(--border)] overflow-hidden transition-all duration-300 ${c.href ? 'cursor-pointer hover:border-[#60A5FA]/50' : 'cursor-default'} ${idx === 4 ? 'sm:col-span-2' : ''}`}
                   style={{ backgroundColor: 'var(--bg-secondary)' }}
                 >
-                  <span className="text-xl opacity-80" style={{ color: 'var(--text-primary)' }}>{c.icon}</span>
-                  <div>
-                    <p className="text-[10px] font-mono tracking-widest mb-1 uppercase" style={{ color: 'var(--text-muted)' }}>{c.label}</p>
-                    <p className="text-sm font-medium transition-colors" style={{ color: 'var(--text-primary)' }}>{c.value}</p>
+                  {/* Hover glow */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{ background: `radial-gradient(circle at 30% 50%, ${c.accent}12, transparent 70%)` }}
+                  />
+
+                  {/* Icon container */}
+                  <div
+                    className="relative flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-lg transition-transform duration-300 group-hover:scale-110"
+                    style={{ background: `linear-gradient(135deg, ${c.accent}18, ${c.accent}08)`, border: `1px solid ${c.accent}25` }}
+                  >
+                    {c.icon}
                   </div>
-                </a>
+
+                  {/* Text */}
+                  <div className="relative flex-1 min-w-0">
+                    <p className="text-[9px] font-mono tracking-[0.2em] uppercase mb-0.5 transition-colors opacity-70 group-hover:opacity-100" style={{ color: 'var(--text-muted)' }}>{c.label}</p>
+                    <p className="text-[13px] font-semibold transition-colors truncate" style={{ color: 'var(--text-primary)' }}>{c.value}</p>
+                  </div>
+
+                  {/* Arrow indicator for clickable items */}
+                  {c.href && (
+                    <div className="relative flex-shrink-0 transition-all duration-300 group-hover:translate-x-0.5 opacity-40 group-hover:opacity-100" style={{ color: 'var(--text-muted)' }}>
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7H13M13 7L8 2M13 7L8 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </div>
+                  )}
+                </motion.a>
               ))}
             </motion.div>
           </div>
@@ -89,7 +115,7 @@ export default function Footer() {
           <div className="w-full lg:w-1/2 flex justify-start lg:justify-end">
             <motion.div 
               initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.3 }}
-              className="w-full max-w-[480px] p-6 sm:p-8 rounded-3xl border border-[var(--text-muted)]/20 relative overflow-hidden transition-colors"
+              className="w-full max-w-[480px] p-6 sm:p-8 rounded-3xl border border-[var(--border)] relative overflow-hidden transition-colors"
               style={{ boxShadow: '0 20px 40px rgba(0,0,0,0.1)', backgroundColor: 'var(--bg-secondary)' }}
             >
               {/* Form Glow */}
@@ -105,7 +131,7 @@ export default function Footer() {
                     placeholder="Your name" 
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3.5 rounded-xl border border-[var(--text-muted)]/20 text-sm focus:outline-none focus:border-[#60A5FA] transition-colors"
+                    className="w-full px-4 py-3.5 rounded-xl border border-[var(--border)] text-sm focus:outline-none focus:border-[#60A5FA] transition-colors"
                     style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}
                   />
                 </div>
@@ -119,7 +145,7 @@ export default function Footer() {
                     placeholder="you@company.com" 
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3.5 rounded-xl border border-[var(--text-muted)]/20 text-sm focus:outline-none focus:border-[#60A5FA] transition-colors"
+                    className="w-full px-4 py-3.5 rounded-xl border border-[var(--border)] text-sm focus:outline-none focus:border-[#60A5FA] transition-colors"
                     style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}
                   />
                 </div>
@@ -133,7 +159,7 @@ export default function Footer() {
                     placeholder="Tell me a bit about what you're working on..." 
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3.5 rounded-xl border border-[var(--text-muted)]/20 text-sm focus:outline-none focus:border-[#60A5FA] transition-colors resize-none"
+                    className="w-full px-4 py-3.5 rounded-xl border border-[var(--border)] text-sm focus:outline-none focus:border-[#60A5FA] transition-colors resize-none"
                     style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}
                   />
                 </div>

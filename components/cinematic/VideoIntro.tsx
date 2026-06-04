@@ -12,7 +12,7 @@ export default function VideoIntro() {
   const ambientVideoRef = useRef<HTMLVideoElement>(null);
   
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const [showHint, setShowHint] = useState(true);
 
   // Auto-hide sound hint after a few seconds
@@ -110,7 +110,6 @@ export default function VideoIntro() {
         src="/assets/about-me.mp4"
         autoPlay
         muted
-        loop
         playsInline
       />
 
@@ -121,8 +120,8 @@ export default function VideoIntro() {
         src="/assets/about-me.mp4"
         autoPlay
         muted={isMuted}
-        loop
         playsInline
+        onEnded={() => setIsPlaying(false)}
       />
 
       {/* Cinematic Dark Gradient */}

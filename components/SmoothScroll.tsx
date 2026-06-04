@@ -12,6 +12,12 @@ declare global {
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    // Force scroll to top on refresh
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     const lenis = new Lenis({
       // Silky-smooth feel — similar to Framer/Spline sites
       duration: 1.4,
