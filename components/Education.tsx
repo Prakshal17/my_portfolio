@@ -235,15 +235,42 @@ export default function Education() {
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8" style={{ color: 'var(--text-primary)' }}>
               EDUCATION
             </h2>
-            <p className="text-sm" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>Hover over the BE card to see the graduation cap ✨</p>
           </div>
-          <div className="mt-8 h-px bg-gradient-to-r from-accent/40 via-white/10 to-transparent" />
+          <div className="mt-4 h-px bg-gradient-to-r from-accent/40 via-white/10 to-transparent" />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {educationItems.map((edu, i) => (
-            <EducationCard key={edu.id} edu={edu} i={i} />
-          ))}
+        <div className="relative pt-4">
+          {/* Horizontal Line connecting the dots */}
+          <div className="hidden md:block absolute top-11 left-[16.6%] right-[16.6%] h-[2px] bg-gradient-to-l from-[#A78BFA] via-[#818CF8] to-[#60A5FA] opacity-50 z-0" />
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+            {educationItems.map((edu, i) => (
+              <div key={edu.id} className="flex flex-col">
+                {/* Timeline Node */}
+                <div className="hidden md:flex justify-center mb-8 relative z-20">
+                  <motion.div
+                    animate={{ boxShadow: [`0 0 10px ${edu.accent}40`, `0 0 30px ${edu.accent}80`, `0 0 10px ${edu.accent}40`] }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                    className="w-14 h-14 rounded-full bg-ink flex items-center justify-center border-[2px]"
+                    style={{ borderColor: edu.accent }}
+                  >
+                    {edu.id === 'edu-be' ? (
+                      <div className="flex items-center justify-center pr-1 pb-1">
+                        <GradCap color={edu.accent} size={32} />
+                      </div>
+                    ) : (
+                      <span className="font-mono text-sm font-bold tracking-wider" style={{ color: edu.accent }}>
+                        {edu.id === 'edu-12' ? '12th' : '10th'}
+                      </span>
+                    )}
+                  </motion.div>
+                </div>
+                
+                {/* Card */}
+                <EducationCard edu={edu} i={i} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
