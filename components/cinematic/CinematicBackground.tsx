@@ -54,7 +54,7 @@ export default function CinematicBackground() {
       <video
         ref={ambientVideoRef}
         className={styles.ambientVideo}
-        src="/assets/hero-video.mp4"
+        src="/assets/about-me.mp4"
         autoPlay
         muted
         loop
@@ -65,7 +65,7 @@ export default function CinematicBackground() {
       <video
         ref={videoRef}
         className={styles.foregroundVideo}
-        src="/assets/hero-video.mp4"
+        src="/assets/about-me.mp4"
         autoPlay
         muted={isMuted}
         loop
