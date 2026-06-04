@@ -540,10 +540,9 @@ export default function WorkExperience() {
                 );
               })}
             </div>
-          </div>
 
             {/* CTA row */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 pt-12 relative z-10">
               <a id="cta-linkedin-exp" href="https://www.linkedin.com/in/prakshal-jain-79379a17b/" target="_blank" rel="noopener noreferrer"
                 className="px-8 py-4 rounded-full font-semibold text-sm tracking-wide hover:scale-105 transition-all duration-300 text-center"
                 style={{ background: '#60A5FA', color: '#0d0f1a', boxShadow: '0 0 40px rgba(96,165,250,0.35)' }}>
