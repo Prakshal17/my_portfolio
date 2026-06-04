@@ -11,6 +11,7 @@ export default function CinematicBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const ambientVideoRef = useRef<HTMLVideoElement>(null);
   const hasEndedRef = useRef(false);
+  const hasUserMutedRef = useRef(false);
 
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
@@ -21,7 +22,6 @@ export default function CinematicBackground() {
     if (!video || !ambient) return;
 
     // Attempt to play UNMUTED first. 
-    // This will succeed on refresh because the user has interacted with the site!
     video.muted = false;
     ambient.muted = true;
     
@@ -41,6 +41,33 @@ export default function CinematicBackground() {
     }
     ambient.play().catch(() => {});
   }, []);
+
+  // Unmute on first user interaction if muted by autoplay block
+  useEffect(() => {
+    const handleInteraction = () => {
+      const video = videoRef.current;
+      if (!video) return;
+
+      if (video.muted && !hasUserMutedRef.current && isPlaying) {
+        video.muted = false;
+        setIsMuted(false);
+      }
+
+      cleanup();
+    };
+
+    const cleanup = () => {
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('keydown', handleInteraction);
+      window.removeEventListener('pointerdown', handleInteraction);
+    };
+
+    window.addEventListener('click', handleInteraction);
+    window.addEventListener('keydown', handleInteraction);
+    window.addEventListener('pointerdown', handleInteraction);
+
+    return cleanup;
+  }, [isPlaying]);
 
   // GSAP entrance animations
   useEffect(() => {
@@ -79,6 +106,13 @@ export default function CinematicBackground() {
           ambientVideoRef.current.currentTime = 0;
           hasEndedRef.current = false;
         }
+
+        // Unmute on manual play unless explicitly muted by user
+        if (!hasUserMutedRef.current) {
+          videoRef.current.muted = false;
+          setIsMuted(false);
+        }
+
         videoRef.current.play();
         ambientVideoRef.current.play();
         setIsPlaying(true);
@@ -91,6 +125,7 @@ export default function CinematicBackground() {
       const newMuted = !isMuted;
       videoRef.current.muted = newMuted;
       setIsMuted(newMuted);
+      hasUserMutedRef.current = newMuted;
     }
   };
 
@@ -111,7 +146,7 @@ export default function CinematicBackground() {
         className={styles.foregroundVideo}
         src="/assets/about-me.mp4"
         autoPlay
-        muted={false}
+        muted={isMuted}
         playsInline
         onEnded={handleVideoEnded}
       />
