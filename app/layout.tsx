@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { Analytics } from '@vercel/analytics/react';
+import SmoothScroll from '@/components/SmoothScroll';
+import { ThemeProvider } from '@/components/Navbar';
+import ScrollToTop from '@/components/ScrollToTop';
 
 export const metadata: Metadata = {
   title: 'Prakshal Jain | ServiceNow Developer — CSA · CAD · CIS-CSM',
@@ -25,11 +29,6 @@ export const metadata: Metadata = {
     icon: '/favicon.svg',
   },
 };
-
-import { Analytics } from '@vercel/analytics/react';
-import SmoothScroll from '@/components/SmoothScroll';
-import { ThemeProvider } from '@/components/Navbar';
-import ScrollToTop from '@/components/ScrollToTop';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
