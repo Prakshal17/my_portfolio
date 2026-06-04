@@ -13,9 +13,8 @@ import Certifications from '@/components/Certifications';
 import WorkExperience from '@/components/WorkExperience';
 import TechMarquee from '@/components/TechMarquee';
 
-const ScrollyCanvas = dynamic(() => import('@/components/ScrollyCanvas'), { ssr: false });
 const Overlay = dynamic(() => import('@/components/Overlay'), { ssr: false });
-const HeroCarousel = dynamic(() => import('@/components/HeroCarousel'), { ssr: false });
+const CinematicBackground = dynamic(() => import('@/components/cinematic/CinematicBackground'), { ssr: false });
 
 const USE_NEW_HERO = false; // Set to false to revert to ScrollyCanvas
 
@@ -25,15 +24,11 @@ export default function Home() {
       {/* ── Fixed Navigation ───────────────────────────────── */}
       <Navbar />
 
-      {/* ── Scrollytelling Hero (500vh) or Carousel ─────────────── */}
-      {USE_NEW_HERO ? (
-        <HeroCarousel />
-      ) : (
-        <div className="relative">
-          <ScrollyCanvas />
-          <Overlay />
-        </div>
-      )}
+      {/* ── Cinematic Video Hero with Left/Right Pop Overlay ── */}
+      <div className="relative h-[calc(100vh-4rem)]">
+        <CinematicBackground />
+        <Overlay />
+      </div>
 
       {/* ── Floating Tech Stack Marquee ──────────────────────── */}
       <TechMarquee />
