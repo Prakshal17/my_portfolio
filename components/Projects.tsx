@@ -61,6 +61,18 @@ const academicProjects = [
     tags: ['Java', 'MySQL'],
     accent: '#FBBF24',
   },
+
+  {
+    id: 'proj-6',
+    index: '06',
+    name: 'Portfolio Website',
+    type: 'Personal Project',
+    period: '2024 - Present',
+    description: 'A modern, responsive portfolio website built with Next.js, Tailwind CSS, and Framer Motion. Features a dynamic theme, interactive timelines, and a cinematic video hero section.',
+    college: 'Personal',
+    tags: ['Next.js', 'Tailwind CSS', 'Framer Motion', 'React'],
+    accent: '#818CF8',
+  }
 ];
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -117,12 +129,12 @@ export default function Projects() {
           transition={{ duration: 0.8 }}
         >
           <div className="flex flex-col items-center text-center">
-            <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">Academic</p>
+            <p className="text-xs tracking-[0.35em] uppercase text-accent font-medium mb-4">My</p>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8 uppercase" style={{ color: 'var(--text-primary)' }}>
               PROJECTS
             </h2>
             <p className="text-sm md:text-base max-w-xl mx-auto leading-relaxed font-mono tracking-widest uppercase transition-colors" style={{ color: 'var(--text-muted)' }}>
-              Walchand Institute of Technology, Solapur
+              Walchand Institute of Technology & Personal
             </p>
           </div>
         </motion.div>

@@ -80,28 +80,27 @@ const educationItems = [
 
 type EduItem = typeof educationItems[0];
 
-function EducationCard({ edu, i }: { edu: EduItem; i: number }) {
+function EducationCard({ edu, i, onClick }: { edu: EduItem; i: number; onClick: () => void }) {
   const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
       id={edu.id}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: i * 0.12 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="glass-card rounded-2xl p-8 group relative overflow-hidden cursor-default hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] transition-all duration-300 border border-transparent hover:border-white/10"
-      style={{ borderColor: hovered ? `${edu.accent}40` : undefined, boxShadow: hovered ? `0 0 40px ${edu.accent}10` : undefined }}
+      onClick={onClick}
+      className="relative w-full rounded-[40px] p-6 sm:p-10 cursor-pointer shadow-2xl transition-colors group overflow-hidden"
+      style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--border)' }}
+      whileHover={{ y: -5, borderColor: `${edu.accent}60` }}
     >
-      {/* Top accent bar */}
-      <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl"
-        style={{ background: `linear-gradient(to right, ${edu.accent}, transparent)` }} />
-
-      {/* Glow */}
-      <div className="absolute -top-16 -right-16 w-52 h-52 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-3xl pointer-events-none"
-        style={{ background: `${edu.accent}15` }} />
+      {/* Dynamic Background matching accent */}
+      <div className="absolute -top-[50%] -right-[20%] w-[100%] h-[150%] rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-700 blur-[120px] pointer-events-none z-0"
+        style={{ background: `radial-gradient(circle, ${edu.accent} 0%, transparent 70%)` }}
+      />
 
       {/* Graduation cap animation — BE card only */}
       {edu.showCap && (
@@ -112,111 +111,91 @@ function EducationCard({ edu, i }: { edu: EduItem; i: number }) {
               animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
               exit={{ opacity: 0, y: -8, scale: 0.7, rotate: 15 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute top-4 right-5 z-10"
+              className="absolute top-6 right-8 z-10"
             >
-              <GradCap color={edu.accent} size={52} />
+              <GradCap color={edu.accent} size={48} />
             </motion.div>
           )}
         </AnimatePresence>
       )}
 
-      {/* Level badge */}
-      <div className="flex items-center gap-3 mb-5">
-        <span className="text-2xl">{edu.icon}</span>
-        <span className="text-xs tracking-[0.3em] uppercase font-bold" style={{ color: edu.accent }}>
-          {edu.level}
-        </span>
-      </div>
-
-      {/* Field */}
-      <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>{edu.field}</h3>
-
-      {/* Institution */}
-      <p className="text-sm font-semibold mb-0.5" style={{ color: 'var(--text-muted)' }}>{edu.institution}</p>
-      <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)', opacity: 0.8 }}>📍 {edu.location}</p>
-      <p className="text-xs mb-4" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>{edu.board}</p>
-
-      {/* Subjects */}
-      <div className="mb-4 flex flex-wrap gap-1.5">
-        {edu.subjects.split(',').map(s => (
-          <span key={s.trim()} className="px-2.5 py-1 rounded-full text-xs"
-            style={{ background: `${edu.accent}10`, color: `${edu.accent}CC`, border: `1px solid ${edu.accent}25` }}>
-            {s.trim()}
-          </span>
-        ))}
-      </div>
-
-      {edu.description && (
-        <motion.p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>
-          {edu.description}
-        </motion.p>
-      )}
-
-      {/* ── Grade Block — Bold CGPA + Distinction + A+ ──── */}
-      {edu.cgpa ? (
-        <div className="mt-4 rounded-xl p-4 relative overflow-hidden"
-          style={{ background: `${edu.accent}08`, border: `1px solid ${edu.accent}20` }}>
-          {/* CGPA big bold display */}
-          <div className="flex items-baseline gap-1.5 mb-2">
-            <span className="text-3xl font-black" style={{ color: edu.accent }}>
-              {edu.cgpa}
-            </span>
-            <span className="text-sm font-semibold" style={{ color: `${edu.accent}90` }}>
-              / {edu.cgpaMax} CGPA
-            </span>
-            {edu.percentage && (
-              <span className="ml-2 text-xs font-mono" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>
-                ({edu.percentage})
-              </span>
-            )}
-          </div>
-
-          {/* Distinction & Grade badges */}
-          <div className="flex flex-wrap gap-2">
-            {edu.distinction && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold"
-                style={{ background: `${edu.accent}18`, color: edu.accent, border: `1px solid ${edu.accent}35` }}>
-                🏅 {edu.distinction}
-              </span>
-            )}
-            {edu.letterGrade && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-black"
-                style={{ background: 'rgba(52,211,153,0.12)', color: '#34D399', border: '1px solid rgba(52,211,153,0.3)' }}>
-                ⭐ Grade {edu.letterGrade}
-              </span>
-            )}
-          </div>
-        </div>
-      ) : (
-        /* Year + simple grade for non-CGPA cards */
-        <div className="flex items-center justify-between mt-2">
-          <span className="text-xs font-mono" style={{ color: 'var(--text-muted)', opacity: 0.5 }}>{edu.year}</span>
-          <span className="text-sm font-bold px-3 py-1 rounded-full"
-            style={{ background: `${edu.accent}15`, color: edu.accent, border: `1px solid ${edu.accent}30` }}>
-            {edu.percentage}
+      <div className="relative z-10 flex flex-col h-full">
+        {/* Level badge */}
+        <div className="flex items-center gap-3 mb-5">
+          <span className="text-3xl">{edu.icon}</span>
+          <span className="text-xs tracking-[0.3em] uppercase font-bold" style={{ color: edu.accent }}>
+            {edu.level}
           </span>
         </div>
-      )}
 
-      {/* Year for CGPA cards */}
-      {edu.cgpa && (
-        <p className="text-xs font-mono mt-3" style={{ color: 'var(--text-muted)', opacity: 0.4 }}>
-          Graduated {edu.year.split('–')[1].trim()}
-        </p>
-      )}
+        {/* Field */}
+        <h3 className="text-2xl sm:text-3xl font-black tracking-normal mb-3" style={{ color: 'var(--text-primary)' }}>
+          {edu.field}
+        </h3>
 
-      {/* Hover hint for BE card */}
-      {edu.showCap && !hovered && (
-        <p className="absolute bottom-3 right-4 text-xs" style={{ color: 'var(--text-muted)', opacity: 0.25 }}>hover for 🎓</p>
-      )}
+        {/* Institution & Year */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+          <div>
+            <p className="text-sm font-semibold" style={{ color: 'var(--text-muted)' }}>{edu.institution}</p>
+            <p className="text-xs" style={{ color: 'var(--text-muted)', opacity: 0.8 }}>📍 {edu.location}</p>
+          </div>
+          <span className="text-xs font-mono opacity-60 tracking-widest uppercase">{edu.year}</span>
+        </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ background: `linear-gradient(to right, transparent, ${edu.accent}60, transparent)` }} />
+        {/* Subjects Preview */}
+        <div className="mb-4 flex flex-wrap gap-1.5 flex-grow">
+          {edu.subjects.split(',').slice(0, 3).map(s => (
+            <span key={s.trim()} className="px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-bold tracking-wide"
+              style={{ background: `${edu.accent}15`, color: edu.accent }}>
+              {s.trim()}
+            </span>
+          ))}
+          {edu.subjects.split(',').length > 3 && (
+            <span className="px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-bold tracking-wide"
+              style={{ background: `${edu.accent}15`, color: edu.accent }}>
+              +{edu.subjects.split(',').length - 3} more
+            </span>
+          )}
+        </div>
+
+        {/* Simple Grade */}
+        <div className="flex items-center justify-between mt-auto pt-4 border-t" style={{ borderColor: 'var(--divider)' }}>
+          {edu.cgpa ? (
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-2xl font-black" style={{ color: edu.accent }}>{edu.cgpa}</span>
+              <span className="text-xs font-semibold" style={{ color: `${edu.accent}90` }}>/ {edu.cgpaMax} CGPA</span>
+            </div>
+          ) : (
+            <span className="text-sm font-bold" style={{ color: edu.accent }}>{edu.percentage}</span>
+          )}
+          <span className="text-xs font-bold tracking-wider uppercase opacity-50">Click for details →</span>
+        </div>
+      </div>
     </motion.div>
   );
 }
 
 export default function Education() {
+  const [selectedEdu, setSelectedEdu] = useState<EduItem | null>(null);
+
+  // Handle browser back button to close modal
+  useEffect(() => {
+    const handlePopState = () => {
+      if (selectedEdu) setSelectedEdu(null);
+    };
+    if (selectedEdu) {
+      window.history.pushState({ modal: true }, '');
+      window.addEventListener('popstate', handlePopState);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedEdu]);
+
   return (
     <section id="education" className="py-24 sm:py-32 relative overflow-hidden bg-ink transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 relative">
@@ -245,7 +224,7 @@ export default function Education() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
             {educationItems.map((edu, i) => (
-              <div key={edu.id} className="flex flex-col">
+              <div key={edu.id} className="flex flex-col h-full">
                 {/* Timeline Node */}
                 <div className="hidden md:flex justify-center mb-8 relative z-20">
                   <motion.div
@@ -267,12 +246,110 @@ export default function Education() {
                 </div>
                 
                 {/* Card */}
-                <EducationCard edu={edu} i={i} />
+                <EducationCard edu={edu} i={i} onClick={() => setSelectedEdu(edu)} />
               </div>
             ))}
           </div>
         </div>
       </div>
+
+      {/* Detail Modal */}
+      <AnimatePresence>
+        {selectedEdu && (
+          <div className="fixed inset-0 z-[100] overflow-y-auto md:overflow-hidden flex md:items-center justify-center p-4 sm:p-8 md:p-12 lg:p-20">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-ink/90 backdrop-blur-xl"
+              onClick={() => setSelectedEdu(null)}
+            />
+            {/* Modal */}
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0, y: 40 }}
+              animate={{ scale: 1,    opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+              className="relative w-full max-w-3xl bg-[var(--card-bg)] border border-[var(--border)] rounded-[2.5rem] shadow-2xl z-10 overflow-y-auto md:max-h-[85vh] custom-scrollbar mx-auto my-12 md:my-0"
+              style={{ backgroundColor: 'var(--ink)' }}
+            >
+              <div className="border-b border-[var(--divider)] p-6 flex justify-between items-start" style={{ background: 'var(--surface)' }}>
+                <div>
+                  <span className="text-xs font-mono font-bold mb-2 block" style={{ color: selectedEdu.accent }}>{selectedEdu.level}</span>
+                  <h3 className="text-2xl font-black mb-2" style={{ color: 'var(--text-primary)' }}>{selectedEdu.field}</h3>
+                  <p className="text-sm font-mono opacity-50 flex items-center gap-2">
+                    <span>📍 {selectedEdu.location}</span>
+                    <span>⏱ {selectedEdu.year}</span>
+                  </p>
+                </div>
+                <button onClick={() => setSelectedEdu(null)} className="w-8 h-8 rounded-full bg-[var(--text-primary)]/10 hover:bg-[var(--text-primary)]/20 flex items-center justify-center transition-colors">
+                  ✕
+                </button>
+              </div>
+
+              <div className="p-6 md:p-8 space-y-6">
+                {/* Grades Block */}
+                <div className="rounded-2xl p-6" style={{ background: `${selectedEdu.accent}08`, border: `1px solid ${selectedEdu.accent}20` }}>
+                  <p className="text-xs tracking-widest uppercase font-bold mb-3" style={{ color: selectedEdu.accent }}>Academic Score</p>
+                  <div className="flex flex-wrap items-baseline gap-3">
+                    {selectedEdu.cgpa ? (
+                      <>
+                        <span className="text-4xl font-black" style={{ color: selectedEdu.accent }}>{selectedEdu.cgpa}</span>
+                        <span className="text-sm font-semibold opacity-70">/ {selectedEdu.cgpaMax} CGPA</span>
+                        {selectedEdu.percentage && <span className="ml-2 font-mono opacity-60">({selectedEdu.percentage})</span>}
+                      </>
+                    ) : (
+                      <span className="text-4xl font-black" style={{ color: selectedEdu.accent }}>{selectedEdu.percentage}</span>
+                    )}
+                  </div>
+                  
+                  {(selectedEdu.distinction || selectedEdu.letterGrade) && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {selectedEdu.distinction && (
+                        <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold"
+                          style={{ background: `${selectedEdu.accent}15`, color: selectedEdu.accent }}>
+                          🏅 {selectedEdu.distinction}
+                        </span>
+                      )}
+                      {selectedEdu.letterGrade && (
+                        <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-black"
+                          style={{ background: 'rgba(52,211,153,0.12)', color: '#34D399' }}>
+                          ⭐ Grade {selectedEdu.letterGrade}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Description & Subjects */}
+                <div>
+                  <p className="text-xs tracking-widest uppercase font-bold mb-3" style={{ color: selectedEdu.accent }}>Institution & Board</p>
+                  <p className="text-sm font-bold mb-1" style={{ color: 'var(--text-primary)' }}>{selectedEdu.institution}</p>
+                  <p className="text-sm opacity-70">{selectedEdu.board}</p>
+                </div>
+
+                {selectedEdu.description && (
+                  <div>
+                    <p className="text-xs tracking-widest uppercase font-bold mb-3" style={{ color: selectedEdu.accent }}>Overview</p>
+                    <p className="text-sm opacity-70 leading-relaxed">{selectedEdu.description}</p>
+                  </div>
+                )}
+
+                <div>
+                  <p className="text-xs tracking-widest uppercase font-bold mb-3" style={{ color: selectedEdu.accent }}>Key Subjects</p>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedEdu.subjects.split(',').map((s) => (
+                      <span key={s.trim()} className="px-3 py-1.5 rounded-md text-xs font-medium border"
+                        style={{ borderColor: `${selectedEdu.accent}30`, color: `${selectedEdu.accent}CC`, background: `${selectedEdu.accent}0A` }}>
+                        {s.trim()}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
