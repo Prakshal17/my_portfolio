@@ -313,7 +313,7 @@ export default function Overlay() {
             if (info.offset.x > 50) setActive(prev => (prev - 1 + 4) % 4);
             else if (info.offset.x < -50) setActive(prev => (prev + 1) % 4);
           }}
-          className="md:hidden absolute inset-0 flex flex-col justify-between pointer-events-auto z-20 px-5 pt-20 pb-20"
+          className="md:hidden absolute inset-0 flex flex-col justify-between pointer-events-auto z-20 px-5 pt-28 pb-24"
         >
           {/* Top area: name/tag */}
           <div style={{ background: 'linear-gradient(to bottom, var(--hero-fade-mobile) 60%, var(--hero-fade-transparent))' }} className="pb-6">
@@ -326,15 +326,15 @@ export default function Overlay() {
         </motion.div>
 
         {/* ── DESKTOP: left + right panels ─────────────────── */}
-        <div className="hidden md:flex absolute inset-0 items-center justify-between pointer-events-auto z-20">
+        <div className="hidden md:flex absolute inset-0 items-center justify-between pointer-events-auto z-20 pt-16 lg:pt-20">
           {/* LEFT */}
-          <div className="w-64 lg:w-80 h-full flex flex-col justify-center pl-8 lg:pl-14"
+          <div className="w-64 lg:w-80 xl:w-96 h-full flex flex-col justify-center pl-8 lg:pl-14 xl:pl-20"
             style={{ background: 'linear-gradient(to right, var(--hero-fade) 70%, var(--hero-fade-transparent))' }}>
             <LeftPanel section={active} />
           </div>
 
           {/* RIGHT */}
-          <div className="w-56 lg:w-72 h-full flex flex-col justify-center pr-8 lg:pr-14 items-end"
+          <div className="w-56 lg:w-72 xl:w-80 h-full flex flex-col justify-center pr-8 lg:pr-14 xl:pr-20 items-end"
             style={{ background: 'linear-gradient(to left, var(--hero-fade) 70%, var(--hero-fade-transparent))' }}>
             <RightPanel section={active} />
           </div>

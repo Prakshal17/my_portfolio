@@ -102,9 +102,9 @@ export default function Navbar() {
         }}
       >
         {/* Logo and Time */}
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1.5">
           {timeStr && (
-            <div className="text-[10px] font-mono tracking-widest text-[var(--text-primary)]/60 flex items-center gap-2">
+            <div className="text-[9px] md:text-[10px] font-mono tracking-wider text-[var(--text-primary)]/80 flex items-center gap-1.5 whitespace-nowrap bg-[var(--text-primary)]/5 px-2 py-1 rounded-md border border-[var(--text-primary)]/10 w-fit">
               <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
               {timeStr}
             </div>
