@@ -70,7 +70,7 @@ export default function CinematicBackground() {
         muted={isMuted}
         loop
         playsInline
-        style={{ objectPosition: 'center 10%' }} 
+        style={{ objectPosition: 'center 0%' }} 
       />
 
       {/* Cinematic Dark Gradient to blend with Overlay */}
