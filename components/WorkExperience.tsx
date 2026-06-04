@@ -525,9 +525,19 @@ export default function WorkExperience() {
                     {/* Empty half for spacing on desktop */}
                     <div className="hidden md:block w-5/12" />
                     
-                    {/* Center Node / Dot */}
-                    <div className="absolute left-4 md:left-1/2 w-5 h-5 rounded-full bg-ink border-[3px] -translate-x-1/2 z-10 shadow-lg" 
-                         style={{ borderColor: exp.accent, boxShadow: `0 0 15px ${exp.accent}50` }} />
+                    {/* Center Animated Number Node */}
+                    <div className="absolute left-4 md:left-1/2 -translate-x-1/2 z-20 flex items-center justify-center">
+                      <motion.div
+                        animate={{ boxShadow: [`0 0 10px ${exp.accent}40`, `0 0 30px ${exp.accent}80`, `0 0 10px ${exp.accent}40`] }}
+                        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                        className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-ink flex items-center justify-center border-[2px]"
+                        style={{ borderColor: exp.accent }}
+                      >
+                        <span className="font-mono text-sm md:text-base font-bold" style={{ color: exp.accent }}>
+                          {exp.index}
+                        </span>
+                      </motion.div>
+                    </div>
                     
                     {/* The Card */}
                     <div className="w-full pl-12 md:pl-0 md:w-5/12">
