@@ -511,14 +511,36 @@ export default function WorkExperience() {
         </motion.div>
 
 
-          {/* Experience cards */}
-          <div className="max-w-4xl mx-auto flex flex-col gap-5">
-            {experiences.map((exp, i) => (
-              <ExperienceCard key={exp.id} exp={exp} i={i}
-                active={activeKey === exp.key}
-                onSelect={() => setActiveKey(exp.key)}
-                onCompanyClick={setSelectedCompany} />
-            ))}
+          {/* Experience cards - Alternating Vertical Timeline */}
+          <div className="relative max-w-6xl mx-auto mb-16">
+            {/* The central vertical line */}
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-white/20 via-white/10 to-transparent -translate-x-1/2 z-0" />
+            
+            <div className="flex flex-col gap-12 md:gap-24 relative z-10">
+              {experiences.map((exp, i) => {
+                const isLeft = i % 2 === 0; // 1st left, 2nd right, 3rd left, 4th right
+                return (
+                  <div key={exp.id} className={`relative flex flex-col md:flex-row w-full items-center ${isLeft ? 'md:flex-row-reverse' : ''}`}>
+                    
+                    {/* Empty half for spacing on desktop */}
+                    <div className="hidden md:block w-5/12" />
+                    
+                    {/* Center Node / Dot */}
+                    <div className="absolute left-4 md:left-1/2 w-5 h-5 rounded-full bg-ink border-[3px] -translate-x-1/2 z-10 shadow-lg" 
+                         style={{ borderColor: exp.accent, boxShadow: `0 0 15px ${exp.accent}50` }} />
+                    
+                    {/* The Card */}
+                    <div className="w-full pl-12 md:pl-0 md:w-5/12">
+                      <ExperienceCard exp={exp} i={i}
+                        active={activeKey === exp.key}
+                        onSelect={() => setActiveKey(exp.key)}
+                        onCompanyClick={setSelectedCompany} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
 
             {/* CTA row */}
             <div className="flex flex-col sm:flex-row gap-4 pt-2">

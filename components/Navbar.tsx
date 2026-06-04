@@ -65,6 +65,24 @@ export default function Navbar() {
   const [isHovered, setIsHovered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, toggle } = useTheme();
+  const [timeStr, setTimeStr] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      };
+      const timeString = new Intl.DateTimeFormat('en-US', options).format(new Date());
+      setTimeStr(`INDIA TIME - ${timeString}`);
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
@@ -83,15 +101,23 @@ export default function Navbar() {
           paddingBottom: isHovered || isMenuOpen ? '0.75rem' : '1.25rem',
         }}
       >
-        {/* Logo */}
-        <motion.a id="nav-logo" href="#"
-          className="flex items-center gap-2 group"
-          whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-          <span className="text-xl font-black tracking-tighter font-heading" style={{ color: '#60A5FA' }}>PJ</span>
-          <span className={`hidden sm:block text-xs tracking-widest font-bold font-heading group-hover:opacity-70 transition-colors ${theme === 'dark' ? 'text-white/30' : 'text-black/40'}`}>
-            Prakshal Jain
-          </span>
-        </motion.a>
+        {/* Logo and Time */}
+        <div className="flex flex-col gap-1">
+          {timeStr && (
+            <div className="text-[10px] font-mono tracking-widest text-[var(--text-primary)]/60 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+              {timeStr}
+            </div>
+          )}
+          <motion.a id="nav-logo" href="#"
+            className="flex items-center gap-2 group"
+            whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+            <span className="text-xl font-black tracking-tighter font-heading" style={{ color: '#60A5FA' }}>PJ</span>
+            <span className={`hidden sm:block text-xs tracking-widest font-bold font-heading group-hover:opacity-70 transition-colors ${theme === 'dark' ? 'text-white/30' : 'text-black/40'}`}>
+              Prakshal Jain
+            </span>
+          </motion.a>
+        </div>
 
         {/* Nav links + Theme Toggle */}
         <ul className="flex items-center gap-3 md:gap-6">
