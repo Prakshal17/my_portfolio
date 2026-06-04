@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 import { Analytics } from '@vercel/analytics/react';
 import SmoothScroll from '@/components/SmoothScroll';
 import { ThemeProvider } from '@/components/Navbar';
+import ScrollToTop from '@/components/ScrollToTop';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <SmoothScroll>{children}</SmoothScroll>
         </ThemeProvider>
+        <ScrollToTop />
         <Analytics />
       </body>
     </html>

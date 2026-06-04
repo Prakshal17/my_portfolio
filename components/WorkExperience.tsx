@@ -520,7 +520,7 @@ export default function WorkExperience() {
               {experiences.map((exp, i) => {
                 const isLeft = i % 2 === 0; // 1st left, 2nd right, 3rd left, 4th right
                 return (
-                  <div key={exp.id} className={`relative flex flex-col md:flex-row w-full items-center ${isLeft ? 'md:flex-row-reverse' : ''}`}>
+                  <div key={exp.id} className={`relative flex flex-col md:flex-row w-full items-center justify-between ${isLeft ? 'md:flex-row-reverse' : ''}`}>
                     
                     {/* Empty half for spacing on desktop */}
                     <div className="hidden md:block w-5/12" />
