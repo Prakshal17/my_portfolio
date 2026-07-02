@@ -117,6 +117,7 @@ function LeftPanel({ section }: { section: number }) {
         <AnimIcon emoji="⚙️" label="ServiceNow" accent="#60A5FA" delay={0.6} />
         <AnimIcon emoji="🔗" label="ITSM" accent="#818CF8" delay={0.7} />
         <AnimIcon emoji="🤖" label="AI" accent="#34D399" delay={0.8} />
+        <AnimIcon emoji="🗄️" label="CMDB" accent="#FB923C" delay={0.9} />
       </motion.div>
     </motion.div>,
 
@@ -208,7 +209,7 @@ function RightPanel({ section }: { section: number }) {
         {[
           { v: '3+', l: 'Yrs ServiceNow', accent: '#60A5FA' },
           { v: '8+', l: 'Clients', accent: '#818CF8' },
-          { v: '3×', l: 'Certified', accent: '#34D399' },
+          { v: '4×', l: 'Certified', accent: '#34D399' },
         ].map((s, i) => <Stat key={s.l} v={s.v} l={s.l} accent={s.accent} delay={0.2 + i * 0.1} />)}
       </div>
     </motion.div>,
@@ -231,6 +232,7 @@ function RightPanel({ section }: { section: number }) {
         { emoji: '🏅', label: 'CSA Certified', accent: '#60A5FA' },
         { emoji: '🏅', label: 'CAD Certified', accent: '#818CF8' },
         { emoji: '🏅', label: 'CIS-CSM', accent: '#34D399' },
+        { emoji: '🏅', label: 'CIS-DF', accent: '#34D399' },
         { emoji: '⭐', label: '6x Micro-Certs', accent: '#FB923C' },
         { emoji: '🤖', label: 'Agentic AI Exec', accent: '#F472B6' },
       ].map((c, i) => (

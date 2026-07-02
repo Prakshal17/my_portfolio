@@ -166,12 +166,29 @@ function WorkspaceScene({ company }: { company: string }) {
 /* ─── Experience Data (from resume) ─────────────────────── */
 const experiences = [
   {
-    id: 'exp-enterprise', key: 'enterprise', index: '01',
+    id: 'exp-rsm', key: 'rsm', index: '01',
+    company: 'RSM US LLP',
+    role: 'ServiceNow Senior Associate',
+    category: 'ServiceNow',
+    location: 'Gurugram',
+    period: 'Jun 2026 – Present',
+    type: 'Hybrid',
+    accent: '#F59E0B',
+    logo: '',
+    summary: 'Working on enterprise ServiceNow solutions at RSM US LLP.',
+    impact: [],
+    bullets: [
+      'Contributing to ServiceNow development and implementations.'
+    ],
+    tags: ['ServiceNow'],
+  },
+  {
+    id: 'exp-enterprise', key: 'enterprise', index: '02',
     company: 'Exterprise Services',
     role: 'ServiceNow Developer',
     category: 'ITSM · CSM',
     location: 'Remote, India',
-    period: 'Jan 2025 – Present',
+    period: 'Jan 2025 – Jun 2026',
     type: 'Remote',
     accent: '#60A5FA',
     logo: '/logos/exterprise.png',
@@ -198,7 +215,7 @@ const experiences = [
     tags: ['Flow Designer', 'Glide Scripting', 'CSM', 'ITSM', 'Performance Analytics', 'REST API', 'Twilio', 'eBonding'],
   },
   {
-    id: 'exp-growinity', key: 'growinity', index: '02',
+    id: 'exp-growinity', key: 'growinity', index: '03',
     company: 'Growinity Solutions LLP',
     role: 'Associate Software Engineer — ServiceNow Developer',
     category: 'Flow Designer · ITSM',
@@ -223,7 +240,7 @@ const experiences = [
     tags: ['Flow Designer', 'Script Includes', 'Business Rules', 'GlideAjax', 'LDAP', 'ACL', 'SMTP'],
   },
   {
-    id: 'exp-seeco', key: 'seeco', index: '03',
+    id: 'exp-seeco', key: 'seeco', index: '04',
     company: 'Seeco Control Systems',
     role: 'ServiceNow Developer',
     category: 'ITSM · ESC Portal · CSM',
@@ -247,7 +264,7 @@ const experiences = [
     tags: ['ITSM', 'ESC Portal', 'CSM', 'Record Producers', 'Reference Qualifiers', 'GlideAjax'],
   },
   {
-    id: 'exp-infosys', key: 'infosys', index: '04',
+    id: 'exp-infosys', key: 'infosys', index: '05',
     company: 'Infosys Limited',
     role: 'Digital Specialist Engineer',
     category: 'Java · Spring Boot · Kafka',

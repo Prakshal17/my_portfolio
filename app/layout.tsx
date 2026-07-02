@@ -6,24 +6,24 @@ import { ThemeProvider } from '@/components/Navbar';
 import ScrollToTop from '@/components/ScrollToTop';
 
 export const metadata: Metadata = {
-  title: 'Prakshal Jain | ServiceNow Developer — CSA · CAD · CIS-CSM',
+  title: 'Prakshal Jain | Senior Associate, ServiceNow Consulting — CSA · CAD · CIS-CSM · CIS-DF',
   description:
-    'ServiceNow Developer with 4+ years IT experience and 3+ years on the Now Platform. Delivered ITSM & CSM solutions for 8+ enterprise clients. CSA · CAD · CIS-CSM certified. Exploring Virtual Agent, NLU, and Agentic AI.',
+    'ServiceNow Developer with 4+ years IT experience and 3+ years on the Now Platform. Delivered ITSM & CSM solutions for 8+ enterprise clients. CSA · CAD · CIS-CSM · CIS-DF certified. Exploring Virtual Agent, NLU, and Agentic AI.',
   keywords: [
-    'ServiceNow Developer', 'ITSM', 'CSM', 'Now Platform', 'CSA', 'CAD', 'CIS-CSM',
+    'ServiceNow Developer', 'ITSM', 'CSM', 'Now Platform', 'CSA', 'CAD', 'CIS-CSM', 'CIS-DF',
     'Flow Designer', 'Prakshal Jain', 'ServiceNow Consultant', 'Virtual Agent',
     'Agentic AI', 'Integration Hub', 'Java', 'Spring Boot', 'Kafka',
   ],
   authors: [{ name: 'Prakshal Jain', url: 'https://www.linkedin.com/in/prakshal-jain17/' }],
   openGraph: {
     title: 'Prakshal Jain | ServiceNow Developer',
-    description: 'ServiceNow Developer | ITSM & CSM | CSA · CAD · CIS-CSM | 6x Micro-Certs | Exploring VA & Agentic AI',
+    description: 'Senior Associate, ServiceNow Consulting @RSM US LLP | CSA · CAD · CIS-CSM · CIS-DF certified | 6x Micro-Certs | Exploring VA & Agentic AI',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Prakshal Jain | ServiceNow Developer',
-    description: 'ServiceNow Developer | CSA · CAD · CIS-CSM | 8+ Clients | Now Platform',
+    description: 'Senior Associate, ServiceNow Consulting @RSM US LLP | CSA · CAD · CIS-CSM · CIS-DF certified | 6x Micro-Certs | Exploring VA & Agentic AI',
   },
   icons: {
     icon: '/favicon.svg',

@@ -11,7 +11,7 @@ const stats = [
   { label: 'Years IT Experience', value: '4+' },
   { label: 'Years on ServiceNow', value: '3+' },
   { label: 'Clients Served', value: '8+' },
-  { label: 'Certifications', value: '33' },
+  { label: 'Certifications', value: '32' },
 ];
 
 export default function About() {
@@ -102,7 +102,7 @@ export default function About() {
               <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ background: '#60A5FA' }} />
               <p className="text-xs tracking-widest uppercase mb-4 transition-colors font-bold" style={{ color: 'var(--text-muted)' }}>LinkedIn Headline</p>
               <p className="text-sm md:text-base md:text-lg leading-relaxed font-bold px-4 transition-colors" style={{ color: 'var(--text-primary)' }}>
-                ServiceNow Developer | ITSM &amp; CSM | CSA • CAD • CIS-CSM | 6x Micro-Certs | Exploring VA &amp; Agentic AI
+                Senior Associate, ServiceNow Consulting @RSM US LLP | CSA · CAD · CIS-CSM · CIS-DF certified | 6x Micro-Certs | Exploring VA &amp; Agentic AI
               </p>
             </div>
 

@@ -18,7 +18,7 @@ const IMAGES = [
     src: '/prakshal.jpg', 
     bg: '#3A1F2B', 
     title: 'CERTIFIED EXPERT',
-    description: 'Holding CSA, CAD, and CIS-CSM certifications with 4+ years of hands-on IT experience.'
+    description: 'Holding CSA, CAD, CIS-CSM, and CIS-DF certifications with 4+ years of hands-on IT experience.'
   },
   { 
     src: '/prakshal.jpg', 

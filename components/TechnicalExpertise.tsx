@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Settings, Database } from 'lucide-react';
 
 const servicenowTech = [
-  { category: 'Modules & Portals', items: ['ITSM', 'CSM', 'Service Catalog', 'Employee Center', 'Service Portal', 'Now Mobile', 'SLAs', 'Surveys'] },
+  { category: 'Modules & Portals', items: ['ITSM', 'CSM', 'CMDB', 'Service Catalog', 'Employee Center', 'Service Portal', 'Now Mobile', 'SLAs', 'Surveys'] },
   { category: 'Scripting & Development', items: ['JavaScript', 'Client Scripts', 'Business Rules', 'Script Includes', 'GlideRecord', 'GlideAjax', 'UI Policies', 'UI Actions', 'ACLs', 'Scoped Apps'] },
   { category: 'Automation & Workflow', items: ['Flow Designer', 'Subflows', 'Custom Actions', 'Decision Tables', 'Scheduled Jobs', 'Inbound Email Actions'] },
   { category: 'Reporting & Workspaces', items: ['Dashboards', 'Performance Analytics', 'Service Ops Workspace', 'CSM/FSM Workspace'] },

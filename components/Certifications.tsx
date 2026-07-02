@@ -12,17 +12,18 @@ const categories = [
     icon: '⚙️',
     accent: '#60A5FA',
     certs: [
-      { name: 'Certified System Administrator (CSA)', issuer: 'ServiceNow', type: 'Mainline', year: '2023' },
-      { name: 'Certified Application Developer (CAD)', issuer: 'ServiceNow', type: 'Mainline', year: '2023' },
-      { name: 'CIS – Customer Service Management (CIS-CSM)', issuer: 'ServiceNow', type: 'Mainline', year: '2023' },
-      { name: 'Agentic AI Executive', issuer: 'ServiceNow', type: 'Micro-Cert', year: '2024' },
-      { name: 'Platform Analytics', issuer: 'ServiceNow', type: 'Micro-Cert', year: '2023' },
-      { name: 'UI Builder', issuer: 'ServiceNow', type: 'Micro-Cert', year: '2023' },
-      { name: 'Flow Designer', issuer: 'ServiceNow', type: 'Micro-Cert', year: '2023' },
-      { name: 'Service Portal', issuer: 'ServiceNow', type: 'Micro-Cert', year: '2022' },
-      { name: 'Playbooks Advanced', issuer: 'ServiceNow', type: 'Micro-Cert', year: '2024' },
+      { name: 'Certified System Administrator (CSA)', issuer: 'ServiceNow', type: 'Mainline', year: 'Feb 2026', note: 'Zurich Delta - Feb 2026 covered' },
+      { name: 'Certified Application Developer (CAD)', issuer: 'ServiceNow', type: 'Mainline', year: 'Dec 2024', note: 'Zurich Delta - Feb 2026 covered' },
+      { name: 'CIS – Customer Service Management (CIS-CSM)', issuer: 'ServiceNow', type: 'Mainline', year: 'Jan 2026', note: 'Zurich Delta - Feb 2026 covered' },
+      { name: 'CIS – Discovery (CIS-DF)', issuer: 'ServiceNow', type: 'Mainline', year: 'Jun 2026' },
+      { name: 'Agentic AI Executive', issuer: 'ServiceNow', type: 'Micro-Cert', year: 'Dec 2025' },
+      { name: 'Platform Analytics', issuer: 'ServiceNow', type: 'Micro-Cert', year: 'Dec 2025' },
+      { name: 'UI Builder', issuer: 'ServiceNow', type: 'Micro-Cert', year: 'Dec 2025' },
+      { name: 'Flow Designer', issuer: 'ServiceNow', type: 'Micro-Cert', year: 'Jun 2025' },
+      { name: 'Service Portal', issuer: 'ServiceNow', type: 'Micro-Cert', year: 'Jun 2025' },
+      { name: 'Playbooks Advanced', issuer: 'ServiceNow', type: 'Micro-Cert', year: 'Dec 2025' },
       { name: 'Virtual Agent', issuer: 'ServiceNow', type: 'Micro-Cert', year: '2024' },
-      { name: 'Customer Service Management', issuer: 'ServiceNow', type: 'Accreditation', year: '2023' },
+      { name: 'Partner Presales: Customer Service Management', issuer: 'ServiceNow', type: 'Accreditation', year: 'Jun 2025' },
       { name: 'AI Agents', issuer: 'ServiceNow', type: 'Accreditation', year: '2024' },
     ],
   },
@@ -128,7 +129,7 @@ export default function Certifications() {
             CERTIFICATIONS
           </h2>
             <p className="text-white/35 text-sm max-w-xs md:text-right">
-              33+ credentials · ServiceNow · Infosys · NPTEL · Coursera · HackerRank · Udemy
+              32 credentials · ServiceNow · Infosys · NPTEL · Coursera · HackerRank · Udemy
             </p>
           </div>
           <div className="mt-8 h-px bg-gradient-to-r from-accent/40 via-white/10 to-transparent" />
@@ -175,6 +176,9 @@ export default function Certifications() {
                 {cert.year && cert.year !== '—' && (
                   <p className="text-xs mt-1 font-mono" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>{cert.year}</p>
                 )}
+                {(cert as any).note && (
+                  <p className="text-[10px] mt-1 italic" style={{ color: 'var(--text-muted)', opacity: 0.9 }}>{(cert as any).note}</p>
+                )}
               </motion.div>
             ))}
           </motion.div>
@@ -185,10 +189,10 @@ export default function Certifications() {
           viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.6 }}
           className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { v: '3', l: 'Mainline ServiceNow', accent: '#60A5FA' },
+            { v: '4', l: 'Mainline ServiceNow', accent: '#60A5FA' },
             { v: '7', l: 'Micro-Certifications', accent: '#818CF8' },
             { v: '2', l: 'Accreditations', accent: '#34D399' },
-            { v: '21+', l: 'Other Credentials', accent: '#FB923C' },
+            { v: '19', l: 'Other Credentials', accent: '#FB923C' },
           ].map(s => (
             <div key={s.l} className="glass-card rounded-xl p-4 text-center">
               <div className="text-2xl font-black mb-1" style={{ color: s.accent }}>{s.v}</div>

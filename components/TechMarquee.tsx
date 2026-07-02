@@ -11,6 +11,7 @@ const techStack = [
   { name: 'Virtual Agent', emoji: '🤖' },
   { name: 'ITSM', emoji: '🎯' },
   { name: 'CSM', emoji: '👥' },
+  { name: 'CMDB', emoji: '🗄️' },
   { name: 'Agentic AI', emoji: '🧠' },
   { name: 'Performance Analytics', emoji: '📊' },
   { name: 'Integration Hub', emoji: '🔌' },
